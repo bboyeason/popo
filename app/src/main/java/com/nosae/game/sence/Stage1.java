@@ -455,7 +455,7 @@ public class Stage1 extends DrawableGameComponent {
         if (mBoboObj != null && mBoboObj.isAlive) {
             mSubCanvas.save();
 
-            mSubCanvas.drawBitmap(mBoboObj.image, mBoboObj.srcRect, mBoboObj.destRect,
+            mSubCanvas.drawBitmap(mBoboObj.boboImage, mBoboObj.srcRect, mBoboObj.destRect,
                     mBoboObj.paint);
 //            DebugConfig.d("srcRect: " + mGoldenFishObj.srcRect.left + ", " + mGoldenFishObj.srcRect.top + ", " + mGoldenFishObj.srcRect.right + ", " + mGoldenFishObj.srcRect.bottom);
 //            DebugConfig.d("destRect: " + mGoldenFishObj.destRect.left + ", " + mGoldenFishObj.destRect.top + ", " + mGoldenFishObj.destRect.right + ", " + mGoldenFishObj.destRect.bottom);

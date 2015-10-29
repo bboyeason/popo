@@ -13,6 +13,7 @@ import com.nosae.game.bobo.Text;
 
 import lbs.DrawableGameComponent;
 import com.nosae.game.objects.GameObj;
+import com.nosae.game.role.Bobo;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -24,6 +25,17 @@ public class Stage2 extends DrawableGameComponent {
 
     private GameObj mBackground;
     private Bitmap mBackGroundImage;
+
+    private GameObj mSenceTitle;
+    private Bitmap mSenceTitleImage;
+
+    private Bobo mBoboObj;
+    private Bitmap mBoboImage;
+    private Bitmap mRule2Image;
+
+    private GameObj mStaff;
+    private Bitmap mStaffImage;
+
 
     private Text mFpsText;
 
@@ -53,13 +65,21 @@ public class Stage2 extends DrawableGameComponent {
         if (mBackground == null) {
             // Load background image
             mBackGroundImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
-                    R.drawable.background);
+                    R.drawable.b_backimage);
             mBackground = new GameObj(0, 0, GameParams.scaleWidth / mBackGroundImage.getWidth(), GameParams.scaleHeight / mBackGroundImage.getHeight(), 0, 0, 0, 0, 0, 0, 0);
             mBackground.isAlive = true;
+        }
 
-            DebugConfig.d("=== surfaceCreated ===" + MainActivity.mSurfaceView.getLeft() + ":" + MainActivity.mSurfaceView.getRight() + ":" + MainActivity.mSurfaceView.getTop() + ":" + MainActivity.mSurfaceView.getBottom());
+        if (mSenceTitle == null) {
+            mSenceTitleImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_stage2title);
+            mSenceTitle = new GameObj(10, 10, mSenceTitleImage.getWidth(), mSenceTitleImage.getHeight(), 0, 0, mSenceTitleImage.getWidth(), mSenceTitleImage.getHeight(), 0, 0, 0);
+        }
 
-
+        if (mBoboObj == null) {
+            mBoboImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role1);
+            mRule2Image = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role2);
+            mBoboObj = new Bobo(mBoboImage, GameParams.halfWidth - mBoboImage.getWidth() / 2, GameParams.scaleHeight - mBoboImage.getHeight(), mBoboImage.getWidth(), mBoboImage.getHeight(), 0, 0, mBoboImage.getWidth(), mBoboImage.getHeight(), 0, 0, 0);
+            mBoboObj.role2 = mBoboObj.new Role2(mRule2Image, mBoboObj.getX() - mRule2Image.getWidth(), GameParams.scaleHeight - mRule2Image.getHeight(), mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, 0);
         }
     }
 
@@ -76,6 +96,9 @@ public class Stage2 extends DrawableGameComponent {
                     + ") " + (int) mGameEntry.totalFrames;
         }
 
+        if (mBoboObj != null){
+            /* FIXME: Role animation */
+        }
     }
 
     @Override
@@ -101,6 +124,14 @@ public class Stage2 extends DrawableGameComponent {
 
         if (DebugConfig.isFpsDebugOn) {
             mSubCanvas.drawText(mFpsText.message, mFpsText.x, mFpsText.y, mFpsText.paint);
+        }
+
+        if (mSenceTitle != null) {
+            mSubCanvas.drawBitmap(mSenceTitleImage, mSenceTitle.srcRect, mSenceTitle.destRect, mSenceTitle.paint);
+        }
+
+        if (mBoboObj != null) {
+            mBoboObj.draw(mSubCanvas);
         }
     }
 }
