@@ -85,7 +85,7 @@ public class Stage1 extends DrawableGameComponent {
     public int mTotalScore = 0;
     public static boolean onOff = true;
     public static boolean isGameOver = false;
-    private boolean isClearStage1 = false;
+    public boolean isClearStage1 = false;
 
     public Stage1(GameEntry mGameEntry) {
         DebugConfig.d("Stage1 Constructor");
@@ -125,7 +125,7 @@ public class Stage1 extends DrawableGameComponent {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case Events.CREATEFISH:
-                        if (isGameOver)
+                        if (isGameOver || isClearStage1)
                             return;
                         createFish();
 

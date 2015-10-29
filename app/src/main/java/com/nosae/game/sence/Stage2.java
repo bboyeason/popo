@@ -81,6 +81,11 @@ public class Stage2 extends DrawableGameComponent {
             mBoboObj = new Bobo(mBoboImage, GameParams.halfWidth - mBoboImage.getWidth() / 2, GameParams.scaleHeight - mBoboImage.getHeight(), mBoboImage.getWidth(), mBoboImage.getHeight(), 0, 0, mBoboImage.getWidth(), mBoboImage.getHeight(), 0, 0, 0);
             mBoboObj.role2 = mBoboObj.new Role2(mRule2Image, mBoboObj.getX() - mRule2Image.getWidth(), GameParams.scaleHeight - mRule2Image.getHeight(), mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, 0);
         }
+
+        if (mStaff == null) {
+            mStaffImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_staff);
+            mStaff = new GameObj(0, GameParams.scaleHeight - mBoboImage.getHeight() - mStaffImage.getHeight(), GameParams.scaleWidth, mStaffImage.getHeight(), 0, 0, mStaffImage.getWidth(), mStaffImage.getHeight(), 0, 0, 0);
+        }
     }
 
     @Override
@@ -108,12 +113,9 @@ public class Stage2 extends DrawableGameComponent {
 
         mSubCanvas = mGameEntry.canvas;
         // Draw background image
-        if (mBackground.isAlive)
-        {
-            for (f = 0; f <= mBackground.destWidth; f++)
-            {
-                for (j = -1; j <= mBackground.destHeight; j++)
-                {
+        if (mBackground.isAlive) {
+            for (f = 0; f <= mBackground.destWidth; f++) {
+                for (j = -1; j <= mBackground.destHeight; j++) {
                     mSubCanvas.drawBitmap(mBackGroundImage,
                             f * mBackGroundImage.getWidth() + mBackground.destRect.left,
                             j * mBackGroundImage.getHeight() + mBackground.destRect.top,
@@ -132,6 +134,10 @@ public class Stage2 extends DrawableGameComponent {
 
         if (mBoboObj != null) {
             mBoboObj.draw(mSubCanvas);
+        }
+
+        if (mStaff != null) {
+            mSubCanvas.drawBitmap(mStaffImage, mStaff.srcRect, mStaff.destRect, mStaff.paint);
         }
     }
 }

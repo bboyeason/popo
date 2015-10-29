@@ -70,6 +70,7 @@ public class GameEntry extends Game {
         if (mStage1 != null && mStage1.mTotalScore >= GameParams.stage1BreakScore
                 && GameStateClass.currentState != GameStateClass.GameState.Stage2) {
 //                    GameStateClass.currentState = GameStateClass.GameState.Stage2;
+            mStage1.isClearStage1 = true;
             GameStateClass.changeState(GameStateClass.GameState.Stage2, mStage1, this);
         }
 //        if (isForceRestart)
