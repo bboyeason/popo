@@ -3,4 +3,15 @@
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
-/build
+build/
+*.iml
+*.class
+*.iml
+*.iws
+*.ipr
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
