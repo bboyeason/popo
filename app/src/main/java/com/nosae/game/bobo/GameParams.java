@@ -90,6 +90,10 @@ public class GameParams {
     }
 
     // For load scaled down image into memory
+    public static Bitmap decodeSampledBitmapFromResource(int resId, int reqWidth, int reqHeight) {
+        return decodeSampledBitmapFromResource(res, resId, reqWidth, reqHeight);
+    }
+
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 

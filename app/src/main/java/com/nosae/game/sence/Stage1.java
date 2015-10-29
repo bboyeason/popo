@@ -182,16 +182,13 @@ public class Stage1 extends DrawableGameComponent {
         int random;
 //        for (int i = 0; i < mMaximum; i++) {
             random = mRandom.nextInt(mFishTable[0].length);
-//            mFishImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
-//                    mFishTable[0][random]);
-            Bitmap mFishImage = GameParams.decodeSampledBitmapFromResource(GameParams.res,
-                mFishTable[0][random], 60, 120);
+            Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(mFishTable[0][random], 60, 120);
 
-            width = mFishImage.getWidth() / mFishTable[1][random];
-            height = mFishImage.getHeight() / mFishTable[2][random];
+            width = fishImage.getWidth() / mFishTable[1][random];
+            height = fishImage.getHeight() / mFishTable[2][random];
                 DebugConfig.d("width: " + width + ", height: " + height);
             speed = mRandom.nextInt(GameParams.fishRandomSpeed) + GameParams.fishRandomSpeed;
-            mFishObj = new NormalFish(mFishImage, 0, 0, width, height, 0, 0, width, height, speed, Color.WHITE, 90);
+            mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, speed, Color.WHITE, 90);
 
             mFishObj.randomTop();
             mFishObj.setCol(mFishTable[1][random]);
@@ -203,7 +200,7 @@ public class Stage1 extends DrawableGameComponent {
             mFishObj.isAlive = true;
             mFishCollections.add(mFishObj);
             DebugConfig.d("create fish: " + mFishCollections.size());
-            mFishImage = null;
+            fishImage = null;
 //                mFishObj = null;
 
 //        }
@@ -259,12 +256,8 @@ public class Stage1 extends DrawableGameComponent {
         if (mBackground == null) {
             // Load background image
 
-//            mBackGroundImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
-//                    R.drawable.background);
-            mBackGroundImage = GameParams.decodeSampledBitmapFromResource(GameParams.res, R.drawable.background, GameParams.scaleWidth, GameParams.scaleHeight);
-//            mBackground = new GameObj(0, 0, GameParams.scaleWidth / mBackGroundImage.getWidth(), GameParams.scaleHeight / mBackGroundImage.getHeight(), 0, 0, 0, 0, 0, 0, 0);
+            mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.background, GameParams.scaleWidth, GameParams.scaleHeight);
             mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
-//            mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, options.outWidth, options.outHeight, 0, 0, 0);
             mBackground.isAlive = true;
 
 
