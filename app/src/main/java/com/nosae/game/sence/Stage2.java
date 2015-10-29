@@ -7,12 +7,13 @@ import android.graphics.Color;
 
 import com.nosae.game.bobo.GameEntry;
 import com.nosae.game.bobo.GameParams;
-import com.nosae.game.bobo.MainActivity;
 import com.nosae.game.bobo.R;
 import com.nosae.game.bobo.Text;
 
 import lbs.DrawableGameComponent;
 import com.nosae.game.objects.GameObj;
+import com.nosae.game.objects.Score;
+import com.nosae.game.objects.TimerBar;
 import com.nosae.game.role.Bobo;
 import com.nosae.game.settings.DebugConfig;
 
@@ -36,10 +37,18 @@ public class Stage2 extends DrawableGameComponent {
     private GameObj mStaff;
     private Bitmap mStaffImage;
 
+    private Score mScore;
+    private GameObj mLife;
+    private Bitmap mLifeImage;
+
+    public TimerBar mTimerBar;
 
     private Text mFpsText;
 
     int f, j;
+    private int mTotalScore;
+    private boolean isGameOver = false;
+
     public Stage2(GameEntry gameEntry) {
         this.mGameEntry = gameEntry;
     }
@@ -75,6 +84,24 @@ public class Stage2 extends DrawableGameComponent {
             mSenceTitle = new GameObj(10, 10, mSenceTitleImage.getWidth(), mSenceTitleImage.getHeight(), 0, 0, mSenceTitleImage.getWidth(), mSenceTitleImage.getHeight(), 0, 0, 0);
         }
 
+        if (mTimerBar == null) {
+            mTimerBar = new TimerBar();
+            mTimerBar.destRect.left = mSenceTitle.destRect.left;
+            mTimerBar.destRect.top = mSenceTitle.destRect.bottom;
+            mTimerBar.destRect.bottom = mTimerBar.destRect.top + mTimerBar.srcHeight;
+        }
+
+        if (mScore == null) {
+            mScore = new Score(mSenceTitle.destRect.left, mTimerBar.destRect.bottom + 10);
+        }
+
+        if (mLife == null) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 2;
+            mLifeImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
+            mLife = new GameObj(mSenceTitle.destRect.left + 10 * 16, mTimerBar.destRect.bottom, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
+        }
+
         if (mBoboObj == null) {
             mBoboImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role1);
             mRule2Image = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role2);
@@ -104,6 +131,16 @@ public class Stage2 extends DrawableGameComponent {
         if (mBoboObj != null){
             /* FIXME: Role animation */
         }
+
+        if (mScore != null) {
+            mScore.setTotalScore(mTotalScore);
+        }
+
+        if (mTimerBar != null) {
+            mTimerBar.action((int) mGameEntry.totalFrames);
+            if (mTimerBar.isTimeout)
+                isGameOver = true;
+        }
     }
 
     @Override
@@ -130,6 +167,18 @@ public class Stage2 extends DrawableGameComponent {
 
         if (mSenceTitle != null) {
             mSubCanvas.drawBitmap(mSenceTitleImage, mSenceTitle.srcRect, mSenceTitle.destRect, mSenceTitle.paint);
+        }
+
+        if (mTimerBar != null) {
+            mTimerBar.draw(mSubCanvas);
+        }
+
+        if (mScore != null) {
+            mScore.drawScore(mSubCanvas);
+        }
+
+        if (mLife != null) {
+            mSubCanvas.drawBitmap(mLifeImage, mLife.srcRect, mLife.destRect, mLife.paint);
         }
 
         if (mBoboObj != null) {
