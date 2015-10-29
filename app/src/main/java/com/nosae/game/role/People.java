@@ -1,4 +1,6 @@
-package com.nosae.game.objects;
+package com.nosae.game.role;
+
+import com.nosae.game.objects.GameObj;
 
 /**
  * Created by eason on 2015/10/23.

@@ -17,11 +17,11 @@ import java.util.Random;
 
 import lbs.DrawableGameComponent;
 import lbs.FishCollection;
-import com.nosae.game.objects.Bobo;
+import com.nosae.game.role.Bobo;
 import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.GameObj;
-import com.nosae.game.objects.GoldenFish;
-import com.nosae.game.objects.NormalFish;
+import com.nosae.game.role.GoldenFish;
+import com.nosae.game.role.NormalFish;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar;
 import com.nosae.game.settings.DebugConfig;

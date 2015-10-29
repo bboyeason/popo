@@ -1,6 +1,8 @@
-package com.nosae.game.objects;
+package com.nosae.game.role;
 
 import android.graphics.Bitmap;
+
+import com.nosae.game.objects.FishObj;
 
 /**
  * Created by eason on 2015/10/22.
