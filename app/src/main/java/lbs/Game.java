@@ -10,7 +10,7 @@ import android.graphics.Canvas;
 
 import com.nosae.game.bobo.MainActivity;
 
-import settings.DebugConfig;
+import com.nosae.game.settings.DebugConfig;
 
 public class Game {
 	

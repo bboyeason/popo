@@ -1,4 +1,4 @@
-package sence;
+package com.nosae.game.sence;
 
 import android.app.Activity;
 import android.os.Bundle;

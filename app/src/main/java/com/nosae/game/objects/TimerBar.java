@@ -1,4 +1,4 @@
-package objects;
+package com.nosae.game.objects;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,7 +9,7 @@ import android.graphics.Rect;
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.R;
 
-import sence.Stage1;
+import com.nosae.game.sence.Stage1;
 
 /**
  * Created by eason on 2015/10/28.

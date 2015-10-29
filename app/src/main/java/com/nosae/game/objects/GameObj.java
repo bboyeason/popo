@@ -1,4 +1,4 @@
-package objects;
+package com.nosae.game.objects;
 
 /**
  * Created by eason on 2015/10/14.

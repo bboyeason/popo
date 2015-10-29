@@ -4,7 +4,7 @@ package com.nosae.game.bobo;
  * Created by eason on 2015/10/19.
  */
 import lbs.*;
-import settings.DebugConfig;
+import com.nosae.game.settings.DebugConfig;
 
 public class GameStateClass {
     // �C�����A

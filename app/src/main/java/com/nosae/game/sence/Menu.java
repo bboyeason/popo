@@ -1,4 +1,4 @@
-package sence;
+package com.nosae.game.sence;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.Button;
 import com.nosae.game.bobo.MainActivity;
 import com.nosae.game.bobo.R;
 
-import objects.Music;
+import com.nosae.game.objects.Music;
 
 /**
  * Created by eason on 2015/10/27.

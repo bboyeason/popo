@@ -1,4 +1,4 @@
-package objects;
+package com.nosae.game.objects;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
-import sence.Menu;
+import com.nosae.game.sence.Menu;
 
 public class SplashScreen extends Activity {
 

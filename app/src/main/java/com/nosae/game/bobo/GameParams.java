@@ -6,8 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Vibrator;
 
-import objects.Music;
-import settings.DebugConfig;
+import com.nosae.game.objects.Music;
+import com.nosae.game.settings.DebugConfig;
 
 /**
  * Created by eason on 2015/10/19.

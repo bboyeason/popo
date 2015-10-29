@@ -5,8 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import objects.FishObj;
-import objects.GameObj;
+import com.nosae.game.objects.FishObj;
 
 /**
  * Created by eason on 2015/10/22.

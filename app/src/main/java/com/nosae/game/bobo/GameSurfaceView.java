@@ -7,8 +7,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import sence.Stage1;
-import settings.DebugConfig;
+import com.nosae.game.sence.Stage1;
+import com.nosae.game.settings.DebugConfig;
 
 /**
  * Created by eason on 2015/10/10.

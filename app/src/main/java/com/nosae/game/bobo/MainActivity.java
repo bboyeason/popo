@@ -1,7 +1,7 @@
 package com.nosae.game.bobo;
 
-import sence.Stage1;
-import settings.DebugConfig;
+import com.nosae.game.sence.Stage1;
+import com.nosae.game.settings.DebugConfig;
 import android.app.Activity;
 import android.app.Service;
 import android.graphics.Rect;

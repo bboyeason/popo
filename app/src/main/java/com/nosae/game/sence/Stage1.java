@@ -1,4 +1,4 @@
-package sence;
+package com.nosae.game.sence;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -17,14 +17,14 @@ import java.util.Random;
 
 import lbs.DrawableGameComponent;
 import lbs.FishCollection;
-import objects.Bobo;
-import objects.ColorMask;
-import objects.GameObj;
-import objects.GoldenFish;
-import objects.NormalFish;
-import objects.Score;
-import objects.TimerBar;
-import settings.DebugConfig;
+import com.nosae.game.objects.Bobo;
+import com.nosae.game.objects.ColorMask;
+import com.nosae.game.objects.GameObj;
+import com.nosae.game.objects.GoldenFish;
+import com.nosae.game.objects.NormalFish;
+import com.nosae.game.objects.Score;
+import com.nosae.game.objects.TimerBar;
+import com.nosae.game.settings.DebugConfig;
 
 /**
  * Created by eason on 2015/10/19.

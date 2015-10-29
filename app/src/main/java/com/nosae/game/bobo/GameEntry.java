@@ -5,10 +5,10 @@ import android.os.Message;
 import android.view.View;
 
 import lbs.Game;
-import objects.Music;
-import sence.Stage1;
-import sence.Stage2;
-import settings.DebugConfig;
+import com.nosae.game.objects.Music;
+import com.nosae.game.sence.Stage1;
+import com.nosae.game.sence.Stage2;
+import com.nosae.game.settings.DebugConfig;
 
 /**
  * Created by eason on 2015/10/19.

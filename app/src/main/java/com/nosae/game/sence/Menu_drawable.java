@@ -1,4 +1,4 @@
-package sence;
+package com.nosae.game.sence;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +8,7 @@ import android.graphics.Color;
 import com.nosae.game.bobo.GameEntry;
 
 import lbs.DrawableGameComponent;
-import objects.GameObj;
+import com.nosae.game.objects.GameObj;
 
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.R;
