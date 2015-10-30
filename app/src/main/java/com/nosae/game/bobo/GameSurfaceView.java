@@ -7,7 +7,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.nosae.game.objects.Quiz;
 import com.nosae.game.sence.Stage1;
+import com.nosae.game.sence.Stage2;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -59,13 +61,16 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                         }
                         break;
                     case Stage2:
+//                        Quiz.isQuizHit = true;
+                        // TODO when hit, new quiz
+                        Stage2.isNewQuiz = true;
                         break;
                 }
 
 
                 break;
         }
-        DebugConfig.d("Total score: " + mMainActivity.mGameEntry.mStage1.mTotalScore);
+//        DebugConfig.d("Total score: " + mMainActivity.mGameEntry.mStage1.mTotalScore);
         return false;
     }
 

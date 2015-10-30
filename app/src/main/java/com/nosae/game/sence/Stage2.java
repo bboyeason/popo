@@ -12,10 +12,13 @@ import com.nosae.game.bobo.Text;
 
 import lbs.DrawableGameComponent;
 import com.nosae.game.objects.GameObj;
+import com.nosae.game.objects.Quiz;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar;
 import com.nosae.game.role.Bobo;
 import com.nosae.game.settings.DebugConfig;
+
+import java.util.Random;
 
 /**
  * Created by eason on 2015/10/25.
@@ -43,9 +46,14 @@ public class Stage2 extends DrawableGameComponent {
 
     public TimerBar mTimerBar;
 
+    private Quiz mQuiz;
+    private Bitmap mQuizImage;
+    public static boolean isNewQuiz = true;
+
     private Text mFpsText;
 
     int f, j;
+
     private int mTotalScore;
     private boolean isGameOver = false;
 
@@ -113,6 +121,16 @@ public class Stage2 extends DrawableGameComponent {
             mStaffImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_staff);
             mStaff = new GameObj(0, GameParams.scaleHeight - mBoboImage.getHeight() - mStaffImage.getHeight(), GameParams.scaleWidth, mStaffImage.getHeight(), 0, 0, mStaffImage.getWidth(), mStaffImage.getHeight(), 0, 0, 0);
         }
+
+        if (mQuiz == null) {
+            int width, height;
+            mQuizImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_quiz);
+            width = mQuizImage.getWidth() / 5;
+            height = mQuizImage.getHeight() / 3;
+            mQuiz = new Quiz(GameParams.halfWidth + GameParams.halfWidth / 2 - width / 2,
+                    mBoboObj.destRect.top + mBoboObj.destHeight / 2 - height / 2,
+                    width, height, 0, 0, width, height, 0, 0, 0);
+        }
     }
 
     @Override
@@ -140,6 +158,11 @@ public class Stage2 extends DrawableGameComponent {
             mTimerBar.action((int) mGameEntry.totalFrames);
             if (mTimerBar.isTimeout)
                 isGameOver = true;
+        }
+
+        if (mQuiz != null && isNewQuiz) {
+            mQuiz.randomQuiz();
+            isNewQuiz = false;
         }
     }
 
@@ -187,6 +210,10 @@ public class Stage2 extends DrawableGameComponent {
 
         if (mStaff != null) {
             mSubCanvas.drawBitmap(mStaffImage, mStaff.srcRect, mStaff.destRect, mStaff.paint);
+        }
+
+        if (mQuiz != null) {
+            mSubCanvas.drawBitmap(mQuizImage, mQuiz.srcRect, mQuiz.destRect, mQuiz.paint);
         }
     }
 }
