@@ -12,13 +12,12 @@ import com.nosae.game.bobo.Text;
 
 import lbs.DrawableGameComponent;
 import com.nosae.game.objects.GameObj;
+import com.nosae.game.objects.Life;
 import com.nosae.game.objects.Quiz;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar;
 import com.nosae.game.role.Bobo;
 import com.nosae.game.settings.DebugConfig;
-
-import java.util.Random;
 
 /**
  * Created by eason on 2015/10/25.
@@ -41,8 +40,10 @@ public class Stage2 extends DrawableGameComponent {
     private Bitmap mStaffImage;
 
     private Score mScore;
-    private GameObj mLife;
+    private GameObj mLifeIcon;
     private Bitmap mLifeImage;
+    private Life mLife;
+    private Bitmap mLifeNumber;
 
     public TimerBar mTimerBar;
 
@@ -79,6 +80,8 @@ public class Stage2 extends DrawableGameComponent {
     protected void LoadContent() {
         super.LoadContent();
         DebugConfig.d("Stage2 LoadContent()");
+        int width, height;
+
         if (mBackground == null) {
             // Load background image
             mBackGroundImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
@@ -103,11 +106,20 @@ public class Stage2 extends DrawableGameComponent {
             mScore = new Score(mSenceTitle.destRect.left, mTimerBar.destRect.bottom + 10);
         }
 
-        if (mLife == null) {
+        if (mLifeIcon == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
             mLifeImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
-            mLife = new GameObj(mSenceTitle.destRect.left + 10 * 16, mTimerBar.destRect.bottom, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
+            mLifeIcon = new GameObj(mSenceTitle.destRect.left + 10 * 16, mTimerBar.destRect.bottom, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
+        }
+
+        if (mLife == null) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 2;
+            mLifeNumber = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_number, options);
+            width = mLifeNumber.getWidth() / 5;
+            height = mLifeNumber.getHeight() / 2;
+            mLife = new Life(mLifeIcon.destRect.right + 10, mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - height / 2, width, height, 0, 0, width, height, 0, 0, 0);
         }
 
         if (mBoboObj == null) {
@@ -123,7 +135,6 @@ public class Stage2 extends DrawableGameComponent {
         }
 
         if (mQuiz == null) {
-            int width, height;
             mQuizImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_quiz);
             width = mQuizImage.getWidth() / 5;
             height = mQuizImage.getHeight() / 3;
@@ -164,6 +175,10 @@ public class Stage2 extends DrawableGameComponent {
             mQuiz.randomQuiz();
             isNewQuiz = false;
         }
+
+        if (mLife != null) {
+            mLife.updateLife();
+        }
     }
 
     @Override
@@ -200,8 +215,12 @@ public class Stage2 extends DrawableGameComponent {
             mScore.drawScore(mSubCanvas);
         }
 
+        if (mLifeIcon != null) {
+            mSubCanvas.drawBitmap(mLifeImage, mLifeIcon.srcRect, mLifeIcon.destRect, mLifeIcon.paint);
+        }
+
         if (mLife != null) {
-            mSubCanvas.drawBitmap(mLifeImage, mLife.srcRect, mLife.destRect, mLife.paint);
+            mSubCanvas.drawBitmap(mLifeNumber, mLife.srcRect, mLife.destRect, mLife.paint);
         }
 
         if (mBoboObj != null) {
