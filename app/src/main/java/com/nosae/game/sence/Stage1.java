@@ -73,7 +73,7 @@ public class Stage1 extends DrawableGameComponent {
             { 13, 16, 16, 16 ,15, 16, 15, 21, 16, 10, 0}, /* Death animation start */
             { 23, 26, 24, 24, 26, 23, 27, 29, 23, 15, 0}, /* Death animation end */
             { 200, 100, 200, 200, 100, -600, 100, 300, -800, 100, 0}, /* Score */
-            { 0, 0, 0, 0 ,0 , 0, 0, 0, 0, 0, 2}
+            { 0, 0, 0, 0 ,0 , 0, 0, 0, 0, 0, 2} /* Timer add (seconds) */
     };
     private int mGoldFish = R.drawable.goldenfish;
 
