@@ -76,7 +76,7 @@ public class Stage1 extends DrawableGameComponent {
     private int mMaximum = 1000;
 
 
-    public static int mTotalScore = 0;
+    public static int mTotalScore;
     public static boolean onOff = true;
     public static boolean isGameOver = false;
     public static boolean isClearStage1 = false;
@@ -110,6 +110,7 @@ public class Stage1 extends DrawableGameComponent {
         mColorMask.isAlive = false;
 
         mTimerBar = new TimerBar(30);
+        mTotalScore = 0;
 
         mHandler = new Handler(mHandlerThread.getLooper()){
             @Override

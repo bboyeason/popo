@@ -66,7 +66,8 @@ public class GameEntry extends Game {
     @Override
     protected void Update() {
 //        DebugConfig.d("GameEntry Update()");
-        if (Stage1.isGameOver && (mMainActivity.mRestartButton.getVisibility() == View.INVISIBLE)) {
+        if ((Stage1.isGameOver || Stage2.isGameOver)
+                && (mMainActivity.mRestartButton.getVisibility() == View.INVISIBLE)) {
             Message m = new Message();
             m.what = 1;
             mMainActivity.mMsgHandler.sendMessage(m);
@@ -129,7 +130,7 @@ public class GameEntry extends Game {
             }
 
             GameStateClass.oldState = GameStateClass.currentState;
-            DebugConfig.d("oldState: " + GameStateClass.oldState + " currentState: " + GameStateClass.currentState);
+            DebugConfig.d("oldState: " + GameStateClass.oldState + ", currentState: " + GameStateClass.currentState);
         }
 
         super.Update();

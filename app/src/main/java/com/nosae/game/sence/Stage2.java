@@ -70,7 +70,7 @@ public class Stage2 extends DrawableGameComponent {
 
     public static boolean isGameOver = false;
     public static boolean isClearStage2 = false;
-    public static int mTotalScore = 0;
+    public static int mTotalScore;
 
     private int[][] mFishTable = {
             {
@@ -134,6 +134,8 @@ public class Stage2 extends DrawableGameComponent {
 
         mFishCollections = new FishCollection();
         mRandom = new Random();
+        mTotalScore = 0;
+        Life.setLife(5);
 
         if (mHandlerThread == null) {
             mHandlerThread = new HandlerThread(THREADNAME,

@@ -65,18 +65,30 @@ public class MainActivity extends Activity {
         mRestartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Stage1.isGameOver = false;
 //                mGameEntry.isForceRestart = true;
 //                mGameEntry.Exit();
 //                mGameEntry.Run();
-                GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage1, mGameEntry);
-                // FIXME don't use sleep
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (GameStateClass.currentState == GameStateClass.GameState.Stage1) {
+                    Stage1.isGameOver = false;
+                    GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage1, mGameEntry);
+                    // FIXME don't use sleep
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    GameStateClass.changeState(GameStateClass.GameState.Stage1, null, mGameEntry);
+                } else if (GameStateClass.currentState == GameStateClass.GameState.Stage2) {
+                    Stage2.isGameOver = false;
+                    GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage2, mGameEntry);
+                    // FIXME don't use sleep
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    GameStateClass.changeState(GameStateClass.GameState.Stage2, null, mGameEntry);
                 }
-                GameStateClass.changeState(GameStateClass.GameState.Stage1, null, mGameEntry);
                 mRestartButton.setVisibility(View.INVISIBLE);
             }
 

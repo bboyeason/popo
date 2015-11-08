@@ -31,6 +31,6 @@ public class GameStateClass {
             nowGameClass.Dispose();
         }
         currentState = newState;
-        DebugConfig.d("GameStateClass => current state: " + currentState + " old state: " + oldState);
+        DebugConfig.d("GameStateClass => new state: " + currentState + ", old state: " + oldState);
     }
 }

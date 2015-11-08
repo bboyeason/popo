@@ -1,5 +1,7 @@
 package com.nosae.game.objects;
 
+import com.nosae.game.sence.Stage2;
+
 /**
  * Created by eason on 2015/10/31.
  */
@@ -19,6 +21,10 @@ public class Life extends GameObj {
         return mLife;
     }
 
+    public static void setLife(int mLife) {
+        Life.mLife = mLife;
+    }
+
     public static void addLife(int life) {
         Life.mLife += life;
 
@@ -33,10 +39,12 @@ public class Life extends GameObj {
         // index = getLife();
 
         // png 0~9
-        if (getLife() == 0)
+        if (getLife() == 0) {
             index = 9;
-        else
+            Stage2.isGameOver = true;
+        } else {
             index = getLife() - 1;
+        }
         setAnimationIndex(column);
     }
 
