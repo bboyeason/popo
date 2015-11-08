@@ -55,27 +55,20 @@ public class Stage1 extends DrawableGameComponent {
     private Random mRandom;
     private int[][] mFishTable = {
             {
-                    R.drawable.fish_01,
-                    R.drawable.fish_02,
-                    R.drawable.fish_03,
-                    R.drawable.fish_04,
-                    R.drawable.fish_05,
-                    R.drawable.fish_06,
-                    R.drawable.fish_07,
-                    R.drawable.fish_08,
-                    R.drawable.fish_09,
-                    R.drawable.fish_10,
+                    R.drawable.a_fish_01,
+                    R.drawable.a_fish_hamburger,
+                    R.drawable.a_fish_hotdog,
                     R.drawable.goldenfish
             },
-            { 24, 27, 25, 25, 27, 24, 28, 30, 24, 16, 1}, /* Animation column */
-            { 1, 1, 1, 1 , 1, 1, 1, 1, 1, 1, 1}, /* Animation row */
-            { 12, 15, 15, 15, 14, 15, 14, 20, 15, 9, 0},  /* Max index */
-            { 13, 16, 16, 16 ,15, 16, 15, 21, 16, 10, 0}, /* Death animation start */
-            { 23, 26, 24, 24, 26, 23, 27, 29, 23, 15, 0}, /* Death animation end */
-            { 200, 100, 200, 200, 100, -600, 100, 300, -800, 100, 0}, /* Score */
-            { 0, 0, 0, 0 ,0 , 0, 0, 0, 0, 0, 2} /* Timer add (seconds) */
+            { 3, 3, 3, 1}, /* Animation column */
+            { 2, 1, 1, 1}, /* Animation row */
+            { 5, 1, 1, 0},  /* Max index */
+            { 5, 2, 2, 0}, /* Death animation start */
+            { 5, 2, 2, 0}, /* Death animation end */
+            { 10, -10, -10, 0}, /* Score */
+            { 0, 0, 0, 2} /* Timer add (seconds) */
     };
-    private int mGoldFish = R.drawable.goldenfish;
+//    private int mGoldFish = R.drawable.goldenfish;
 
     public static Handler mHandler;
     public static HandlerThread mHandlerThread;
@@ -134,7 +127,7 @@ public class Stage1 extends DrawableGameComponent {
                             m.what = Events.CREATEFISH;
                             // TODO msg.obj = something;
                             //if (msg.obj != null) {
-                            mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.fishRebirthMax) + GameParams.fishRebirthMin);
+                            mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage1FishRebirthMax) + GameParams.stage1FishRebirthMin);
                             //}
                         }
                         break;
@@ -187,7 +180,8 @@ public class Stage1 extends DrawableGameComponent {
             width = fishImage.getWidth() / mFishTable[1][random];
             height = fishImage.getHeight() / mFishTable[2][random];
             DebugConfig.d("Image ID: " + random + "=> width: " + width + ", height: " + height);
-            speed = mRandom.nextInt(GameParams.fishRandomSpeed) + GameParams.fishRandomSpeed;
+
+            speed = mRandom.nextInt(GameParams.stage1FishRandomSpeed) + GameParams.stage1FishRandomSpeed;
             mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, speed, Color.WHITE, 90);
 
             mFishObj.randomTop();
@@ -419,7 +413,7 @@ public class Stage1 extends DrawableGameComponent {
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (NormalFish) mFishCollections.get(f);
             if (mFishObj.isAlive) {
-                mSubCanvas.save();
+//                mSubCanvas.save();
 
 //                mSubCanvas.rotate(mSubFishObj.theta - 90, mSubFishObj.getX()
 //                        + Aircraft.halfWidth, mSubFishObj.getY()
@@ -427,32 +421,32 @@ public class Stage1 extends DrawableGameComponent {
                 mSubCanvas.drawBitmap(mSubFishObj.image, mSubFishObj.srcRect,
                         mSubFishObj.destRect, mSubFishObj.paint);
 
-                mSubCanvas.restore();
+//                mSubCanvas.restore();
             }
 
         }
 
 
         if (mGoldenFishObj != null && mGoldenFishObj.isAlive) {
-            mSubCanvas.save();
+//            mSubCanvas.save();
 
             mSubCanvas.drawBitmap(mGoldenFishObj.image, mGoldenFishObj.srcRect, mGoldenFishObj.destRect,
                     mGoldenFishObj.paint);
 //            DebugConfig.d("srcRect: " + mGoldenFishObj.srcRect.left + ", " + mGoldenFishObj.srcRect.top + ", " + mGoldenFishObj.srcRect.right + ", " + mGoldenFishObj.srcRect.bottom);
 //            DebugConfig.d("destRect: " + mGoldenFishObj.destRect.left + ", " + mGoldenFishObj.destRect.top + ", " + mGoldenFishObj.destRect.right + ", " + mGoldenFishObj.destRect.bottom);
-            mSubCanvas.restore();
+//            mSubCanvas.restore();
 
 
         }
 
         if (mBoboObj != null && mBoboObj.isAlive) {
-            mSubCanvas.save();
+//            mSubCanvas.save();
 
             mSubCanvas.drawBitmap(mBoboObj.boboImage, mBoboObj.srcRect, mBoboObj.destRect,
                     mBoboObj.paint);
 //            DebugConfig.d("srcRect: " + mGoldenFishObj.srcRect.left + ", " + mGoldenFishObj.srcRect.top + ", " + mGoldenFishObj.srcRect.right + ", " + mGoldenFishObj.srcRect.bottom);
 //            DebugConfig.d("destRect: " + mGoldenFishObj.destRect.left + ", " + mGoldenFishObj.destRect.top + ", " + mGoldenFishObj.destRect.right + ", " + mGoldenFishObj.destRect.bottom);
-            mSubCanvas.restore();
+//            mSubCanvas.restore();
 
 
         }
@@ -461,10 +455,10 @@ public class Stage1 extends DrawableGameComponent {
             mSubCanvas.drawText(mFpsText.message, mFpsText.x, mFpsText.y, mFpsText.paint);
         }
 
-        mSubCanvas.save();
+//        mSubCanvas.save();
         mScore.drawScore(mSubCanvas);
         mTimerBar.draw(mSubCanvas);
-        mSubCanvas.restore();
+//        mSubCanvas.restore();
 
 
         if ((isGameOver || !mBoboObj.isAlive) && mColorMask.isAlive)

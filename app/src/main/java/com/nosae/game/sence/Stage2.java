@@ -4,25 +4,40 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 
+import com.nosae.game.bobo.Events;
 import com.nosae.game.bobo.GameEntry;
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.R;
 import com.nosae.game.bobo.Text;
 
 import lbs.DrawableGameComponent;
+import lbs.FishCollection;
+
+import com.nosae.game.objects.FishObj;
 import com.nosae.game.objects.GameObj;
 import com.nosae.game.objects.Life;
 import com.nosae.game.objects.Quiz;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar;
 import com.nosae.game.role.Bobo;
+import com.nosae.game.role.NormalFish;
+import com.nosae.game.role.Stage2_fish;
 import com.nosae.game.settings.DebugConfig;
+
+import java.util.Random;
 
 /**
  * Created by eason on 2015/10/25.
  */
 public class Stage2 extends DrawableGameComponent {
+
+    public static Handler mHandler;
+    public static HandlerThread mHandlerThread;
+    public static final String THREADNAME = "Stage2_fish_generator";
     public GameEntry mGameEntry;
     private Canvas mSubCanvas;
 
@@ -49,14 +64,58 @@ public class Stage2 extends DrawableGameComponent {
 
     private Quiz mQuiz;
     private Bitmap mQuizImage;
-    public static boolean isNewQuiz = true;
+    public static boolean isQuizHit = true;
 
     private Text mFpsText;
 
     int f, j;
 
-    private int mTotalScore;
     private boolean isGameOver = false;
+    public boolean isClearStage2 = false;
+    public static int mTotalScore = 0;
+
+    private int[][] mFishTable = {
+            {
+                    R.drawable.b_fish_red_do,
+                    R.drawable.b_fish_red_re,
+                    R.drawable.b_fish_red_mi,
+                    R.drawable.b_fish_red_fa,
+                    R.drawable.b_fish_red_so,
+                    R.drawable.b_fish_yellow_do,
+                    R.drawable.b_fish_yellow_re,
+                    R.drawable.b_fish_yellow_mi,
+                    R.drawable.b_fish_yellow_fa,
+                    R.drawable.b_fish_yellow_so,
+                    R.drawable.b_fish_blue_do,
+                    R.drawable.b_fish_blue_re,
+                    R.drawable.b_fish_blue_mi,
+                    R.drawable.b_fish_blue_fa,
+                    R.drawable.b_fish_blue_so
+            },
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, /* Animation column */
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, /* Animation row */
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Max index */
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Death animation start */
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Death animation end */
+    };
+    /* Color, red:0, yellow:1, blue:2 */
+    private Quiz.quizColor mFishTableColor[] = {
+            Quiz.quizColor.red, Quiz.quizColor.red, Quiz.quizColor.red, Quiz.quizColor.red, Quiz.quizColor.red,
+            Quiz.quizColor.yellow, Quiz.quizColor.yellow, Quiz.quizColor.yellow, Quiz.quizColor.yellow, Quiz.quizColor.yellow,
+            Quiz.quizColor.blue, Quiz.quizColor.blue, Quiz.quizColor.blue, Quiz.quizColor.blue, Quiz.quizColor.blue
+    };
+    /* Syllable */
+    private Quiz.quizSyllable mFishTableSyllable[] = {
+            Quiz.quizSyllable.Do, Quiz.quizSyllable.Re, Quiz.quizSyllable.Mi, Quiz.quizSyllable.Fa, Quiz.quizSyllable.So,
+            Quiz.quizSyllable.Do, Quiz.quizSyllable.Re, Quiz.quizSyllable.Mi, Quiz.quizSyllable.Fa, Quiz.quizSyllable.So,
+            Quiz.quizSyllable.Do, Quiz.quizSyllable.Re, Quiz.quizSyllable.Mi, Quiz.quizSyllable.Fa, Quiz.quizSyllable.So
+    };
+
+    private Stage2_fish mFishObj;
+    private Stage2_fish mSubFishObj;
+    public static FishCollection mFishCollections;
+    private Random mRandom;
+    public static boolean onOff = true;
 
     public Stage2(GameEntry gameEntry) {
         this.mGameEntry = gameEntry;
@@ -74,6 +133,75 @@ public class Stage2 extends DrawableGameComponent {
         if (DebugConfig.isFpsDebugOn) {
             mFpsText = new Text(GameParams.halfWidth - 50, 20, 12, "FPS", Color.BLUE);
         }
+
+        mFishCollections = new FishCollection();
+        mRandom = new Random();
+
+        if (mHandlerThread == null) {
+            mHandlerThread = new HandlerThread(THREADNAME,
+                    android.os.Process.THREAD_PRIORITY_BACKGROUND);
+            mHandlerThread.start();
+//            mHandlerThread.setDaemon(true);
+            DebugConfig.d("Create thread: " + THREADNAME);
+        }
+        mHandler = new Handler(mHandlerThread.getLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case Events.CREATEFISH:
+                        if (isGameOver || isClearStage2)
+                            return;
+                        stage2CreateFish();
+
+                        if (onOff) {
+                            Message m = new Message();
+                            m.what = Events.CREATEFISH;
+                            // TODO msg.obj = something;
+                            //if (msg.obj != null) {
+                            mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage2FishRebirthMax) + GameParams.stage2FishRebirthMin);
+                            //}
+                        }
+                        break;
+
+                }
+            }
+        };
+    }
+
+    private void stage2CreateFish() {
+        int width, height;
+        int speed;
+        int random;
+        Random mRandom = new Random();
+        random = mRandom.nextInt(mFishTable[0].length);
+        Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(mFishTable[0][random], 60, 60);
+
+        width = fishImage.getWidth() / mFishTable[1][random];
+        height = fishImage.getHeight() / mFishTable[2][random];
+        DebugConfig.d("width: " + width + ", height: " + height);
+        speed = mRandom.nextInt(GameParams.stage2FishRandomSpeed) + GameParams.stage2FishRandomSpeed;
+        mFishObj = new Stage2_fish(fishImage, 0, 0, width, height, 0, 0, width, height, speed, Color.WHITE, 90);
+
+        mFishObj.randomTop();
+        mFishObj.setCol(mFishTable[1][random]);
+        mFishObj.setMaxIndex(mFishTable[3][random]);
+        mFishObj.setDeathIndexStart(mFishTable[4][random]);
+        mFishObj.setDeathIndexEnd(mFishTable[5][random]);
+//        mFishObj.setScore(mFishTable[6][random]);
+//        mFishObj.setTimerAdd(mFishTable[7][random]);
+        mFishObj.setColor(mFishTableColor[random]);
+        mFishObj.setSyllable(mFishTableSyllable[random]);
+        mFishObj.isAlive = true;
+        mFishCollections.add(mFishObj);
+        DebugConfig.d("create fish: " + mFishCollections.size());
+    }
+
+    private void FishGeneration() {
+        onOff = true;
+        Message msg = new Message();
+        msg.what = Events.CREATEFISH;
+        mHandler.sendMessage(msg);
     }
 
     @Override
@@ -142,6 +270,8 @@ public class Stage2 extends DrawableGameComponent {
                     mBoboObj.destRect.top + mBoboObj.destHeight / 2 - height / 2,
                     width, height, 0, 0, width, height, 0, 0, 0);
         }
+
+        FishGeneration();
     }
 
     @Override
@@ -171,13 +301,26 @@ public class Stage2 extends DrawableGameComponent {
                 isGameOver = true;
         }
 
-        if (mQuiz != null && isNewQuiz) {
+        if (mQuiz != null && isQuizHit) {
             mQuiz.randomQuiz();
-            isNewQuiz = false;
+            isQuizHit = false;
         }
 
         if (mLife != null) {
             mLife.updateLife();
+        }
+
+        for (f = mFishCollections.size() -1 ; f >= 0; f--) {
+            mSubFishObj = (Stage2_fish) mFishCollections.get(f);
+            mSubFishObj.Animation();
+            if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mBoboObj.srcHeight)) {
+                mFishCollections.remove(mSubFishObj);
+            }
+//            if (!mBoboObj.isAlive)
+//                isGameOver = true;
+
+            if (!mSubFishObj.isAlive)
+                mFishCollections.remove(mSubFishObj);
         }
     }
 
@@ -233,6 +376,22 @@ public class Stage2 extends DrawableGameComponent {
 
         if (mQuiz != null) {
             mSubCanvas.drawBitmap(mQuizImage, mQuiz.srcRect, mQuiz.destRect, mQuiz.paint);
+        }
+
+        for (f = mFishCollections.size() -1 ; f >= 0; f--) {
+            mSubFishObj = (Stage2_fish) mFishCollections.get(f);
+            if (mFishObj.isAlive) {
+//                mSubCanvas.save();
+
+//                mSubCanvas.rotate(mSubFishObj.theta - 90, mSubFishObj.getX()
+//                        + Aircraft.halfWidth, mSubFishObj.getY()
+//                        + Aircraft.halfHeight);
+                mSubCanvas.drawBitmap(mSubFishObj.image, mSubFishObj.srcRect,
+                        mSubFishObj.destRect, mSubFishObj.paint);
+
+//                mSubCanvas.restore();
+            }
+
         }
     }
 }

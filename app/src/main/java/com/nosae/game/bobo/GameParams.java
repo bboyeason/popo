@@ -26,15 +26,18 @@ public class GameParams {
     public static float density = 0;
     public static int densityDpi = 0;
 
+    public static int stage1FishRandomSpeed = 5;
+    public static int stage2FishRandomSpeed = 3;
 
-    public static int fishRandomSpeed = 5;
-    public static int fishRebirthMin = 100;
-    public static int fishRebirthMax = 700;
+    public static int stage1FishRebirthMin = 100;
+    public static int stage1FishRebirthMax = 700;
+    public static int stage2FishRebirthMin = 700;
+    public static int stage2FishRebirthMax = 1000;
 
     public static int goldenFishRebirthMin = 1000;
     public static int goldenFishRebirthMax = 1400;
 
-    public static final int stage1BreakScore = 5000;
+    public static final int stage1BreakScore = 100;
 
     public static float[] Cosine = new float[360];
     public static float[] Sine = new float[360];

@@ -7,7 +7,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.nosae.game.objects.Life;
 import com.nosae.game.objects.Quiz;
+import com.nosae.game.role.Stage2_fish;
 import com.nosae.game.sence.Stage1;
 import com.nosae.game.sence.Stage2;
 import com.nosae.game.settings.DebugConfig;
@@ -21,6 +23,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private static Handler mMsgHandler;
     private MainActivity mMainActivity;
     private int f;
+    private int mStage2Hit = 0x00;
+    private int mStage2HitColor = 0x01;
+    private int mStage2HitSyllable = 0x10;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (mMainActivity.mToggleButton.isChecked())
@@ -61,13 +67,38 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                         }
                         break;
                     case Stage2:
-//                        Quiz.isQuizHit = true;
-                        // TODO when hit, new quiz
-                        Stage2.isNewQuiz = true;
+                        if (Stage2.mFishCollections == null)
+                            return false;
+                        for (f = 0; f < Stage2.mFishCollections.size(); f++) {
+                            if (Stage2.mFishCollections.get(f).destRect.contains((int) x, (int) y)) {
+                                if (((Stage2_fish) Stage2.mFishCollections.get(f)).getColor() == Quiz.quizTable[Quiz.currentQuiz].color) {
+                                    DebugConfig.d("Hit color!!!");
+                                    Stage2.mTotalScore += 5;
+                                    mStage2Hit |= mStage2HitColor;
+                                } else {
+                                    Life.addLife(-1);
+                                    GameParams.vibrator.vibrate(50);
+                                }
+                                if (((Stage2_fish) Stage2.mFishCollections.get(f)).getSyllable() == Quiz.quizTable[Quiz.currentQuiz].syllable) {
+                                    DebugConfig.d("Hit syllable!!!");
+                                    Stage2.mTotalScore += 5;
+                                    mStage2Hit |= mStage2HitSyllable;
+                                } else {
+                                    Life.addLife(-1);
+                                    GameParams.vibrator.vibrate(50);
+                                }
+
+                                if (mStage2Hit != 0x00) {
+                                    // TODO when hit, new quiz
+                                    Stage2.isQuizHit = true;
+                                    mStage2Hit = 0x00;
+                                }
+                                Stage2.mFishCollections.get(f).readyToDeath = true;
+                                break;
+                            }
+                        }
                         break;
                 }
-
-
                 break;
         }
 //        DebugConfig.d("Total score: " + mMainActivity.mGameEntry.mStage1.mTotalScore);

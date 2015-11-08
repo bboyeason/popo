@@ -9,18 +9,18 @@ import java.util.Random;
  */
 public class Quiz extends GameObj{
 
-    protected class QuizItem {
-        quizColor color;
-        quizSyllable syllable;
+    public class QuizItem {
+        public quizColor color;
+        public quizSyllable syllable;
     }
-    private enum quizColor {red, yellow, blue}
-    private enum quizSyllable {Do, Re, Mi, Fa, So}
+    public enum quizColor {red, yellow, blue}
+    public enum quizSyllable {Do, Re, Mi, Fa, So}
 
     private quizColor[] colors = {quizColor.red, quizColor.yellow, quizColor.blue};
     private quizSyllable[] syllables = {quizSyllable.Do, quizSyllable.Re, quizSyllable.Mi, quizSyllable.Fa, quizSyllable.So};
 
-    private QuizItem quizTable[];
-    private static int currentQuiz;
+    public static QuizItem quizTable[];
+    public static int currentQuiz;
     private static int oldQuiz;
     public static boolean isQuizHit = false;
 

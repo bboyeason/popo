@@ -1,6 +1,7 @@
 package com.nosae.game.bobo;
 
 import com.nosae.game.sence.Stage1;
+import com.nosae.game.sence.Stage2;
 import com.nosae.game.settings.DebugConfig;
 import android.app.Activity;
 import android.app.Service;
@@ -162,6 +163,10 @@ public class MainActivity extends Activity {
             Stage1.onOff = false;
             Stage1.mHandler.removeMessages(com.nosae.game.bobo.Events.CREATEFISH);
         }
+        if (Stage2.mHandler != null) {
+            Stage2.onOff = false;
+            Stage2.mHandler.removeMessages(com.nosae.game.bobo.Events.CREATEFISH);
+        }
         super.onStop();
     }
 
@@ -179,6 +184,12 @@ public class MainActivity extends Activity {
             Stage1.mHandlerThread.interrupt();
             Stage1.mHandlerThread.quit();
             Stage1.mHandlerThread = null;
+        }
+        if (Stage2.mHandlerThread != null) {
+            DebugConfig.d("mHandlerThread " + Stage2.mHandlerThread.getThreadId());
+            Stage2.mHandlerThread.interrupt();
+            Stage2.mHandlerThread.quit();
+            Stage2.mHandlerThread = null;
         }
     }
 
