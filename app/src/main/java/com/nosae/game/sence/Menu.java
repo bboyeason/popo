@@ -51,7 +51,7 @@ public class Menu extends Activity {
                     private void finish() {
                         // TODO Auto-generated method stub
                         if (mMusic != null)
-                            mMusic.Stop();
+                            mMusic.Pause();
                     }
                 });
             }
@@ -71,7 +71,7 @@ public class Menu extends Activity {
                     private void finish() {
                         // TODO Auto-generated method stub
                         if (mMusic != null)
-                            mMusic.Stop();
+                            mMusic.Pause();
                     }
                 });
             }
@@ -91,7 +91,7 @@ public class Menu extends Activity {
                     private void finish() {
                         // TODO Auto-generated method stub
                         if (mMusic != null)
-                            mMusic.Stop();
+                            mMusic.Pause();
                     }
                 });
             }
@@ -111,7 +111,7 @@ public class Menu extends Activity {
                     private void finish() {
                         // TODO Auto-generated method stub
                         if (mMusic != null)
-                            mMusic.Stop();
+                            mMusic.Pause();
                     }
                 });
             }
@@ -142,7 +142,7 @@ public class Menu extends Activity {
     protected void onPause() {
         super.onPause();
         if (mMusic.player.isPlaying())
-            mMusic.Stop();
+            mMusic.Pause();
     }
 
     @Override

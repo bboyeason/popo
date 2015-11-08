@@ -28,6 +28,8 @@ public class GameEntry extends Game {
     @Override
     public void Run() {
         DebugConfig.d("GameEntry Run()");
+        if (GameParams.music != null && !GameParams.music.player.isPlaying())
+            GameParams.music.Play();
         super.Run();
     }
 
@@ -35,7 +37,7 @@ public class GameEntry extends Game {
     public void Exit() {
         DebugConfig.d("GameEntry Exit()");
         if (GameParams.music != null && GameParams.music.player.isPlaying())
-            GameParams.music.Stop();
+            GameParams.music.Pause();
         super.Exit();
     }
 
