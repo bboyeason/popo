@@ -17,14 +17,12 @@ import com.nosae.game.bobo.Text;
 import lbs.DrawableGameComponent;
 import lbs.FishCollection;
 
-import com.nosae.game.objects.FishObj;
 import com.nosae.game.objects.GameObj;
 import com.nosae.game.objects.Life;
 import com.nosae.game.objects.Quiz;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar;
 import com.nosae.game.role.Bobo;
-import com.nosae.game.role.NormalFish;
 import com.nosae.game.role.Stage2_fish;
 import com.nosae.game.settings.DebugConfig;
 
@@ -70,8 +68,8 @@ public class Stage2 extends DrawableGameComponent {
 
     int f, j;
 
-    private boolean isGameOver = false;
-    public boolean isClearStage2 = false;
+    public static boolean isGameOver = false;
+    public static boolean isClearStage2 = false;
     public static int mTotalScore = 0;
 
     private int[][] mFishTable = {
@@ -224,7 +222,7 @@ public class Stage2 extends DrawableGameComponent {
         }
 
         if (mTimerBar == null) {
-            mTimerBar = new TimerBar();
+            mTimerBar = new TimerBar(60);
             mTimerBar.destRect.left = mSenceTitle.destRect.left;
             mTimerBar.destRect.top = mSenceTitle.destRect.bottom;
             mTimerBar.destRect.bottom = mTimerBar.destRect.top + mTimerBar.srcHeight;
@@ -296,7 +294,7 @@ public class Stage2 extends DrawableGameComponent {
         }
 
         if (mTimerBar != null) {
-            mTimerBar.action((int) mGameEntry.totalFrames);
+            mTimerBar.action((int) GameEntry.totalFrames);
             if (mTimerBar.isTimeout)
                 isGameOver = true;
         }

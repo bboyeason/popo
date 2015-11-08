@@ -22,6 +22,7 @@ public class GameEntry extends Game {
     public GameEntry(MainActivity mMainActivity) {
         DebugConfig.d("GameEntry Constructor");
         this.mMainActivity = mMainActivity;
+        totalFrames = 0;
     }
 
     @Override

@@ -112,7 +112,6 @@ public class MainActivity extends Activity {
 //        mSurfaceView = new GameSurfaceView(this);
         mSurfaceView = (SurfaceView) findViewById(R.id.surfaceViewTest);
 
-        DebugConfig.d("===================");
         Initialize();
 
 

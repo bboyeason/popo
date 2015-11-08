@@ -79,7 +79,7 @@ public class Stage1 extends DrawableGameComponent {
     public int mTotalScore = 0;
     public static boolean onOff = true;
     public static boolean isGameOver = false;
-    public boolean isClearStage1 = false;
+    public static boolean isClearStage1 = false;
 
     public Stage1(GameEntry mGameEntry) {
         DebugConfig.d("Stage1 Constructor");
@@ -106,12 +106,10 @@ public class Stage1 extends DrawableGameComponent {
             DebugConfig.d("Create thread");
         }
 
-        mGameEntry.totalFrames = 0;
-
         mColorMask = new ColorMask(Color.RED, 0);
         mColorMask.isAlive = false;
 
-        mTimerBar = new TimerBar();
+        mTimerBar = new TimerBar(30);
 
         mHandler = new Handler(mHandlerThread.getLooper()){
             @Override
@@ -374,7 +372,7 @@ public class Stage1 extends DrawableGameComponent {
 
         mScore.setTotalScore(mTotalScore);
 
-        mTimerBar.action((int) mGameEntry.totalFrames);
+        mTimerBar.action((int) GameEntry.totalFrames);
         if (mTimerBar.isTimeout)
             isGameOver = true;
 

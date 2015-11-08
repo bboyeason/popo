@@ -17,10 +17,10 @@ public class Game {
 	private boolean isRun;
 	public GameComponentCollection Components = new GameComponentCollection();
 	public Canvas canvas = null;
-	public long totalFrames;
+	public static long totalFrames;
 	public int fps;
 	public int actualFPS;
-	public int setFPS = 30;
+	public static int setFPS = 30;
 	private int fpsInterval = 1000 / setFPS;
 	
 	private Thread gameLoop;

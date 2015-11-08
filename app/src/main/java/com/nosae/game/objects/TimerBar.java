@@ -6,10 +6,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 
+import com.nosae.game.bobo.GameEntry;
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.R;
 
 import com.nosae.game.sence.Stage1;
+import com.nosae.game.sence.Stage2;
+
+import lbs.Game;
 
 /**
  * Created by eason on 2015/10/28.
@@ -18,7 +22,7 @@ public class TimerBar extends GameObj {
 
     private Bitmap mTimerBarImage;
     private int mStartFrame = 0;
-    private int mRunningFrame = 30 * 30; //30 fps * 30 seconds
+    private int mRunningFrame = 0; // fps * 30 seconds
     public boolean isTimeout = false;
     private ColorMask mTimerBar;
     private int destX;
@@ -36,8 +40,11 @@ public class TimerBar extends GameObj {
             R.drawable.time_0
     };
 
-    public TimerBar() {
+    public TimerBar(int gamingTime) {
         super(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        mStartFrame = (int) GameEntry.totalFrames;
+        mRunningFrame = Game.setFPS * gamingTime;
 
         mTimerBar = new ColorMask(Color.BLUE, 0);
         mTimerBar.isAlive = true;
@@ -59,7 +66,7 @@ public class TimerBar extends GameObj {
     }
 
     public void action(int totalFrame) {
-        if (Stage1.isGameOver)
+        if (Stage1.isGameOver || Stage2.isGameOver)
             return;
         int gap;
         int frameGap = totalFrame - mStartFrame;
