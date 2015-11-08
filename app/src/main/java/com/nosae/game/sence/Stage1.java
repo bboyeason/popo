@@ -182,11 +182,11 @@ public class Stage1 extends DrawableGameComponent {
         int random;
 //        for (int i = 0; i < mMaximum; i++) {
             random = mRandom.nextInt(mFishTable[0].length);
-            Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(mFishTable[0][random], 60, 120);
+            Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(mFishTable[0][random], (int) (50 * mFishTable[1][random] / GameParams.density), (int) (50 * mFishTable[2][random] / GameParams.density));
 
             width = fishImage.getWidth() / mFishTable[1][random];
             height = fishImage.getHeight() / mFishTable[2][random];
-                DebugConfig.d("width: " + width + ", height: " + height);
+            DebugConfig.d("Image ID: " + random + "=> width: " + width + ", height: " + height);
             speed = mRandom.nextInt(GameParams.fishRandomSpeed) + GameParams.fishRandomSpeed;
             mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, speed, Color.WHITE, 90);
 

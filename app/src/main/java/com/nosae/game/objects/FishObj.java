@@ -7,7 +7,6 @@ import android.graphics.Rect;
 
 import com.nosae.game.bobo.GameParams;
 
-
 /**
  * Created by eason on 2015/10/14.
  */
@@ -169,7 +168,7 @@ public class FishObj extends GameObj {
     protected void FishAnimation(boolean readyToDeath)
     {
         // Set animation frame index
-        setAnimationIndex(col);
+//        setAnimationIndex(col);
         if (!readyToDeath) {
             if (index >= 0)
                 index++;
@@ -181,11 +180,14 @@ public class FishObj extends GameObj {
             else
                 index++;
 
-            if (index == deathIndexEnd) {
+            if (index > deathIndexEnd) {
+                index = deathIndexEnd;
                 // remove this
                 isAlive = false;
             }
         }
+        setAnimationIndex(col);
+
 //        if (index == 0) {
 //            flipRight = true;
 //            flipLeft = false;
@@ -199,7 +201,6 @@ public class FishObj extends GameObj {
 //            index--;
 //        }
 
-        // �C�C�^�_�������Aoffset��e�氵�W��
 /*
         if (offset == 0)
         {
@@ -211,10 +212,8 @@ public class FishObj extends GameObj {
         else
             index += offset;
 
-        // �k�s
         offset = 0;
 
-        // ����ʵe���޶W�X�d��
         if (index < 0)
             index = 0;
         else if (index > maxIndex)

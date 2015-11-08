@@ -41,7 +41,7 @@ public class GameObj {
     public boolean isAlive;
     protected State state = State.step1;
 
-    protected int index = 1;
+    protected int index = 0;
 
     // Color Mask Constructor
     public GameObj(int x,int y,int width,int height,int color,int alpha)
@@ -74,11 +74,9 @@ public class GameObj {
         this.speed = speed;
         setTheta(theta);
 
-        // �]�w�C��L�o
         setColorFilter(color);
     }
 
-    // �]�w�C��L�o
     public void setColorFilter(int color)
     {
         paint = new Paint();

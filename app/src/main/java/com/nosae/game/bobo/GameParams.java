@@ -23,6 +23,8 @@ public class GameParams {
     public static int scaleHeight = 0;
     public static int halfWidth = 0;
     public static int halfHeight = 0;
+    public static float density = 0;
+    public static int densityDpi = 0;
 
 
     public static int fishRandomSpeed = 5;

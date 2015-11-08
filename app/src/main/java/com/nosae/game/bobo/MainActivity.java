@@ -158,9 +158,10 @@ public class MainActivity extends Activity {
     protected void onStop() {
         DebugConfig.d("MainActivity onStop()");
 //            mToggleButton.setChecked(true);
-        Stage1.onOff = false;
-
-        Stage1.mHandler.removeMessages(com.nosae.game.bobo.Events.CREATEFISH);
+        if (Stage1.mHandler != null) {
+            Stage1.onOff = false;
+            Stage1.mHandler.removeMessages(com.nosae.game.bobo.Events.CREATEFISH);
+        }
         super.onStop();
     }
 
@@ -175,7 +176,6 @@ public class MainActivity extends Activity {
         }
         if (Stage1.mHandlerThread != null) {
             DebugConfig.d("mHandlerThread " + Stage1.mHandlerThread.getThreadId());
-
             Stage1.mHandlerThread.interrupt();
             Stage1.mHandlerThread.quit();
             Stage1.mHandlerThread = null;
@@ -196,9 +196,12 @@ public class MainActivity extends Activity {
         GameParams.scaleHeight = dm.heightPixels;
         GameParams.halfWidth = GameParams.scaleWidth >> 1;
         GameParams.halfHeight = GameParams.scaleHeight >> 1;
+        GameParams.density = dm.density;
+        GameParams.densityDpi = dm.densityDpi;
         GameParams.screenRect = new Rect(0, 0, GameParams.scaleWidth, GameParams.scaleHeight);
         GameParams.screenRectBoundary = new Rect( 0 - GameParams.boundary, 0 - GameParams.boundary, GameParams.scaleWidth + GameParams.boundary, GameParams.scaleHeight + GameParams.boundary);
         DebugConfig.d("Screen size: " + GameParams.screenRect.width() + " x " + GameParams.screenRect.height());
+        DebugConfig.d("Screen size: " + dm.widthPixels + " x " + dm.heightPixels + ", density: " + dm.density + ", density dpi: " + dm.densityDpi);
 
         mGameEntry = new GameEntry(this);
         GameStateClass.currentState = GameStateClass.GameState.Stage1;
