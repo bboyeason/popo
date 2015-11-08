@@ -7,7 +7,7 @@ public class Life extends GameObj {
     public int width = 0;
     public int height = 0;
     private int column = 5;
-    private static int mLife = 9;
+    private static int mLife = 5;
     public Life(int destX, int destY, int destWidth, int destHeight, int srcX, int srcY, int srcWidth, int srcHeight, int speed, int color, int theta) {
         super(destX, destY, destWidth, destHeight, srcX, srcY, srcWidth, srcHeight, speed, color, theta);
 
@@ -22,8 +22,8 @@ public class Life extends GameObj {
     public static void addLife(int life) {
         Life.mLife += life;
 
-        if (Life.mLife > 9)
-            Life.mLife = 9;
+        if (Life.mLife > 5)
+            Life.mLife = 5;
         else if (Life.mLife < 0)
             Life.mLife = 0;
     }

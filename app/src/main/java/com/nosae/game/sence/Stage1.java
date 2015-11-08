@@ -76,7 +76,7 @@ public class Stage1 extends DrawableGameComponent {
     private int mMaximum = 1000;
 
 
-    public int mTotalScore = 0;
+    public static int mTotalScore = 0;
     public static boolean onOff = true;
     public static boolean isGameOver = false;
     public static boolean isClearStage1 = false;
