@@ -58,15 +58,16 @@ public class Stage1 extends DrawableGameComponent {
                     R.drawable.a_fish_01,
                     R.drawable.a_fish_hamburger,
                     R.drawable.a_fish_hotdog,
+                    R.drawable.a_fish_donut,
                     R.drawable.goldenfish
             },
-            { 3, 3, 3, 1}, /* Animation column */
-            { 2, 1, 1, 1}, /* Animation row */
-            { 5, 1, 1, 0},  /* Max index */
-            { 5, 2, 2, 0}, /* Death animation start */
-            { 5, 2, 2, 0}, /* Death animation end */
-            { 10, -10, -10, 0}, /* Score */
-            { 0, 0, 0, 2} /* Timer add (seconds) */
+            { 3, 3, 3, 3, 1}, /* Animation column */
+            { 2, 1, 1, 1, 1}, /* Animation row */
+            { 5, 1, 1, 1, 0},  /* Max index */
+            { 5, 2, 2, 2, 0}, /* Death animation start */
+            { 5, 2, 2, 2, 0}, /* Death animation end */
+            { 10, -10, -10, -10, 0}, /* Score */
+            { 0, 0, 0, 0, 2} /* Timer add (seconds) */
     };
 //    private int mGoldFish = R.drawable.goldenfish;
 
