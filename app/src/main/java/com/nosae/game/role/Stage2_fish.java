@@ -34,6 +34,10 @@ public class Stage2_fish extends FishObj {
     }
 
     public void Animation() {
+        if (index == 0)
+            offset = 1;
+        else if (index == maxIndex)
+            offset = -1;
         FishAnimation(readyToDeath);
     }
 }

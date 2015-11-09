@@ -161,8 +161,8 @@ public class FishObj extends GameObj {
     {
         // Set animation frame index
         if (!readyToDeath) {
-            if (index >= 0)
-                index++;
+            index += offset;
+
             if (index > maxIndex || index < 0)
                 index = 0;
         } else {

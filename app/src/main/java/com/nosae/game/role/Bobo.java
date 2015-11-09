@@ -38,7 +38,10 @@ public class Bobo extends FishObj {
         this.maxIndex = maxIndex;
     }
     public void Animation() {
-//        offset = 1;
+        if (index == 0)
+            offset = 1;
+        else if (index == maxIndex)
+            offset = -1;
         FishAnimation(readyToDeath);
     }
 
