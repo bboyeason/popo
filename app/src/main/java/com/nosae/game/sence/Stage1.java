@@ -61,11 +61,11 @@ public class Stage1 extends DrawableGameComponent {
                     R.drawable.a_fish_donut,
                     R.drawable.a_add_time
             },
-            { 3, 3, 3, 3, 4}, /* Animation column */
+            { 3, 3, 3, 3, 5}, /* Animation column */
             { 2, 1, 1, 1, 2}, /* Animation row */
-            { 5, 1, 1, 1, 4},  /* Max index */
-            { 5, 2, 2, 2, 5}, /* Death animation start */
-            { 5, 2, 2, 2, 7}, /* Death animation end */
+            { 5, 1, 1, 1, 5},  /* Max index */
+            { 5, 2, 2, 2, 6}, /* Death animation start */
+            { 5, 2, 2, 2, 9}, /* Death animation end */
             { 10, -10, -10, -10, 0}, /* Score */
             { 0, 0, 0, 0, 2} /* Timer add (seconds) */
     };
