@@ -484,7 +484,7 @@ public class Stage1 extends DrawableGameComponent {
             mSubCanvas.drawRect(mColorMask.destRect, mColorMask.paint);
 
             // Text
-            mSubCanvas.drawText(mColorMask.warningText.message, mColorMask.warningText.x, mColorMask.warningText.y, mColorMask.warningText.paint);
+            mSubCanvas.drawText(mColorMask.text.message, mColorMask.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, mColorMask.text.paint);
         }
         super.Draw();
     }

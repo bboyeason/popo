@@ -15,9 +15,9 @@
         android:layout_alignParentRight="true" />
 
     <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New ToggleButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text=""
         android:textOn=""
         android:textOff=""
         android:id="@+id/toggleButton"

@@ -12,12 +12,13 @@ public class ColorMask extends GameObj{
 
         private int startFrame;
         private int delayFrame = 300;
-        public Text warningText;
+        public Text text;
+        private final static String STRING = "Game Over";
 
         public ColorMask(int color,int alpha) {
             super(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, color, alpha);
 
-            warningText = new Text(GameParams.halfWidth - 100, GameParams.halfHeight, 36, "Game Over", Color.BLACK);
+            text = new Text(GameParams.halfWidth - 100, GameParams.halfHeight, 36, STRING, Color.BLACK);
         }
 
         public ColorMask(int x, int y, int destWidth, int destHeight, int color,int alpha) {
@@ -46,7 +47,8 @@ public class ColorMask extends GameObj{
 
                     if (frameTime - startFrame > delayFrame)
                     {
-                        isAlive = false;
+                        // always display
+//                        isAlive = false;
                     }
 
                     break;

@@ -17,16 +17,16 @@ import android.widget.ToggleButton;
 
 
 public class MainActivity extends Activity {
-    private final static String TAG = "Easonnnnnn";
+    private final static String TAG = "BoBo";
 //    private static Handler mHandler;
     protected static Handler mMsgHandler;
-    private static HandlerThread mHandlerThread;
+//    private static HandlerThread mHandlerThread;
 
     public static SurfaceView mSurfaceView;
 
 
     ToggleButton mToggleButton;
-    Button mRestartButton;
+    public Button mRestartButton;
 
     public GameEntry mGameEntry;
 
@@ -54,12 +54,12 @@ public class MainActivity extends Activity {
 
         DebugConfig.setTag(TAG);
 //        mHandler = new Handler();
-        if (mHandlerThread == null) {
-            mHandlerThread = new HandlerThread("sdfasdfasd",
-                    android.os.Process.THREAD_PRIORITY_BACKGROUND);
-            mHandlerThread.start();
-            DebugConfig.d("Create message handler thread.");
-        }
+//        if (mHandlerThread == null) {
+//            mHandlerThread = new HandlerThread("sdfasdfasd",
+//                    android.os.Process.THREAD_PRIORITY_BACKGROUND);
+//            mHandlerThread.start();
+//            DebugConfig.d("Create message handler thread.");
+//        }
 
         mRestartButton = (Button) findViewById(R.id.restartButton);
         mRestartButton.setOnClickListener(new View.OnClickListener() {
@@ -185,11 +185,11 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         DebugConfig.d("MainActivity onDestroy()");
         super.onDestroy();
-        if (mHandlerThread != null) {
-            mHandlerThread.interrupt();
-            mHandlerThread.quit();
-            mHandlerThread = null;
-        }
+//        if (mHandlerThread != null) {
+//            mHandlerThread.interrupt();
+//            mHandlerThread.quit();
+//            mHandlerThread = null;
+//        }
         if (Stage1.mHandlerThread != null) {
             DebugConfig.d("mHandlerThread " + Stage1.mHandlerThread.getThreadId());
             Stage1.mHandlerThread.interrupt();
