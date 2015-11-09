@@ -23,7 +23,7 @@ import com.nosae.game.objects.GameObj;
 import com.nosae.game.role.GoldenFish;
 import com.nosae.game.role.NormalFish;
 import com.nosae.game.objects.Score;
-import com.nosae.game.objects.TimerBar;
+import com.nosae.game.objects.TimerBar2;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -49,7 +49,8 @@ public class Stage1 extends DrawableGameComponent {
     private Score mScore;
 
     private ColorMask mColorMask;
-    public TimerBar mTimerBar;
+    public TimerBar2 mTimerBar;
+    public Bitmap mTimerBarImage;
     public static FishCollection mFishCollections;
     private int f, j;
     private Random mRandom;
@@ -61,11 +62,11 @@ public class Stage1 extends DrawableGameComponent {
                     R.drawable.a_fish_donut,
                     R.drawable.a_add_time
             },
-            { 3, 3, 3, 3, 5}, /* Animation column */
-            { 2, 1, 1, 1, 2}, /* Animation row */
-            { 5, 1, 1, 1, 5},  /* Max index */
-            { 5, 2, 2, 2, 6}, /* Death animation start */
-            { 5, 2, 2, 2, 9}, /* Death animation end */
+            { 3, 7, 3, 3, 5}, /* Animation column */
+            { 2, 8 , 1, 1, 2}, /* Animation row */
+            { 5, 36, 1, 1, 0},  /* Max index */
+            { 5, 37, 2, 2, 1}, /* Death animation start */
+            { 5, 51, 2, 2, 9}, /* Death animation end */
             { 10, -10, -10, -10, 0}, /* Score */
             { 0, 0, 0, 0, 2} /* Timer add (seconds) */
     };
@@ -109,7 +110,6 @@ public class Stage1 extends DrawableGameComponent {
         mColorMask = new ColorMask(Color.RED, 0);
         mColorMask.isAlive = false;
 
-        mTimerBar = new TimerBar(30);
         mTotalScore = 0;
 
         mHandler = new Handler(mHandlerThread.getLooper()){
@@ -247,6 +247,8 @@ public class Stage1 extends DrawableGameComponent {
     @Override
     protected void LoadContent() {
         super.LoadContent();
+        int width, height;
+
         if (mBackground == null) {
             // Load background image
 
@@ -261,7 +263,6 @@ public class Stage1 extends DrawableGameComponent {
         }
 
         if (mBoboObj == null) {
-            int width, height;
             mBoboImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
                     R.drawable.bobo);
             width = mBoboImage.getWidth() / 4;
@@ -281,8 +282,22 @@ public class Stage1 extends DrawableGameComponent {
             mFpsText = new Text(GameParams.halfWidth - 50, 100, 12, "FPS", Color.BLUE);
         }
 
-        mScore = new Score(10, 10);
+        if (mTimerBar == null) {
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inSampleSize = 4;
+            mTimerBarImage = GameParams.decodeSampledBitmapFromResource(R.drawable.timer_bar, (int) (200 / GameParams.density), (int) (30 / GameParams.density));
+            if (mTimerBarImage != null) {
+                width = mTimerBarImage.getWidth() / 1;
+                height = mTimerBarImage.getHeight() / 11;
+                mTimerBar = new TimerBar2(10, 10, width, height, 0, 0, width, height, 0, 0, 0);
+            }
+        }
+        if (mTimerBar != null) {
+            mTimerBar.setTimer(30);
+        }
 
+        if (mScore == null)
+            mScore = new Score(10, mTimerBar.destRect.bottom + 5);
     }
 
     @Override
@@ -457,9 +472,11 @@ public class Stage1 extends DrawableGameComponent {
 
 //        mSubCanvas.save();
         mScore.drawScore(mSubCanvas);
-        mTimerBar.draw(mSubCanvas);
 //        mSubCanvas.restore();
 
+        if (mTimerBar != null) {
+            mSubCanvas.drawBitmap(mTimerBarImage, mTimerBar.srcRect, mTimerBar.destRect, null);
+        }
 
         if ((isGameOver || !mBoboObj.isAlive) && mColorMask.isAlive)
         {

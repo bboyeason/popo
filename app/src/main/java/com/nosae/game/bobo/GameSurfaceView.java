@@ -53,7 +53,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                     Stage1.mTotalScore -= Stage1.mFishCollections.get(f).getScore();
                                 }
 
-                                mMainActivity.mGameEntry.mStage1.mTimerBar.addTime(Stage1.mFishCollections.get(f).getTimerAdd());
+                                mMainActivity.mGameEntry.mStage1.mTimerBar.addTimer(Stage1.mFishCollections.get(f).getTimerAdd());
 //                              mMainActivity.mGameEntry.mStage1.mTotalScore += Stage1.mFishCollections.get(f).getScore();
                                 if (Stage1.mTotalScore < 0) {
                                     Stage1.mTotalScore = 0;
