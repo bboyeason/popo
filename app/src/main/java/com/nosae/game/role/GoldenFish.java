@@ -10,9 +10,7 @@ import com.nosae.game.objects.FishObj;
 public class GoldenFish extends FishObj {
 
     public static int width = 0;
-
     public static int height = 0;
-
     public static int halfWidth = 0;
     public static int halfHeight = 0;
 
