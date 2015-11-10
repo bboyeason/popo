@@ -345,7 +345,8 @@ public class Stage1 extends DrawableGameComponent {
         if (mTimerBar == null) {
 //            BitmapFactory.Options options = new BitmapFactory.Options();
 //            options.inSampleSize = 4;
-            mTimerBarImage = GameParams.decodeSampledBitmapFromResource(R.drawable.timer_bar, (int) (GameParams.density * GameParams.halfWidth), (int) (GameParams.density * 120));
+//            mTimerBarImage = GameParams.decodeSampledBitmapFromResource(R.drawable.timer_bar, (int) (GameParams.density * GameParams.halfWidth), (int) (GameParams.density * 120));
+            mTimerBarImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.timer_bar);
             if (mTimerBarImage != null) {
                 width = mTimerBarImage.getWidth() / 1;
                 height = mTimerBarImage.getHeight() / 11;
