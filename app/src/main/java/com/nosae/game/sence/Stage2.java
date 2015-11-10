@@ -308,6 +308,8 @@ public class Stage2 extends DrawableGameComponent {
 
         if (mLife != null) {
             mLife.updateLife();
+            if (Life.getLife() <= 0)
+                isGameOver = true;
         }
 
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {

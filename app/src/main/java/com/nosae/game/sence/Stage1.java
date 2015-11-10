@@ -424,6 +424,8 @@ public class Stage1 extends DrawableGameComponent {
 
         if (mLife != null) {
             mLife.updateLife();
+            if (Life.getLife() <= 0)
+                isGameOver = true;
         }
 
         mTimerBar.action((int) GameEntry.totalFrames);
