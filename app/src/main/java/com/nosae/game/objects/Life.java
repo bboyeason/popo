@@ -41,7 +41,6 @@ public class Life extends GameObj {
         // png 0~9
         if (getLife() == 0) {
             index = 9;
-            Stage2.isGameOver = true;
         } else {
             index = getLife() - 1;
         }
