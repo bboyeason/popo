@@ -43,8 +43,9 @@ public class GameParams {
     public static float[] Cosine = new float[360];
     public static float[] Sine = new float[360];
 
-    public static Music music;
+    public static Music music = null;
     public static Vibrator vibrator = null;
+    public static VideoPlayer videoPlayer = null;
 
     public static boolean outOfScreenBottom(Rect r) {
         if (screenRect.bottom < r.top) {
