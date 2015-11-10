@@ -2,6 +2,7 @@ package com.nosae.game.objects;
 
 import com.nosae.game.sence.Stage1;
 import com.nosae.game.sence.Stage2;
+import com.nosae.game.settings.DebugConfig;
 
 import lbs.Game;
 
@@ -22,6 +23,11 @@ public class TimerBar2 extends GameObj {
         super(destX, destY, destWidth, destHeight, srcX, srcY, srcWidth, srcHeight, speed, color, theta);
         this.width = srcWidth;
         this.height = srcHeight;
+    }
+
+    public void setStartFrame(int startFrame) {
+        this.mStartFrame = startFrame;
+        DebugConfig.d("Start Frame: " + mStartFrame);
     }
 
     public void setTimer(int seconds) {
