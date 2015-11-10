@@ -222,7 +222,6 @@ public class MainActivity extends Activity {
         GameParams.densityDpi = dm.densityDpi;
         GameParams.screenRect = new Rect(0, 0, GameParams.scaleWidth, GameParams.scaleHeight);
         GameParams.screenRectBoundary = new Rect( 0 - GameParams.boundary, 0 - GameParams.boundary, GameParams.scaleWidth + GameParams.boundary, GameParams.scaleHeight + GameParams.boundary);
-        DebugConfig.d("Screen size: " + GameParams.screenRect.width() + " x " + GameParams.screenRect.height());
         DebugConfig.d("Screen size: " + dm.widthPixels + " x " + dm.heightPixels + ", density: " + dm.density + ", density dpi: " + dm.densityDpi);
 
         mGameEntry = new GameEntry(this);
