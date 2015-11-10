@@ -64,24 +64,39 @@ public class Stage1 extends DrawableGameComponent {
 
     private int f, j;
     private Random mRandom;
-    private int[][] mFishTable = {
+    private int[][] mFishTable1 = {
             {
                     R.drawable.a_fish_01,
                     R.drawable.a_fish_01,
                     R.drawable.a_fish_hamburger,
                     R.drawable.a_fish_hotdog,
-                    R.drawable.a_fish_donut,
+                    R.drawable.a_fish_donut
+            },
+            {  3,  3, 10, 10, 10 }, /* Animation column */
+            {  2,  2,  6,  6,  6 }, /* Animation row */
+            {  5,  5, 39, 39, 39 },  /* Max index */
+            {  5,  5, 40, 40, 40 }, /* Death animation start */
+            {  5,  5, 55, 55, 55 }, /* Death animation end */
+            { -1, -1, 10, 20, 30 }, /* Touch Score */
+            { 10, 20, -1, -2, -2 }, /* Arrival Score */
+            {  0,  0,  0,  0,  0 } /* Timer add (seconds) */
+    };
+
+    private int[][] mFishTable2 = {
+            {
                     R.drawable.a_add_time
             },
-            { 3, 3, 7, 3, 3, 5}, /* Animation column */
-            { 2, 2, 8 , 1, 1, 2}, /* Animation row */
-            { 5, 5, 36, 1, 1, 0},  /* Max index */
-            { 5, 5, 37, 2, 2, 1}, /* Death animation start */
-            { 5, 5, 51, 2, 2, 9}, /* Death animation end */
-            { -1, -1, 10, 20, 30, 0}, /* Touch Score */
-            { 10, 20, -1, -2, -2, 0}, /* Arrival Score */
-            { 0, 0, 0, 0, 0, 2} /* Timer add (seconds) */
+            { 5 }, /* Animation column */
+            { 2 }, /* Animation row */
+            { 0 },  /* Max index */
+            { 1 }, /* Death animation start */
+            { 9 }, /* Death animation end */
+            { 0 }, /* Touch Score */
+            { 0 }, /* Arrival Score */
+            { 10 } /* Timer add (seconds) */
     };
+
+
 //    private int mGoldFish = R.drawable.goldenfish;
 
     public static Handler mHandler;
@@ -132,7 +147,7 @@ public class Stage1 extends DrawableGameComponent {
                     case Events.CREATEFISH:
                         if (isGameOver || isClearStage1)
                             return;
-                        createFish();
+                        createFish(mFishTable1);
 
                         if (onOff) {
                             Message m = new Message();
@@ -143,7 +158,19 @@ public class Stage1 extends DrawableGameComponent {
                             //}
                         }
                         break;
+                    case Events.CREATESTAR:
+                        if (isGameOver || isClearStage1)
+                            return;
 
+                        if (onOff) {
+                            Message m = new Message();
+                            m.what = Events.CREATESTAR;
+                            mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
+                        }
+                        createFish(mFishTable2);
+                        break;
+                    case Events.CREATELIFE:
+                        break;
                 }
 
             }
@@ -177,33 +204,36 @@ public class Stage1 extends DrawableGameComponent {
         //if (msg.obj != null) {
         mHandler.sendMessage(msg);
         //}
-//        DebugConfig.d("send message");
 
+        msg = null;
+        msg = new Message();
+        msg.what = Events.CREATESTAR;
+        mHandler.sendMessage(msg);
     }
-    protected void createFish(){
+    protected void createFish(int[][] fishTable){
         int width, height;
 
         int speed = 5;
         int random;
 //        for (int i = 0; i < mMaximum; i++) {
-            random = mRandom.nextInt(mFishTable[0].length);
-            Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(mFishTable[0][random], (int) (50 * mFishTable[1][random] / GameParams.density), (int) (50 * mFishTable[2][random] / GameParams.density));
+            random = mRandom.nextInt(fishTable[0].length);
+            Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(fishTable[0][random], (int) (50 * fishTable[1][random] / GameParams.density), (int) (50 * fishTable[2][random] / GameParams.density));
 
-            width = fishImage.getWidth() / mFishTable[1][random];
-            height = fishImage.getHeight() / mFishTable[2][random];
+            width = fishImage.getWidth() / fishTable[1][random];
+            height = fishImage.getHeight() / fishTable[2][random];
             DebugConfig.d("Image ID: " + random + "=> width: " + width + ", height: " + height);
 
             speed = mRandom.nextInt(GameParams.stage1FishRandomSpeed) + GameParams.stage1FishRandomSpeed;
             mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, speed, Color.WHITE, 90);
 
             mFishObj.randomTop();
-            mFishObj.setCol(mFishTable[1][random]);
-            mFishObj.setMaxIndex(mFishTable[3][random]);
-            mFishObj.setDeathIndexStart(mFishTable[4][random]);
-            mFishObj.setDeathIndexEnd(mFishTable[5][random]);
-            mFishObj.setTouchScore(mFishTable[6][random]);
-            mFishObj.setArrivalScore(mFishTable[7][random]);
-            mFishObj.setTimerAdd(mFishTable[8][random]);
+            mFishObj.setCol(fishTable[1][random]);
+            mFishObj.setMaxIndex(fishTable[3][random]);
+            mFishObj.setDeathIndexStart(fishTable[4][random]);
+            mFishObj.setDeathIndexEnd(fishTable[5][random]);
+            mFishObj.setTouchScore(fishTable[6][random]);
+            mFishObj.setArrivalScore(fishTable[7][random]);
+            mFishObj.setTimerAdd(fishTable[8][random]);
             mFishObj.isAlive = true;
             mFishCollections.add(mFishObj);
             DebugConfig.d("create fish: " + mFishCollections.size());
@@ -221,20 +251,20 @@ public class Stage1 extends DrawableGameComponent {
             int speed = 5;
             int random;
             for (int i = 0; i < mMaximum; i++) {
-                random = mRandom.nextInt(mFishTable[0].length);
+                random = mRandom.nextInt(mFishTable1[0].length);
                 mFishImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
-                        mFishTable[0][random]);
-                width = mFishImage.getWidth() / mFishTable[1][random];
-                height = mFishImage.getHeight() / mFishTable[2][random];
+                        mFishTable1[0][random]);
+                width = mFishImage.getWidth() / mFishTable1[1][random];
+                height = mFishImage.getHeight() / mFishTable1[2][random];
 //                DebugConfig.d("width: " + mFishImage.getWidth());
                 speed = mRandom.nextInt(GameParams.fishRandomSpeed) + GameParams.fishRandomSpeed;
                 mFishObj = new NormalFish(mFishImage, 0, 0, width, height, 0, 0, width, height, speed, Color.WHITE, 90, 100);
 
                 mFishObj.randomTop();
-                mFishObj.setCol(mFishTable[1][random]);
-                mFishObj.setMaxIndex(mFishTable[3][random]);
-                mFishObj.setDeathIndexStart(mFishTable[4][random]);
-                mFishObj.setDeathIndexEnd(mFishTable[5][random]);
+                mFishObj.setCol(mFishTable1[1][random]);
+                mFishObj.setMaxIndex(mFishTable1[3][random]);
+                mFishObj.setDeathIndexStart(mFishTable1[4][random]);
+                mFishObj.setDeathIndexEnd(mFishTable1[5][random]);
                 mFishObj.isAlive = true;
                 mFishCollections.add(mFishObj);
                 DebugConfig.d("create fish: " + mFishCollections.size());
@@ -287,7 +317,6 @@ public class Stage1 extends DrawableGameComponent {
             mBoboObj = new Bobo(mBoboImage, GameParams.halfWidth - width/2, GameParams.scaleHeight - height, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
             mBoboObj.setCol(4);
             mBoboObj.setMaxIndex(20);
-//        mBoboObj.randomTop();
             mBoboObj.isAlive = true;
         }
 
@@ -296,7 +325,7 @@ public class Stage1 extends DrawableGameComponent {
         }
 
         if (mScore == null)
-            mScore = new Score(20, 20);
+            mScore = new Score(40, 40);
 
         if (mLifeIcon == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -481,8 +510,8 @@ public class Stage1 extends DrawableGameComponent {
         }
 
         if (mBoboObj != null && mBoboObj.isAlive) {
-            mSubCanvas.drawBitmap(mBoboObj.boboImage, mBoboObj.srcRect, mBoboObj.destRect,
-                    mBoboObj.paint);
+//            mSubCanvas.drawBitmap(mBoboObj.boboImage, mBoboObj.srcRect, mBoboObj.destRect,
+//                    mBoboObj.paint);
 //            DebugConfig.d("srcRect: " + mGoldenFishObj.srcRect.left + ", " + mGoldenFishObj.srcRect.top + ", " + mGoldenFishObj.srcRect.right + ", " + mGoldenFishObj.srcRect.bottom);
 //            DebugConfig.d("destRect: " + mGoldenFishObj.destRect.left + ", " + mGoldenFishObj.destRect.top + ", " + mGoldenFishObj.destRect.right + ", " + mGoldenFishObj.destRect.bottom);
         }

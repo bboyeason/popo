@@ -5,4 +5,6 @@ package com.nosae.game.bobo;
  */
 public interface Events {
     int CREATEFISH = 0;
+    int CREATESTAR = 1;
+    int CREATELIFE = 2;
 }
