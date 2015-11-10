@@ -325,13 +325,13 @@ public class Stage1 extends DrawableGameComponent {
         }
 
         if (mScore == null)
-            mScore = new Score(40, 40);
+            mScore = new Score((int) (20 * GameParams.density), (int) (20 * GameParams.density));
 
         if (mLifeIcon == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
             mLifeImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
-            mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + 5, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
+            mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + (int) (5 * GameParams.density), mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
         }
 
         if (mLife == null) {
@@ -340,7 +340,7 @@ public class Stage1 extends DrawableGameComponent {
             mLifeNumber = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_number, options);
             width = mLifeNumber.getWidth() / 5;
             height = mLifeNumber.getHeight() / 2;
-            mLife = new Life(mLifeIcon.destRect.right + 10, mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
+            mLife = new Life(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
             Life.setLife(5);
         }
 
