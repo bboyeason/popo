@@ -9,7 +9,7 @@ public class DebugConfig {
     // Debug switch
     public static final boolean isDebugOn = true;
     public static final boolean isFpsDebugOn = true;
-    public static String TAG = "";
+    public static String TAG = "BoBo";
 //    public static final boolean DEBUG_OTHER = isDebugOn && true;
 
     public static void setTag(String tag) {
@@ -32,6 +32,25 @@ public class DebugConfig {
     public static void d(String TAG, String msg, Throwable tr) {
         if (isDebugOn) {
             Log.d(TAG, msg, tr);
+        }
+    }
+
+    public static boolean e(String msg) {
+        if (isDebugOn) {
+            Log.e(TAG, msg);
+        }
+        return false;
+    }
+
+    public static void e(String TAG, String msg) {
+        if (isDebugOn) {
+            Log.e(TAG, msg);
+        }
+    }
+
+    public static void e(String TAG, String msg, Throwable tr) {
+        if (isDebugOn) {
+            Log.e(TAG, msg, tr);
         }
     }
 }
