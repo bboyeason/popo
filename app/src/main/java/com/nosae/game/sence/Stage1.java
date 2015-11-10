@@ -252,7 +252,7 @@ public class Stage1 extends DrawableGameComponent {
         if (mBackground == null) {
             // Load background image
 
-            mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.background, GameParams.scaleWidth, GameParams.scaleHeight);
+            mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.a_background, GameParams.scaleWidth, GameParams.scaleHeight);
             mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
             mBackground.isAlive = true;
 
