@@ -454,7 +454,7 @@ public class Stage1 extends DrawableGameComponent {
 
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (NormalFish) mFishCollections.get(f);
-            if (mFishObj.isAlive) {
+            if (mSubFishObj.isAlive) {
                 mSubCanvas.drawBitmap(mSubFishObj.image, mSubFishObj.srcRect,
                         mSubFishObj.destRect, mSubFishObj.paint);
             }
