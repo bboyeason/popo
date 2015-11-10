@@ -28,6 +28,8 @@ public class Score extends GameObj {
     private final int destY;
 
     public int totalScore;
+    public int width;
+    public int height;
 //    public Canvas canvas;
     protected Bitmap bitmap;
     public Score(int destX, int destY) {
@@ -35,6 +37,11 @@ public class Score extends GameObj {
         this.destX = destX;
         this.destY = destY;
 //        this.canvas = canvas;
+        bitmap  = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mScore[0]);
+        width = bitmap.getWidth();
+        height = bitmap.getHeight();
+        bitmap.recycle();
+        bitmap = null;
     }
 
     public void setTotalScore(int totalScore) {

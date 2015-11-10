@@ -17,6 +17,8 @@ import java.util.Random;
 
 import lbs.DrawableGameComponent;
 import lbs.FishCollection;
+
+import com.nosae.game.objects.Life;
 import com.nosae.game.role.Bobo;
 import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.GameObj;
@@ -49,9 +51,17 @@ public class Stage1 extends DrawableGameComponent {
     private Score mScore;
 
     private ColorMask mColorMask;
+
     public TimerBar2 mTimerBar;
     public Bitmap mTimerBarImage;
+
+    private GameObj mLifeIcon;
+    private Bitmap mLifeImage;
+    private Life mLife;
+    private Bitmap mLifeNumber;
+
     public static FishCollection mFishCollections;
+
     private int f, j;
     private Random mRandom;
     private int[][] mFishTable = {
@@ -282,6 +292,26 @@ public class Stage1 extends DrawableGameComponent {
             mFpsText = new Text(GameParams.halfWidth - 50, 100, 12, "FPS", Color.BLUE);
         }
 
+        if (mScore == null)
+            mScore = new Score(20, 20);
+
+        if (mLifeIcon == null) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 4;
+            mLifeImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
+            mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + 5, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
+        }
+
+        if (mLife == null) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 2;
+            mLifeNumber = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_number, options);
+            width = mLifeNumber.getWidth() / 5;
+            height = mLifeNumber.getHeight() / 2;
+            mLife = new Life(mLifeIcon.destRect.right + 10, mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
+            Life.setLife(5);
+        }
+
         if (mTimerBar == null) {
 //            BitmapFactory.Options options = new BitmapFactory.Options();
 //            options.inSampleSize = 4;
@@ -289,15 +319,12 @@ public class Stage1 extends DrawableGameComponent {
             if (mTimerBarImage != null) {
                 width = mTimerBarImage.getWidth() / 1;
                 height = mTimerBarImage.getHeight() / 11;
-                mTimerBar = new TimerBar2(10, 10, width, height, 0, 0, width, height, 0, 0, 0);
+                mTimerBar = new TimerBar2(mLife.destRect.right + 10, mScore.getY() + (mLife.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
             }
         }
         if (mTimerBar != null) {
             mTimerBar.setTimer(30);
         }
-
-        if (mScore == null)
-            mScore = new Score(10, mTimerBar.destRect.bottom + 5);
     }
 
     @Override
@@ -388,6 +415,10 @@ public class Stage1 extends DrawableGameComponent {
 
         mScore.setTotalScore(mTotalScore);
 
+        if (mLife != null) {
+            mLife.updateLife();
+        }
+
         mTimerBar.action((int) GameEntry.totalFrames);
         if (mTimerBar.isTimeout)
             isGameOver = true;
@@ -400,9 +431,7 @@ public class Stage1 extends DrawableGameComponent {
 
     @Override
     protected void Draw() {
-//        DebugConfig.d("Stage1 Draw()");
         Canvas mSubCanvas = mGameEntry.canvas;
-        // Draw background image
         if (mBackground.isAlive)
         {
             mSubCanvas.drawBitmap(mBackGroundImage,
@@ -423,56 +452,44 @@ public class Stage1 extends DrawableGameComponent {
 */
         }
 
-
-
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (NormalFish) mFishCollections.get(f);
             if (mFishObj.isAlive) {
-//                mSubCanvas.save();
-
-//                mSubCanvas.rotate(mSubFishObj.theta - 90, mSubFishObj.getX()
-//                        + Aircraft.halfWidth, mSubFishObj.getY()
-//                        + Aircraft.halfHeight);
                 mSubCanvas.drawBitmap(mSubFishObj.image, mSubFishObj.srcRect,
                         mSubFishObj.destRect, mSubFishObj.paint);
-
-//                mSubCanvas.restore();
             }
 
         }
 
 
         if (mGoldenFishObj != null && mGoldenFishObj.isAlive) {
-//            mSubCanvas.save();
-
             mSubCanvas.drawBitmap(mGoldenFishObj.image, mGoldenFishObj.srcRect, mGoldenFishObj.destRect,
                     mGoldenFishObj.paint);
 //            DebugConfig.d("srcRect: " + mGoldenFishObj.srcRect.left + ", " + mGoldenFishObj.srcRect.top + ", " + mGoldenFishObj.srcRect.right + ", " + mGoldenFishObj.srcRect.bottom);
 //            DebugConfig.d("destRect: " + mGoldenFishObj.destRect.left + ", " + mGoldenFishObj.destRect.top + ", " + mGoldenFishObj.destRect.right + ", " + mGoldenFishObj.destRect.bottom);
-//            mSubCanvas.restore();
-
-
         }
 
         if (mBoboObj != null && mBoboObj.isAlive) {
-//            mSubCanvas.save();
-
             mSubCanvas.drawBitmap(mBoboObj.boboImage, mBoboObj.srcRect, mBoboObj.destRect,
                     mBoboObj.paint);
 //            DebugConfig.d("srcRect: " + mGoldenFishObj.srcRect.left + ", " + mGoldenFishObj.srcRect.top + ", " + mGoldenFishObj.srcRect.right + ", " + mGoldenFishObj.srcRect.bottom);
 //            DebugConfig.d("destRect: " + mGoldenFishObj.destRect.left + ", " + mGoldenFishObj.destRect.top + ", " + mGoldenFishObj.destRect.right + ", " + mGoldenFishObj.destRect.bottom);
-//            mSubCanvas.restore();
-
-
         }
-//            mFishCollections.get(f).draw(mSubCanvas);
+
         if (DebugConfig.isFpsDebugOn) {
             mSubCanvas.drawText(mFpsText.message, mFpsText.x, mFpsText.y, mFpsText.paint);
         }
 
-//        mSubCanvas.save();
-        mScore.drawScore(mSubCanvas);
-//        mSubCanvas.restore();
+        if (mScore != null)
+            mScore.drawScore(mSubCanvas);
+
+        if (mLifeIcon != null) {
+            mSubCanvas.drawBitmap(mLifeImage, mLifeIcon.srcRect, mLifeIcon.destRect, mLifeIcon.paint);
+        }
+
+        if (mLife != null) {
+            mSubCanvas.drawBitmap(mLifeNumber, mLife.srcRect, mLife.destRect, mLife.paint);
+        }
 
         if (mTimerBar != null) {
             mSubCanvas.drawBitmap(mTimerBarImage, mTimerBar.srcRect, mTimerBar.destRect, null);
