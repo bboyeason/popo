@@ -37,6 +37,9 @@ public class Stage1 extends DrawableGameComponent {
     private GameObj mBackground;
     private Bitmap mBackGroundImage;
 
+    private GameObj mSenceTitle;
+    private Bitmap mSenceTitleImage;
+
     private NormalFish mFishObj;
     private NormalFish mSubFishObj;
 
@@ -281,12 +284,6 @@ public class Stage1 extends DrawableGameComponent {
         }
     };*/
 
-
-
-    private void UpdateScore() {
-
-    }
-
     @Override
     protected void LoadContent() {
         super.LoadContent();
@@ -294,15 +291,16 @@ public class Stage1 extends DrawableGameComponent {
 
         if (mBackground == null) {
             // Load background image
-
             mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.a_background, GameParams.scaleWidth, GameParams.scaleHeight);
             mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
             mBackground.isAlive = true;
+        }
+        // Random fish generator
+        FishGeneration();
 
-
-            // Random fish generator
-            FishGeneration();
-
+        if (mSenceTitle == null) {
+            mSenceTitleImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
+            mSenceTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSenceTitleImage.getWidth(), mSenceTitleImage.getHeight(), 0, 0, mSenceTitleImage.getWidth(), mSenceTitleImage.getHeight(), 0, 0, 0);
         }
 
         if (mBoboObj == null) {
@@ -490,6 +488,10 @@ public class Stage1 extends DrawableGameComponent {
                 }
             }
 */
+        }
+
+        if (mSenceTitle != null) {
+            mSubCanvas.drawBitmap(mSenceTitleImage, mSenceTitle.srcRect, mSenceTitle.destRect, mSenceTitle.paint);
         }
 
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
