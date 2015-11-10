@@ -67,18 +67,20 @@ public class Stage1 extends DrawableGameComponent {
     private int[][] mFishTable = {
             {
                     R.drawable.a_fish_01,
+                    R.drawable.a_fish_01,
                     R.drawable.a_fish_hamburger,
                     R.drawable.a_fish_hotdog,
                     R.drawable.a_fish_donut,
                     R.drawable.a_add_time
             },
-            { 3, 7, 3, 3, 5}, /* Animation column */
-            { 2, 8 , 1, 1, 2}, /* Animation row */
-            { 5, 36, 1, 1, 0},  /* Max index */
-            { 5, 37, 2, 2, 1}, /* Death animation start */
-            { 5, 51, 2, 2, 9}, /* Death animation end */
-            { 10, -10, -10, -10, 0}, /* Score */
-            { 0, 0, 0, 0, 2} /* Timer add (seconds) */
+            { 3, 3, 7, 3, 3, 5}, /* Animation column */
+            { 2, 2, 8 , 1, 1, 2}, /* Animation row */
+            { 5, 5, 36, 1, 1, 0},  /* Max index */
+            { 5, 5, 37, 2, 2, 1}, /* Death animation start */
+            { 5, 5, 51, 2, 2, 9}, /* Death animation end */
+            { -1, -1, 10, 20, 30, 0}, /* Touch Score */
+            { 10, 20, -1, -2, -2, 0}, /* Arrival Score */
+            { 0, 0, 0, 0, 0, 2} /* Timer add (seconds) */
     };
 //    private int mGoldFish = R.drawable.goldenfish;
 
@@ -199,8 +201,9 @@ public class Stage1 extends DrawableGameComponent {
             mFishObj.setMaxIndex(mFishTable[3][random]);
             mFishObj.setDeathIndexStart(mFishTable[4][random]);
             mFishObj.setDeathIndexEnd(mFishTable[5][random]);
-            mFishObj.setScore(mFishTable[6][random]);
-            mFishObj.setTimerAdd(mFishTable[7][random]);
+            mFishObj.setTouchScore(mFishTable[6][random]);
+            mFishObj.setArrivalScore(mFishTable[7][random]);
+            mFishObj.setTimerAdd(mFishTable[8][random]);
             mFishObj.isAlive = true;
             mFishCollections.add(mFishObj);
             DebugConfig.d("create fish: " + mFishCollections.size());
@@ -375,8 +378,12 @@ public class Stage1 extends DrawableGameComponent {
             if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mBoboObj.srcHeight)) {
 //                DebugConfig.d("Arrive screen bottom, remove it.");
                 if (!isGameOver) {
-                    mTotalScore += mSubFishObj.getScore();
-                    if (mTotalScore < 0) {
+                    if (mSubFishObj.getArrivalScore() > 0) {
+                        mTotalScore += mSubFishObj.getArrivalScore();
+                    } else if (mSubFishObj.getArrivalScore() < 0) {
+                        Life.addLife(mSubFishObj.getArrivalScore());
+                    }
+                    if (mTotalScore < 0 || Life.getLife() <= 0) {
                         mTotalScore = 0;
                         mBoboObj.isAlive = false;
                     }
@@ -454,7 +461,7 @@ public class Stage1 extends DrawableGameComponent {
 
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (NormalFish) mFishCollections.get(f);
-            if (mFishObj.isAlive) {
+            if (mSubFishObj.isAlive) {
                 mSubCanvas.drawBitmap(mSubFishObj.image, mSubFishObj.srcRect,
                         mSubFishObj.destRect, mSubFishObj.paint);
             }

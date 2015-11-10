@@ -37,7 +37,7 @@ public class GameParams {
     public static int goldenFishRebirthMin = 1000;
     public static int goldenFishRebirthMax = 1400;
 
-    public static final int stage1BreakScore = 100;
+    public static final int stage1BreakScore = 500;
     public static final int stage2BreakScore = 100;
 
     public static float[] Cosine = new float[360];

@@ -15,7 +15,8 @@ public class FishObj extends GameObj {
 
     private Rect mActRect;
     private Random r = new Random();
-    private int score = 0;
+    private int touchScore = 0;
+    private int arrivalScore = 0;
     private int col = 1;// 1: Not animation, 2~: Animation
     public int maxIndex = 0;// Animation frame count
     public int deathIndexStart = 0;
@@ -41,8 +42,20 @@ public class FishObj extends GameObj {
         this.maxIndex = maxIndex;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setTouchScore(int touchScore) {
+        this.touchScore = touchScore;
+    }
+
+    public int getTouchScore() {
+        return touchScore;
+    }
+
+    public int getArrivalScore() {
+        return arrivalScore;
+    }
+
+    public void setArrivalScore(int arrivalScore) {
+        this.arrivalScore = arrivalScore;
     }
 
     public void setTimerAdd(int timerAdd) {
@@ -53,9 +66,6 @@ public class FishObj extends GameObj {
         return timerAdd;
     }
 
-    public int getScore() {
-        return score;
-    }
 
     public void setCol(int col) {
         this.col = col;

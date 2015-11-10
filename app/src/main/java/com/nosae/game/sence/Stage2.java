@@ -188,7 +188,7 @@ public class Stage2 extends DrawableGameComponent {
         mFishObj.setMaxIndex(mFishTable[3][random]);
         mFishObj.setDeathIndexStart(mFishTable[4][random]);
         mFishObj.setDeathIndexEnd(mFishTable[5][random]);
-//        mFishObj.setScore(mFishTable[6][random]);
+//        mFishObj.setTouchScore(mFishTable[6][random]);
 //        mFishObj.setTimerAdd(mFishTable[7][random]);
         mFishObj.setColor(mFishTableColor[random]);
         mFishObj.setSyllable(mFishTableSyllable[random]);

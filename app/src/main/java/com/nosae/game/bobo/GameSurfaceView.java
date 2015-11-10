@@ -48,20 +48,19 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                         for (f = 0; f < Stage1.mFishCollections.size(); f++) {
                             if (Stage1.mFishCollections.get(f).destRect.contains((int) x, (int) y)) {
                                 DebugConfig.d("Hit!!");
-                                if (!Stage1.mFishCollections.get(f).readyToDeath && Stage1.mFishCollections.get(f).getScore() > 0) {
-                                    GameParams.vibrator.vibrate(50);
-                                    Stage1.mTotalScore -= Stage1.mFishCollections.get(f).getScore();
+                                if (!Stage1.mFishCollections.get(f).readyToDeath) {
+                                    if (Stage1.mFishCollections.get(f).getTouchScore() > 0) {
+                                        Stage1.mTotalScore += Stage1.mFishCollections.get(f).getTouchScore();
+                                    } else if (Stage1.mFishCollections.get(f).getTouchScore() == -1) {
+                                        GameParams.vibrator.vibrate(50);
+                                    }
                                 }
-
                                 mMainActivity.mGameEntry.mStage1.mTimerBar.addTimer(Stage1.mFishCollections.get(f).getTimerAdd());
-//                              mMainActivity.mGameEntry.mStage1.mTotalScore += Stage1.mFishCollections.get(f).getScore();
-                                if (Stage1.mTotalScore < 0) {
+                                /*if (Stage1.mTotalScore < 0) {
                                     Stage1.mTotalScore = 0;
                                     mMainActivity.mGameEntry.mStage1.mBoboObj.isAlive = false;
-                                }
-//                              Stage1.mFishCollections.get(f).isAlive = false;
+                                }*/
                                 Stage1.mFishCollections.get(f).readyToDeath = true;
-//                              Stage1.mFishCollections.remove(Stage1.mFishCollections.get(f));
                                 break;
                             }
                         }
