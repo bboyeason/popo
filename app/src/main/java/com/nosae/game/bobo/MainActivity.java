@@ -217,9 +217,10 @@ public class MainActivity extends Activity {
         mGameEntry = new GameEntry(this);
         GameStateClass.oldState = GameStateClass.GameState.None;
         if (Stage1.isClearStage1) {
-            GameStateClass.currentState = GameStateClass.GameState.Stage2;
-        } else if (Stage2.isClearStage2) {
-            GameStateClass.currentState = GameStateClass.GameState.Stage3;
+            if (Stage2.isClearStage2)
+                GameStateClass.currentState = GameStateClass.GameState.Stage3;
+            else
+                GameStateClass.currentState = GameStateClass.GameState.Stage2;
         } else {
             GameStateClass.currentState = GameStateClass.GameState.Stage1;
         }
