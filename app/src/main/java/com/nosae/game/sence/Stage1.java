@@ -292,7 +292,7 @@ public class Stage1 extends DrawableGameComponent {
             mTimerBarImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.timer_bar);
             if (mTimerBarImage != null) {
                 width = mTimerBarImage.getWidth() / 1;
-                height = mTimerBarImage.getHeight() / 11;
+                height = mTimerBarImage.getHeight() / 9;
                 mTimerBar = new TimerBar2(mLife.destRect.right + 10, mScore.getY() + (mLife.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
                 if (mTimerBar != null)
                     mTimerBar.setStartFrame((int) GameEntry.totalFrames);

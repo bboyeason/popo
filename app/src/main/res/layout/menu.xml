@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="@drawable/menu_background" >
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/settingsButton"
         android:layout_gravity="center_horizontal"
-        android:layout_alignBaseline="@+id/exitButton"
-        android:layout_alignBottom="@+id/exitButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/menu_setting" />
+        android:background="@drawable/menu_setting"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="13dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -21,16 +20,19 @@
         android:id="@+id/karnofskyButton"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/settingsButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/startButton"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/go"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:background="@drawable/play"
+        android:layout_below="@+id/karnofskyButton"
+        android:layout_alignLeft="@+id/loadButton"
+        android:layout_alignStart="@+id/loadButton"
+        android:layout_marginTop="190dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -38,15 +40,17 @@
         android:text="Load"
         android:id="@+id/loadButton"
         android:layout_gravity="center_horizontal"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/exitButton"
         android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
+        android:background="@drawable/menu_exit"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/menu_exit" />
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="13dp" />
 </RelativeLayout>
