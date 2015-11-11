@@ -73,10 +73,10 @@ public class Stage1 extends DrawableGameComponent {
                     R.drawable.a_fish_donut
             },
             {  3,  3, 10, 10, 10 }, /* Animation column */
-            {  2,  2,  6,  6,  6 }, /* Animation row */
-            {  5,  5, 39, 39, 39 }, /* Max index */
-            {  5,  5, 40, 40, 40 }, /* Death animation start */
-            {  5,  5, 55, 55, 55 }, /* Death animation end */
+            {  2,  2,  2,  6,  6 }, /* Animation row */
+            {  5,  5,  0, 39, 39 }, /* Max index */
+            {  5,  5,  1, 40, 40 }, /* Death animation start */
+            {  5,  5, 18, 55, 55 }, /* Death animation end */
             { -1, -1, 10, 20, 30 }, /* Touch Score */
             { 10, 20, -1, -2, -2 }, /* Arrival Score */
             {  0,  0,  0,  0,  0 }, /* Timer add (seconds) */
