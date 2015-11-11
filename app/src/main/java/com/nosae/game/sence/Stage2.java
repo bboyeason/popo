@@ -116,6 +116,7 @@ public class Stage2 extends DrawableGameComponent {
     public static boolean onOff = true;
 
     public Stage2(GameEntry gameEntry) {
+        DebugConfig.d("Stage2 Constructor");
         this.mGameEntry = gameEntry;
     }
 

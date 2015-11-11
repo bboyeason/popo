@@ -130,7 +130,6 @@ public class Stage1 extends DrawableGameComponent {
             mHandlerThread = new HandlerThread("Stage1_fish_generator",
                     android.os.Process.THREAD_PRIORITY_BACKGROUND);
             mHandlerThread.start();
-//            mHandlerThread.setDaemon(true);
             DebugConfig.d("Create thread");
         }
 
@@ -187,7 +186,7 @@ public class Stage1 extends DrawableGameComponent {
         msg.what = Events.CREATEFISH;
         // TODO msg.obj = something;
         mHandler.sendMessage(msg);
-        msg = null;
+//        msg = null;
         msg = new Message();
         msg.what = Events.CREATESTAR;
         mHandler.sendMessageDelayed(msg, 5000);

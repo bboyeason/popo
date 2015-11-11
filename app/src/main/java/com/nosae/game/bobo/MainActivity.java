@@ -103,8 +103,10 @@ public class MainActivity extends Activity {
                     if (isChecked) {
 //                        Stage1.isRunning = true;
 
-                        Stage1.onOff = false;
-                        Stage1.mHandler.removeMessages(com.nosae.game.bobo.Events.CREATEFISH);
+                        if (GameStateClass.currentState == GameStateClass.GameState.Stage1) {
+                            Stage1.onOff = false;
+                            Stage1.mHandler.removeMessages(com.nosae.game.bobo.Events.CREATEFISH);
+                        }
                         mGameEntry.Exit();
 
 
@@ -113,19 +115,19 @@ public class MainActivity extends Activity {
 
                         mGameEntry.Run();
 
-                        Stage1.onOff = true;
-                        Message msg = new Message();
-                        msg.what = com.nosae.game.bobo.Events.CREATEFISH;
-                        Stage1.mHandler.sendMessageDelayed(msg, 150);
+                        if (GameStateClass.currentState == GameStateClass.GameState.Stage1) {
+                            Stage1.onOff = true;
+                            Message msg = new Message();
+                            msg.what = com.nosae.game.bobo.Events.CREATEFISH;
+                            Stage1.mHandler.sendMessageDelayed(msg, 150);
+                        }
                     }
                 }
             }
         });
 //        mSurfaceView = new GameSurfaceView(this);
-        mSurfaceView = (SurfaceView) findViewById(R.id.surfaceViewTest);
-
         Initialize();
-
+        mSurfaceView = (SurfaceView) findViewById(R.id.surfaceViewTest);
 
     }
 
@@ -138,10 +140,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         DebugConfig.d("MainActivity onResume()");
-
         super.onResume();
 //        mToggleButton.setChecked(false);
-
     }
 
     @Override
@@ -150,17 +150,7 @@ public class MainActivity extends Activity {
         GameParams.vibrator.cancel();
         if (mGameEntry != null)
         {
-            /*
-            if (GameStateClass.currentState != GameState.Menu_drawable)
-            {
-                if (GV.music != null)
-                    GV.music.Pause();
-            }
-            */
-
-
             mGameEntry.Exit();
-
         }
 
         super.onPause();
@@ -225,9 +215,14 @@ public class MainActivity extends Activity {
         DebugConfig.d("Screen size: " + dm.widthPixels + " x " + dm.heightPixels + ", density: " + dm.density + ", density dpi: " + dm.densityDpi);
 
         mGameEntry = new GameEntry(this);
-        GameStateClass.currentState = GameStateClass.GameState.Stage1;
         GameStateClass.oldState = GameStateClass.GameState.None;
-
+        if (Stage1.isClearStage1) {
+            GameStateClass.currentState = GameStateClass.GameState.Stage2;
+        } else if (Stage2.isClearStage2) {
+            GameStateClass.currentState = GameStateClass.GameState.Stage3;
+        } else {
+            GameStateClass.currentState = GameStateClass.GameState.Stage1;
+        }
 
 
 //        Looper looper = mHandlerThread.getLooper();

@@ -76,7 +76,6 @@ public class GameEntry extends Game {
         if (mStage1 != null && !Stage1.isClearStage1
                 && Stage1.mTotalScore >= GameParams.stage1BreakScore
                 && GameStateClass.currentState != GameStateClass.GameState.Stage2) {
-//                    GameStateClass.currentState = GameStateClass.GameState.Stage2;
             Stage1.isClearStage1 = true;
             GameStateClass.changeState(GameStateClass.GameState.Stage2, mStage1, this);
         } else if (mStage2 != null && !Stage2.isClearStage2
@@ -93,9 +92,6 @@ public class GameEntry extends Game {
             switch (GameStateClass.currentState) {
                 case None:
                     DebugConfig.d("None Stage");
-
-//                    bee.UnloadContent();
-
                     break;
                 case Menu:
 //                    mMenuDrawable = new Menu_drawable(this);
@@ -103,7 +99,7 @@ public class GameEntry extends Game {
 
                     break;
                 case Stage1:
-                    DebugConfig.d("new Stage1");
+                    DebugConfig.d("Start stage 1.");
                     mStage1 = new Stage1(this);
                     Components.add(mStage1);
 
@@ -113,24 +109,25 @@ public class GameEntry extends Game {
 
                         GameParams.music.Play();
                     }
-
                     break;
 
                 case Stage2:
-//                    Components.remove(mStage1);
+                    DebugConfig.d("Start stage 2.");
                     // TODO quit fish thread
                     // TODO animation for stage switch
                     mStage2 = new Stage2(this);
                     Components.add(mStage2);
+                    break;
 
                 case Stage3:
+                    DebugConfig.d("Start stage 3.");
                     mStage3 = new Stage3(this);
                     Components.add(mStage3);
                     break;
             }
 
-            GameStateClass.oldState = GameStateClass.currentState;
             DebugConfig.d("oldState: " + GameStateClass.oldState + ", currentState: " + GameStateClass.currentState);
+            GameStateClass.oldState = GameStateClass.currentState;
         }
 
         super.Update();
