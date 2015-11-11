@@ -77,7 +77,7 @@ public class Stage1 extends DrawableGameComponent {
             },
             {  3,  3, 10, 10, 10 }, /* Animation column */
             {  2,  2,  6,  6,  6 }, /* Animation row */
-            {  5,  5, 39, 39, 39 },  /* Max index */
+            {  5,  5, 39, 39, 39 }, /* Max index */
             {  5,  5, 40, 40, 40 }, /* Death animation start */
             {  5,  5, 55, 55, 55 }, /* Death animation end */
             { -1, -1, 10, 20, 30 }, /* Touch Score */
@@ -220,7 +220,8 @@ public class Stage1 extends DrawableGameComponent {
         int random;
 //        for (int i = 0; i < mMaximum; i++) {
             random = mRandom.nextInt(fishTable[0].length);
-            Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(fishTable[0][random], (int) (50 * fishTable[1][random] / GameParams.density), (int) (50 * fishTable[2][random] / GameParams.density));
+//            Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(fishTable[0][random], (int) (50 * fishTable[1][random] / GameParams.density), (int) (50 * fishTable[2][random] / GameParams.density));
+            Bitmap fishImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, fishTable[0][random]);
 
             width = fishImage.getWidth() / fishTable[1][random];
             height = fishImage.getHeight() / fishTable[2][random];
