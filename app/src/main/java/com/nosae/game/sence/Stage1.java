@@ -43,9 +43,6 @@ public class Stage1 extends DrawableGameComponent {
     private NormalFish mFishObj;
     private NormalFish mSubFishObj;
 
-    private GoldenFish mGoldenFishObj;
-    private Bitmap mGoldenFishImage;
-
     public Bobo mBoboObj;
     private Bitmap mBoboImage;
 
@@ -103,12 +100,9 @@ public class Stage1 extends DrawableGameComponent {
     };
 
 
-//    private int mGoldFish = R.drawable.goldenfish;
 
     public static Handler mHandler;
     public static HandlerThread mHandlerThread;
-    private int mMaximum = 1000;
-
 
     public static int mTotalScore;
     public static boolean onOff = true;
@@ -186,30 +180,13 @@ public class Stage1 extends DrawableGameComponent {
         super.Initialize();
     }
 
- /*   public static void ThreadSwitch(boolean onoff) {
-        if (mHandlerThread == null)
-            return;
-        try {
-            if (onoff) {
-                    mHandlerThread.wait();
-            } else {
-                    mHandlerThread.notify();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }*/
     private void FishGeneration() {
 
-//        mHandler.post(createFishes);
-//        mHandler.post(createGoldenFish);
         onOff = true;
         Message msg = new Message();
         msg.what = Events.CREATEFISH;
         // TODO msg.obj = something;
-        //if (msg.obj != null) {
         mHandler.sendMessage(msg);
-        //}
         msg = null;
         msg = new Message();
         msg.what = Events.CREATESTAR;
@@ -249,44 +226,6 @@ public class Stage1 extends DrawableGameComponent {
 
 //        }
     }
-
-/*    protected Runnable createFishes = new Runnable() {
-        @Override
-        public void run() {
-            int width, height;
-
-            int speed = 5;
-            int random;
-            for (int i = 0; i < mMaximum; i++) {
-                random = mRandom.nextInt(mFishTable1[0].length);
-                mFishImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
-                        mFishTable1[0][random]);
-                width = mFishImage.getWidth() / mFishTable1[1][random];
-                height = mFishImage.getHeight() / mFishTable1[2][random];
-//                DebugConfig.d("width: " + mFishImage.getWidth());
-                speed = mRandom.nextInt(GameParams.fishRandomSpeed) + GameParams.fishRandomSpeed;
-                mFishObj = new NormalFish(mFishImage, 0, 0, width, height, 0, 0, width, height, speed, Color.WHITE, 90, 100);
-
-                mFishObj.randomTop();
-                mFishObj.setCol(mFishTable1[1][random]);
-                mFishObj.setMaxIndex(mFishTable1[3][random]);
-                mFishObj.setDeathIndexStart(mFishTable1[4][random]);
-                mFishObj.setDeathIndexEnd(mFishTable1[5][random]);
-                mFishObj.isAlive = true;
-                mFishCollections.add(mFishObj);
-                DebugConfig.d("create fish: " + mFishCollections.size());
-                mFishImage = null;
-//                mFishObj = null;
-                try {
-                    mHandlerThread.sleep(mRandom.nextInt(GameParams.fishRebirthMax) + GameParams.fishRebirthMin);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    DebugConfig.d("Thread interrupted: " + e.getMessage());
-                }
-
-            }
-        }
-    };*/
 
     @Override
     protected void LoadContent() {
@@ -378,29 +317,6 @@ public class Stage1 extends DrawableGameComponent {
         if (mBackground.isAlive) {
             //TODO maybe background rolling
         }
-        Resources rs = GameParams.res;
-
-        if (mGameEntry.totalFrames == 10) {
-//            int width, height;
-//            mGoldenFishImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
-//                    R.drawable.aircraft);
-//            width = mGoldenFishImage.getWidth() / 4;
-//            height = mGoldenFishImage.getHeight() / 5;
-//            GoldenFish.width = width;
-//            GoldenFish.height = height;
-//            GoldenFish.halfWidth = width >> 1;
-//            GoldenFish.halfHeight = height >> 1;
-//            mGoldenFishObj = new GoldenFish(mGoldenFishImage, 0, 0, width, height, 0, 0, width, height, 5, Color.WHITE, 90);
-//            mGoldenFishObj.setCol(4);
-//            mGoldenFishObj.randomTop();
-//            mGoldenFishObj.isAlive = true;
-
-//            mFishCollections.add(mGoldenFishObj);
-        }
-        if (mGoldenFishObj != null) {
-//            mGoldenFishObj.Animation();
-//            mGoldenFishObj.moveDown(GameParams.screenRect.height() + mGoldenFishObj.srcHeight);
-        }
 
         if (mBoboObj != null) {
 //            mBoboObj.Animation();
@@ -430,24 +346,6 @@ public class Stage1 extends DrawableGameComponent {
 
             if (!mSubFishObj.isAlive)
                 mFishCollections.remove(mSubFishObj);
-
-
-            // GoldenFish out of screen bottom
-//            if (GameParams.outOfScreenBottom(mFishCollections.get(f).getRect())) {
-//                DebugConfig.d("Out of screen bottom.");
-//                //TODO destory
-//                mFishCollections.remove(mFishCollections.get(f));
-//            }
-/*                mFishCollections.get(f).y_Speed = -mFishCollections.get(f).y_Speed;
-
-            } else if (GameParams.outOfScreenTop(mFishCollections.get(f).getRect())) {
-                DebugConfig.d("Out of screen top.");
-
-                mFishCollections.get(f).y_Speed = Math.abs(mFishCollections.get(f).y_Speed);
-
-            }
-            mFishCollections.get(f).move(0, mFishCollections.get(f).y_Speed);*/
-
 
         }
         if (DebugConfig.isFpsDebugOn) {
@@ -507,14 +405,6 @@ public class Stage1 extends DrawableGameComponent {
                         mSubFishObj.destRect, mSubFishObj.paint);
             }
 
-        }
-
-
-        if (mGoldenFishObj != null && mGoldenFishObj.isAlive) {
-            mSubCanvas.drawBitmap(mGoldenFishObj.image, mGoldenFishObj.srcRect, mGoldenFishObj.destRect,
-                    mGoldenFishObj.paint);
-//            DebugConfig.d("srcRect: " + mGoldenFishObj.srcRect.left + ", " + mGoldenFishObj.srcRect.top + ", " + mGoldenFishObj.srcRect.right + ", " + mGoldenFishObj.srcRect.bottom);
-//            DebugConfig.d("destRect: " + mGoldenFishObj.destRect.left + ", " + mGoldenFishObj.destRect.top + ", " + mGoldenFishObj.destRect.right + ", " + mGoldenFishObj.destRect.bottom);
         }
 
         if (mBoboObj != null && mBoboObj.isAlive) {
