@@ -6,13 +6,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings"
         android:id="@+id/settingsButton"
         android:layout_gravity="center_horizontal"
         android:layout_alignBaseline="@+id/exitButton"
         android:layout_alignBottom="@+id/exitButton"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/menu_setting" />
 
     <Button
         android:layout_width="wrap_content"
@@ -43,10 +43,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exit"
         android:id="@+id/exitButton"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/menu_exit" />
 </RelativeLayout>
