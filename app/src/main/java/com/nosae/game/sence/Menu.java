@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.nosae.game.bobo.MainActivity;
 import com.nosae.game.bobo.R;
 
+import com.nosae.game.bobo.SplashScreen;
 import com.nosae.game.objects.Music;
 
 /**
@@ -83,7 +84,7 @@ public class Menu extends Activity {
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
-                        Intent i = new Intent(Menu.this, MainActivity.class);
+                        Intent i = new Intent(Menu.this, SplashScreen.class);
                         startActivity(i);
                         this.finish();
                     }

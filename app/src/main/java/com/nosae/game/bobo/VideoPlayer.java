@@ -81,7 +81,7 @@ public class VideoPlayer
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(splashScreen, Menu.class);
+                Intent i = new Intent(splashScreen, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 splashScreen.startActivity(i);
                 this.finish();
