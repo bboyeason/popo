@@ -1,7 +1,5 @@
 package com.nosae.game.objects;
 
-import com.nosae.game.sence.Stage2;
-
 /**
  * Created by eason on 2015/10/31.
  */

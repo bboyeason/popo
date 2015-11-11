@@ -27,6 +27,7 @@ public class FishObj extends GameObj {
 
     public boolean readyToDeath = false;
     private int timerAdd = 0;
+    private int lifeAdd = 0;
 
     public FishObj(Bitmap fishImage, int destX, int destY, int destWidth, int destHeight,
                    int srcX, int srcY, int srcWidth, int srcHeight,
@@ -66,6 +67,13 @@ public class FishObj extends GameObj {
         return timerAdd;
     }
 
+    public int getLifeAdd() {
+        return lifeAdd;
+    }
+
+    public void setLifeAdd(int lifeAdd) {
+        this.lifeAdd = lifeAdd;
+    }
 
     public void setCol(int col) {
         this.col = col;

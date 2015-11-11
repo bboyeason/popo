@@ -82,21 +82,24 @@ public class Stage1 extends DrawableGameComponent {
             {  5,  5, 55, 55, 55 }, /* Death animation end */
             { -1, -1, 10, 20, 30 }, /* Touch Score */
             { 10, 20, -1, -2, -2 }, /* Arrival Score */
-            {  0,  0,  0,  0,  0 } /* Timer add (seconds) */
+            {  0,  0,  0,  0,  0 }, /* Timer add (seconds) */
+            {  0,  0,  0,  0,  0 } /* Life add */
     };
 
     private int[][] mFishTable2 = {
             {
-                    R.drawable.a_add_time
+                    R.drawable.a_add_time,
+                    R.drawable.a_add_life
             },
-            { 5 }, /* Animation column */
-            { 2 }, /* Animation row */
-            { 0 },  /* Max index */
-            { 1 }, /* Death animation start */
-            { 9 }, /* Death animation end */
-            { 0 }, /* Touch Score */
-            { 0 }, /* Arrival Score */
-            { 10 } /* Timer add (seconds) */
+            {  5,  5 }, /* Animation column */
+            {  2,  2 }, /* Animation row */
+            {  0,  0 },  /* Max index */
+            {  1,  1 }, /* Death animation start */
+            {  9,  9 }, /* Death animation end */
+            {  0,  0 }, /* Touch Score */
+            {  0,  0 }, /* Arrival Score */
+            { 10,  0 }, /* Timer add (seconds) */
+            {  0,  1 } /* Life add */
     };
 
 
@@ -165,12 +168,12 @@ public class Stage1 extends DrawableGameComponent {
                         if (isGameOver || isClearStage1)
                             return;
 
+                        createFish(mFishTable2);
                         if (onOff) {
                             Message m = new Message();
                             m.what = Events.CREATESTAR;
                             mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
                         }
-                        createFish(mFishTable2);
                         break;
                     case Events.CREATELIFE:
                         break;
@@ -207,11 +210,10 @@ public class Stage1 extends DrawableGameComponent {
         //if (msg.obj != null) {
         mHandler.sendMessage(msg);
         //}
-
         msg = null;
         msg = new Message();
         msg.what = Events.CREATESTAR;
-        mHandler.sendMessage(msg);
+        mHandler.sendMessageDelayed(msg, 5000);
     }
     protected void createFish(int[][] fishTable){
         int width, height;
@@ -238,6 +240,7 @@ public class Stage1 extends DrawableGameComponent {
             mFishObj.setTouchScore(fishTable[6][random]);
             mFishObj.setArrivalScore(fishTable[7][random]);
             mFishObj.setTimerAdd(fishTable[8][random]);
+            mFishObj.setLifeAdd(fishTable[9][random]);
             mFishObj.isAlive = true;
             mFishCollections.add(mFishObj);
             DebugConfig.d("create fish: " + mFishCollections.size());
@@ -288,6 +291,7 @@ public class Stage1 extends DrawableGameComponent {
     @Override
     protected void LoadContent() {
         super.LoadContent();
+        DebugConfig.d("Stage1 LoadContent()");
         int width, height;
 
         if (mBackground == null) {

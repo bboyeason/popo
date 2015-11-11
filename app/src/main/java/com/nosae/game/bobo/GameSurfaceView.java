@@ -29,7 +29,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mMainActivity.mToggleButton.isChecked())
+        if (mMainActivity.mToggleButton.isChecked() || Stage1.isGameOver || Stage2.isGameOver)
             return false;
         final float x = event.getX();
         final float y = event.getY();
@@ -56,6 +56,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                     }
                                 }
                                 mMainActivity.mGameEntry.mStage1.mTimerBar.addTimer(Stage1.mFishCollections.get(f).getTimerAdd());
+                                Life.addLife(Stage1.mFishCollections.get(f).getLifeAdd());
                                 /*if (Stage1.mTotalScore < 0) {
                                     Stage1.mTotalScore = 0;
                                     mMainActivity.mGameEntry.mStage1.mBoboObj.isAlive = false;
