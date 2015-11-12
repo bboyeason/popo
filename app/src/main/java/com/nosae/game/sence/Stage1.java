@@ -86,13 +86,13 @@ public class Stage1 extends DrawableGameComponent {
     private int[][] mFishTable2 = {
             {
                     R.drawable.sea_star,
-                    R.drawable.a_add_life
+                    R.drawable.jellyfish
             },
-            { 10,  5 }, /* Animation column */
-            {  3,  2 }, /* Animation row */
+            { 10, 10 }, /* Animation column */
+            {  3,  3 }, /* Animation row */
             {  0,  0 },  /* Max index */
             {  1,  1 }, /* Death animation start */
-            { 27,  9 }, /* Death animation end */
+            { 27, 27 }, /* Death animation end */
             {  0,  0 }, /* Touch Score */
             {  0,  0 }, /* Arrival Score */
             { 10,  0 }, /* Timer add (seconds) */
