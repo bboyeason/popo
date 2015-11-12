@@ -206,7 +206,7 @@ public class Stage1 extends DrawableGameComponent {
             DebugConfig.d("Image ID: " + random + "=> width: " + width + ", height: " + height);
 
             speed = mRandom.nextInt(GameParams.stage1FishRandomSpeed) + GameParams.stage1FishRandomSpeed;
-            mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, speed, Color.WHITE, 90);
+            mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, (int) (speed * GameParams.density), Color.WHITE, 90);
 
             mFishObj.randomTop();
             mFishObj.setCol(fishTable[1][random]);
