@@ -1,5 +1,8 @@
 package com.nosae.game.sence;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +10,7 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -151,6 +155,10 @@ public class Menu extends Activity {
         DebugConfig.d("Menu logo init");
         mImageView = new ImageView(this);
         mImageView.setBackgroundResource(R.drawable.logo_1);
+
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.menu_root);
+        layout.addView(mImageView, 0);
+
         float fromX, toX, fromY, toY;
         fromX = GameParams.scaleWidth;
         toX = -GameParams.scaleWidth;
@@ -171,12 +179,29 @@ public class Menu extends Activity {
         amSet.addAnimation(amTranslate);
         amSet.addAnimation(amAlpha);
 
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.menu_root);
-        layout.addView(mImageView, 0);
-        mImageView.startAnimation(amSet);
+//        mImageView.startAnimation(amSet);
 
         mSettingsButton.startAnimation(amAlpha);
         mExitButton.startAnimation(amAlpha);
+
+        ObjectAnimator objAnimator1 = ObjectAnimator.ofFloat(mImageView, "alpha", 0.3f, 1.0f);
+        objAnimator1.setRepeatCount(ObjectAnimator.INFINITE);
+//        objAnimator1.setRepeatMode(ObjectAnimator.REVERSE);
+
+        ObjectAnimator objAnimator2 = ObjectAnimator.ofFloat(mImageView, "translationX", fromX, toX, fromX);
+//        objAnimator2.setInterpolator(new AccelerateDecelerateInterpolator());
+        objAnimator2.setRepeatCount(ObjectAnimator.INFINITE);
+        objAnimator1.setRepeatMode(ObjectAnimator.REVERSE);
+
+        ObjectAnimator objAnimator3 = ObjectAnimator.ofFloat(mImageView, "translationY", fromY, toY);
+        objAnimator3.setRepeatCount(ObjectAnimator.INFINITE);
+//        objAnimator1.setRepeatMode(ObjectAnimator.REVERSE);
+
+        AnimatorSet bouncer = new AnimatorSet();
+        bouncer.play(objAnimator1).with(objAnimator2).with(objAnimator3);
+        bouncer.setDuration(6000);
+        bouncer.start();
+
     }
 
     @Override
