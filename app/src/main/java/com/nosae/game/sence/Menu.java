@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.MainActivity;
 import com.nosae.game.bobo.R;
 
@@ -26,6 +28,11 @@ public class Menu extends Activity {
         setContentView(R.layout.menu);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // acquire screen size
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        GameParams.getScreenInfo(dm);
+
         Button mSettingsButton = (Button) findViewById(R.id.settingsButton);
         Button mKarnofskyScaleButton = (Button) findViewById(R.id.karnofskyButton);
         Button mStartButton = (Button) findViewById(R.id.startButton);

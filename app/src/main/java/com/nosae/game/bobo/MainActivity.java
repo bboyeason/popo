@@ -201,18 +201,6 @@ public class MainActivity extends Activity {
                 Service.VIBRATOR_SERVICE);
 
         GameParams.res = getResources();
-        // acquire screen size
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        GameParams.scaleWidth = dm.widthPixels;
-        GameParams.scaleHeight = dm.heightPixels;
-        GameParams.halfWidth = GameParams.scaleWidth >> 1;
-        GameParams.halfHeight = GameParams.scaleHeight >> 1;
-        GameParams.density = dm.density;
-        GameParams.densityDpi = dm.densityDpi;
-        GameParams.screenRect = new Rect(0, 0, GameParams.scaleWidth, GameParams.scaleHeight);
-        GameParams.screenRectBoundary = new Rect( 0 - GameParams.boundary, 0 - GameParams.boundary, GameParams.scaleWidth + GameParams.boundary, GameParams.scaleHeight + GameParams.boundary);
-        DebugConfig.d("Screen size: " + dm.widthPixels + " x " + dm.heightPixels + ", density: " + dm.density + ", density dpi: " + dm.densityDpi);
 
         mGameEntry = new GameEntry(this);
         GameStateClass.oldState = GameStateClass.GameState.None;

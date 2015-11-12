@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Vibrator;
+import android.util.DisplayMetrics;
 
 import com.nosae.game.objects.Music;
 import com.nosae.game.settings.DebugConfig;
@@ -62,8 +63,7 @@ public class GameParams {
     }
 
     // Collision detection
-    public static boolean isCollision(Rect a, Rect b)
-    {
+    public static boolean isCollision(Rect a, Rect b) {
         if (a.left < b.right)
             if (a.right > b.left)
                 if (a.top < b.bottom)
@@ -73,21 +73,15 @@ public class GameParams {
         return false;
     }
 
-    public static boolean isInScreen(Rect obj)
-    {
+    public static boolean isInScreen(Rect obj) {
         return isCollision(obj, screenRect);
     }
 
-    // �D����
-    public static int getTheta(double XDistance, double YDistance)
-    {
-        // ���i���H0
+    public static int getTheta(double XDistance, double YDistance) {
         if (XDistance == 0) XDistance = 1;
 
-        // ����
-        int theta = (int)(Math.atan(YDistance / XDistance) * 180 / Math.PI);
+        int theta = (int) (Math.atan(YDistance / XDistance) * 180 / Math.PI);
 
-        // �H���ഫ
         if (XDistance >= 0 && theta <= 0)
             theta += 360;
         else if (XDistance <= 0)
@@ -118,25 +112,37 @@ public class GameParams {
     }
 
     public static int calculateInSampleSize(
-                BitmapFactory.Options options, int reqWidth, int reqHeight) {
-            // Raw height and width of image
-            final int height = options.outHeight;
-            final int width = options.outWidth;
-            int inSampleSize = 1;
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
 
-            if (height > reqHeight || width > reqWidth) {
+        if (height > reqHeight || width > reqWidth) {
 
-                final int halfHeight = height / 2;
-                final int halfWidth = width / 2;
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
 
-                // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-                // height and width larger than the requested height and width.
-                while ((halfHeight / inSampleSize) > reqHeight
-                        || (halfWidth / inSampleSize) > reqWidth) {
-                    inSampleSize *= 2;
-                }
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    || (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
             }
-            DebugConfig.d("inSampleSize:" + inSampleSize);
-            return inSampleSize;
         }
+        DebugConfig.d("inSampleSize:" + inSampleSize);
+        return inSampleSize;
+    }
+
+    public static void getScreenInfo(DisplayMetrics dm) {
+        scaleWidth = dm.widthPixels;
+        scaleHeight = dm.heightPixels;
+        halfWidth = scaleWidth >> 1;
+        halfHeight = scaleHeight >> 1;
+        density = dm.density;
+        densityDpi = dm.densityDpi;
+        screenRect = new Rect(0, 0, scaleWidth, scaleHeight);
+        screenRectBoundary = new Rect(0 - boundary, 0 - boundary, scaleWidth + boundary, scaleHeight + boundary);
+        DebugConfig.d("Screen size: " + dm.widthPixels + " x " + dm.heightPixels + ", density: " + dm.density + ", density dpi: " + dm.densityDpi);
+    }
 }
