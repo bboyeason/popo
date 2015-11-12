@@ -3,6 +3,7 @@ package com.nosae.game.sence;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,6 +40,7 @@ public class Menu extends Activity {
     private Button mStartButton;
     private Button mLoadButton;
     private Button mExitButton;
+    private AnimatorSet mBouncer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +109,10 @@ public class Menu extends Activity {
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Handler().post(new Runnable() {
+                Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStartButton.getWidth() / 2, mStartButton.getHeight() / 2);
+                amScale.setDuration(100);
+                mStartButton.startAnimation(amScale);
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         Intent i = new Intent(Menu.this, SplashScreen.class);
@@ -119,7 +125,7 @@ public class Menu extends Activity {
                         if (mMusic != null)
                             mMusic.Pause();
                     }
-                });
+                }, 100);
             }
         });
 
@@ -199,11 +205,18 @@ public class Menu extends Activity {
         objAnimator3.setRepeatCount(ObjectAnimator.INFINITE);
 //        objAnimator1.setRepeatMode(ObjectAnimator.REVERSE);
 
-        AnimatorSet bouncer = new AnimatorSet();
-        bouncer.play(objAnimator1).with(objAnimator2).with(objAnimator3);
-        bouncer.setDuration(6000);
-        bouncer.start();
+        objAnimator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float) animation.getAnimatedValue();
+                DebugConfig.d("the animation value is " + value);
+            }
+        });
 
+        mBouncer = new AnimatorSet();
+        mBouncer.play(objAnimator1).with(objAnimator2).with(objAnimator3);
+        mBouncer.setDuration(6000);
+        mBouncer.start();
     }
 
     @Override
@@ -217,6 +230,10 @@ public class Menu extends Activity {
         if (!mMusic.player.isPlaying()) {
             mMusic.Play();
         }
+
+        if (!mBouncer.isRunning())
+            mBouncer.start();
+        // if API 19 or later, we can use mBouncer.resume()
     }
 
     @Override
@@ -224,6 +241,9 @@ public class Menu extends Activity {
         super.onPause();
         if (mMusic.player.isPlaying())
             mMusic.Pause();
+        if (mBouncer.isRunning())
+            mBouncer.cancel();
+        // if API 19 or later, we can use mBouncer.pause()
     }
 
     @Override
@@ -234,5 +254,10 @@ public class Menu extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        DebugConfig.d("Menu onDestroy()");
+        if (mBouncer != null) {
+            mBouncer.cancel();
+            mBouncer.end();
+        }
     }
 }
