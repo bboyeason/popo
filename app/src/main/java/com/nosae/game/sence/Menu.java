@@ -100,7 +100,9 @@ public class Menu extends Activity {
                 });
             }
         });
-
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mStartButton.getLayoutParams();
+        layoutParams.topMargin = (int) (GameParams.scaleHeight * 0.56);
+        mStartButton.setLayoutParams(layoutParams);
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
