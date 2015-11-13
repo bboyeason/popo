@@ -197,4 +197,9 @@ public class FishObj extends GameObj {
         }
         setAnimationIndex(col);
     }
+
+    public void recycle() {
+        image.recycle();
+        image = null;
+    }
 }

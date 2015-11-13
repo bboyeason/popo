@@ -345,13 +345,15 @@ public class Stage1 extends DrawableGameComponent {
                     }
                 }
                 mFishCollections.remove(mSubFishObj);
+                mSubFishObj.recycle();
             }
             if (!mBoboObj.isAlive)
                 isGameOver = true;
 
-            if (!mSubFishObj.isAlive)
+            if (!mSubFishObj.isAlive) {
                 mFishCollections.remove(mSubFishObj);
-
+                mSubFishObj.recycle();
+            }
         }
         if (DebugConfig.isFpsDebugOn) {
             mFpsText.message = "actual FPS: " + (int) mGameEntry.actualFPS + " FPS (" + (int) mGameEntry.fps
