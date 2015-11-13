@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.*;
+import android.widget.Toast;
 
 import com.nosae.game.bobo.Events;
 import com.nosae.game.bobo.GameEntry;
@@ -196,7 +197,15 @@ public class Stage1 extends DrawableGameComponent {
 //        for (int i = 0; i < mMaximum; i++) {
             random = mRandom.nextInt(fishTable[0].length);
 //            Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(fishTable[0][random], (int) (50 * fishTable[1][random] / GameParams.density), (int) (50 * fishTable[2][random] / GameParams.density));
-            Bitmap fishImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, fishTable[0][random]);
+        Bitmap fishImage = null;
+        try {
+            fishImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, fishTable[0][random]);
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            Toast.makeText(mGameEntry.mMainActivity, "OutOfMemoryError!",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
             width = fishImage.getWidth() / fishTable[1][random];
             height = fishImage.getHeight() / fishTable[2][random];
