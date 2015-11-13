@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -162,7 +163,8 @@ public class Menu extends Activity {
     private void logoInit() {
         DebugConfig.d("Menu logo init");
         mImageView = new ImageView(this);
-        mImageView.setBackgroundResource(R.drawable.logo_1);
+//        mImageView.setBackgroundResource(R.drawable.logo_1);
+        mImageView.setBackgroundResource(R.drawable.logo_animation_list);
 
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.menu_root);
         layout.addView(mImageView, 0);
@@ -205,6 +207,9 @@ public class Menu extends Activity {
         objAnimator3.setRepeatCount(ObjectAnimator.INFINITE);
 //        objAnimator1.setRepeatMode(ObjectAnimator.REVERSE);
 
+        ObjectAnimator objAnimator4 = ObjectAnimator.ofFloat(mImageView, "rotationY", 0.0f, 180.0f);
+        objAnimator4.setRepeatCount(ObjectAnimator.INFINITE);
+
         objAnimator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -213,8 +218,12 @@ public class Menu extends Activity {
             }
         });
 
+        AnimationDrawable animDrawable = (AnimationDrawable) mImageView.getBackground();
+        animDrawable.start();
         mBouncer = new AnimatorSet();
-        mBouncer.play(objAnimator1).with(objAnimator2).with(objAnimator3);
+        mBouncer.play(objAnimator1).with(objAnimator2).with(objAnimator3).with(objAnimator4);
+//        AnimatorSet as = new AnimatorSet();
+//        as.playSequentially(mBouncer);
         mBouncer.setDuration(6000);
         mBouncer.start();
     }
