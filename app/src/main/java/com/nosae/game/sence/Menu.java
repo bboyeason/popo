@@ -214,7 +214,7 @@ public class Menu extends Activity {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
-                DebugConfig.d("the animation value is " + value);
+//                DebugConfig.d("the animation value is " + value);
             }
         });
 
@@ -240,7 +240,7 @@ public class Menu extends Activity {
             mMusic.Play();
         }
 
-        if (!mBouncer.isRunning())
+        if (mBouncer != null && !mBouncer.isRunning())
             mBouncer.start();
         // if API 19 or later, we can use mBouncer.resume()
     }
@@ -248,9 +248,10 @@ public class Menu extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        DebugConfig.d("Menu onPause()");
         if (mMusic.player.isPlaying())
             mMusic.Pause();
-        if (mBouncer.isRunning())
+        if (mBouncer != null && mBouncer.isRunning())
             mBouncer.cancel();
         // if API 19 or later, we can use mBouncer.pause()
     }
@@ -264,9 +265,7 @@ public class Menu extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         DebugConfig.d("Menu onDestroy()");
-        if (mBouncer != null) {
+        if (mBouncer != null)
             mBouncer.cancel();
-            mBouncer.end();
-        }
     }
 }
