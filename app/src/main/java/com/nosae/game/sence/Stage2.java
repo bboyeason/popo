@@ -18,7 +18,7 @@ import lbs.DrawableGameComponent;
 import lbs.FishCollection;
 
 import com.nosae.game.objects.GameObj;
-import com.nosae.game.objects.Life;
+import com.nosae.game.objects.Life2;
 import com.nosae.game.objects.Quiz;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar;
@@ -55,7 +55,7 @@ public class Stage2 extends DrawableGameComponent {
     private Score mScore;
     private GameObj mLifeIcon;
     private Bitmap mLifeImage;
-    private Life mLife;
+    private Life2 mLife2;
     private Bitmap mLifeNumber;
 
     public TimerBar mTimerBar;
@@ -136,7 +136,7 @@ public class Stage2 extends DrawableGameComponent {
         mFishCollections = new FishCollection();
         mRandom = new Random();
         mTotalScore = 0;
-        Life.setLife(5);
+        Life2.setLife(5);
 
         if (mHandlerThread == null) {
             mHandlerThread = new HandlerThread(THREADNAME,
@@ -242,13 +242,13 @@ public class Stage2 extends DrawableGameComponent {
             mLifeIcon = new GameObj(mSenceTitle.destRect.left + 10 * 16, mTimerBar.destRect.bottom, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
         }
 
-        if (mLife == null) {
+        if (mLife2 == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
             mLifeNumber = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_number, options);
             width = mLifeNumber.getWidth() / 5;
             height = mLifeNumber.getHeight() / 2;
-            mLife = new Life(mLifeIcon.destRect.right + 10, mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - height / 2, width, height, 0, 0, width, height, 0, 0, 0);
+            mLife2 = new Life2(mLifeIcon.destRect.right + 10, mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - height / 2, width, height, 0, 0, width, height, 0, 0, 0);
         }
 
         if (mBoboObj == null) {
@@ -307,9 +307,9 @@ public class Stage2 extends DrawableGameComponent {
             isQuizHit = false;
         }
 
-        if (mLife != null) {
-            mLife.updateLife();
-            if (Life.getLife() <= 0)
+        if (mLife2 != null) {
+            mLife2.updateLife();
+            if (Life2.getLife() <= 0)
                 isGameOver = true;
         }
 
@@ -365,8 +365,8 @@ public class Stage2 extends DrawableGameComponent {
             mSubCanvas.drawBitmap(mLifeImage, mLifeIcon.srcRect, mLifeIcon.destRect, mLifeIcon.paint);
         }
 
-        if (mLife != null) {
-            mSubCanvas.drawBitmap(mLifeNumber, mLife.srcRect, mLife.destRect, mLife.paint);
+        if (mLife2 != null) {
+            mSubCanvas.drawBitmap(mLifeNumber, mLife2.srcRect, mLife2.destRect, mLife2.paint);
         }
 
         if (mBoboObj != null) {

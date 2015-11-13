@@ -1,6 +1,5 @@
 package com.nosae.game.sence;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -18,11 +17,10 @@ import java.util.Random;
 import lbs.DrawableGameComponent;
 import lbs.FishCollection;
 
-import com.nosae.game.objects.Life;
+import com.nosae.game.objects.Life1;
 import com.nosae.game.role.Bobo;
 import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.GameObj;
-import com.nosae.game.role.GoldenFish;
 import com.nosae.game.role.NormalFish;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar2;
@@ -57,8 +55,7 @@ public class Stage1 extends DrawableGameComponent {
 
     private GameObj mLifeIcon;
     private Bitmap mLifeImage;
-    private Life mLife;
-    private Bitmap mLifeNumber;
+    private Life1 mLife1;
 
     public static FishCollection mFishCollections;
 
@@ -275,14 +272,14 @@ public class Stage1 extends DrawableGameComponent {
             mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + (int) (5 * GameParams.density), mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
         }
 
-        if (mLife == null) {
+        if (mLife1 == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
-            mLifeNumber = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_number, options);
-            width = mLifeNumber.getWidth() / 5;
-            height = mLifeNumber.getHeight() / 2;
-            mLife = new Life(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
-            Life.setLife(5);
+            Bitmap numBitmap = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
+            mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth(), numBitmap.getHeight());
+            Life1.setLife(5);
+            numBitmap.recycle();
+            numBitmap = null;
         }
 
         if (mTimerBar == null) {
@@ -293,7 +290,7 @@ public class Stage1 extends DrawableGameComponent {
             if (mTimerBarImage != null) {
                 width = mTimerBarImage.getWidth() / 1;
                 height = mTimerBarImage.getHeight() / 9;
-                mTimerBar = new TimerBar2(mLife.destRect.right + 10, mScore.getY() + (mLife.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
+                mTimerBar = new TimerBar2(mLife1.destRect.right + 10, mScore.getY() + (mLife1.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
                 if (mTimerBar != null)
                     mTimerBar.setStartFrame((int) GameEntry.totalFrames);
             }
@@ -331,9 +328,9 @@ public class Stage1 extends DrawableGameComponent {
                     if (mSubFishObj.getArrivalScore() > 0) {
                         mTotalScore += mSubFishObj.getArrivalScore();
                     } else if (mSubFishObj.getArrivalScore() < 0) {
-                        Life.addLife(mSubFishObj.getArrivalScore());
+                        Life1.addLife(mSubFishObj.getArrivalScore());
                     }
-                    if (mTotalScore < 0 || Life.getLife() <= 0) {
+                    if (mTotalScore < 0 || Life1.getLife() <= 0) {
                         mTotalScore = 0;
                         mBoboObj.isAlive = false;
                     }
@@ -354,9 +351,9 @@ public class Stage1 extends DrawableGameComponent {
 
         mScore.setTotalScore(mTotalScore);
 
-        if (mLife != null) {
-            mLife.updateLife();
-            if (Life.getLife() <= 0)
+        if (mLife1 != null) {
+            mLife1.updateLife();
+            if (Life1.getLife() <= 0)
                 isGameOver = true;
         }
 
@@ -424,8 +421,9 @@ public class Stage1 extends DrawableGameComponent {
             mSubCanvas.drawBitmap(mLifeImage, mLifeIcon.srcRect, mLifeIcon.destRect, mLifeIcon.paint);
         }
 
-        if (mLife != null) {
-            mSubCanvas.drawBitmap(mLifeNumber, mLife.srcRect, mLife.destRect, mLife.paint);
+        if (mLife1 != null) {
+//            mSubCanvas.drawBitmap(mLifeNumber, mLife2.srcRect, mLife2.destRect, mLife2.paint);
+            mLife1.draw(mSubCanvas);
         }
 
         if (mTimerBar != null) {

@@ -3,12 +3,12 @@ package com.nosae.game.objects;
 /**
  * Created by eason on 2015/10/31.
  */
-public class Life extends GameObj {
+public class Life2 extends GameObj {
     public int width = 0;
     public int height = 0;
     private int column = 5;
     private static int mLife = 5;
-    public Life(int destX, int destY, int destWidth, int destHeight, int srcX, int srcY, int srcWidth, int srcHeight, int speed, int color, int theta) {
+    public Life2(int destX, int destY, int destWidth, int destHeight, int srcX, int srcY, int srcWidth, int srcHeight, int speed, int color, int theta) {
         super(destX, destY, destWidth, destHeight, srcX, srcY, srcWidth, srcHeight, speed, color, theta);
 
         this.width = srcWidth;
@@ -20,16 +20,16 @@ public class Life extends GameObj {
     }
 
     public static void setLife(int mLife) {
-        Life.mLife = mLife;
+        Life2.mLife = mLife;
     }
 
     public static void addLife(int life) {
-        Life.mLife += life;
+        Life2.mLife += life;
 
-        if (Life.mLife > 5)
-            Life.mLife = 5;
-        else if (Life.mLife < 0)
-            Life.mLife = 0;
+        if (Life2.mLife > 5)
+            Life2.mLife = 5;
+        else if (Life2.mLife < 0)
+            Life2.mLife = 0;
     }
 
     public void updateLife() {
