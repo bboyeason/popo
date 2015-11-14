@@ -28,7 +28,7 @@ public class VideoPlayer
 
         videoView = new VideoView(this.splashScreen);
 //        videoView = new myVideo(this.splashScreen);
-        Load(R.raw.videoviewdemo);
+        Load(R.raw.story);
 
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
