@@ -98,6 +98,7 @@ public class MainActivity extends Activity {
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                GameParams.playSound(mGameEntry.mMainActivity);
 //                mToggleButton.setChecked(isChecked);
                 if (mGameEntry != null) {
                     if (isChecked) {
