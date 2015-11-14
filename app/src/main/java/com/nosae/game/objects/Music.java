@@ -44,6 +44,10 @@ public class Music{
     {
         player.pause();
     }
+
+    public void setLooping(boolean looping) {
+        player.setLooping(looping);
+    }
 }
 
 

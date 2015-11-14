@@ -62,6 +62,7 @@ public class Menu extends Activity {
         if (mMusic == null) {
 //            mMusic.player.release();
             mMusic = new Music(this, R.raw.menu,2);
+            mMusic.setLooping(true);
             mMusic.Play();
         }
 

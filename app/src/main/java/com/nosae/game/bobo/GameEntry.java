@@ -106,7 +106,7 @@ public class GameEntry extends Game {
                     if (GameParams.music == null) {
 //                        GameParams.music.player.release();
                         GameParams.music = new Music(mMainActivity, R.raw.stage1, 1);
-
+                        GameParams.music.setLooping(true);
                         GameParams.music.Play();
                     }
                     break;

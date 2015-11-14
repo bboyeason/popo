@@ -7,7 +7,6 @@ import lbs.*;
 import com.nosae.game.settings.DebugConfig;
 
 public class GameStateClass {
-    // �C�����A
     public enum GameState
     {
         None,
@@ -26,6 +25,10 @@ public class GameStateClass {
     public static void changeState(GameState newState,DrawableGameComponent nowGameClass,Game game)
     {
         if (nowGameClass != null) {
+            if (GameParams.music != null) {
+                GameParams.music.Stop();
+                GameParams.music = null;
+            }
             game.Components.remove(nowGameClass);
 
             nowGameClass.Dispose();
