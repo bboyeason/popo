@@ -62,6 +62,11 @@ public class Menu extends Activity {
         mStartButton = (Button) findViewById(R.id.startButton);
         mLoadButton = (Button) findViewById(R.id.loadButton);
         mExitButton = (Button) findViewById(R.id.exitButton);
+        mSettingsButton.setSoundEffectsEnabled(false);
+        mKarnofskyScaleButton.setSoundEffectsEnabled(false);
+        mStartButton.setSoundEffectsEnabled(false);
+        mLoadButton.setSoundEffectsEnabled(false);
+        mExitButton.setSoundEffectsEnabled(false);
         if (mMusic == null) {
 //            mMusic.player.release();
             mMusic = new Music(this, R.raw.menu,2);
