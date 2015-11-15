@@ -34,12 +34,12 @@ public class Settings extends Activity {
         soundSwitch = (Switch) findViewById(R.id.sound_switch);
 
         SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
-        boolean isMusicOn = settings.getBoolean("isMusicOn", false);
+        boolean isMusicOn = settings.getBoolean("isMusicOn", true);
         musicSwitch.setChecked(isMusicOn);
         GameParams.isMusicOn = isMusicOn;
 
         settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
-        boolean isSoundOn = settings.getBoolean("isSoundOn", false);
+        boolean isSoundOn = settings.getBoolean("isSoundOn", true);
         soundSwitch.setChecked(isSoundOn);
     }
 

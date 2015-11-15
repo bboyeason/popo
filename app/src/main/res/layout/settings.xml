@@ -10,7 +10,8 @@
         android:id="@+id/music_switch"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp" />
+        android:layout_marginTop="57dp"
+        android:checked="true" />
 
     <Switch
         android:layout_width="wrap_content"
@@ -19,7 +20,8 @@
         android:id="@+id/sound_switch"
         android:layout_below="@+id/music_switch"
         android:layout_alignLeft="@+id/music_switch"
-        android:layout_alignStart="@+id/music_switch" />
+        android:layout_alignStart="@+id/music_switch"
+        android:checked="true" />
 
     <SeekBar
         android:layout_width="match_parent"
