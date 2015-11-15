@@ -16,8 +16,7 @@ import com.nosae.game.settings.DebugConfig;
  */
 public class VideoPlayer
 {
-    public VideoView videoView;
-//    public myVideo videoView;
+    public myVideo videoView;
     private int videoPosition = 0;
     private SplashScreen splashScreen;
     public boolean isRuningVideo;
@@ -26,8 +25,7 @@ public class VideoPlayer
     public VideoPlayer(SplashScreen splashScreen) {
         this.splashScreen = splashScreen;
 
-        videoView = new VideoView(this.splashScreen);
-//        videoView = new myVideo(this.splashScreen);
+        videoView = new myVideo(this.splashScreen);
         Load(R.raw.story);
 
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -93,7 +91,7 @@ public class VideoPlayer
         }, splashInterval);
     }
 
-/*    public class myVideo extends VideoView
+    public class myVideo extends VideoView
     {
         public myVideo(Context context) {
             super(context);
@@ -109,6 +107,6 @@ public class VideoPlayer
 
             return false;
         }
-    }*/
+    }
 }
 
