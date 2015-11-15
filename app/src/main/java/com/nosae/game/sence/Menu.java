@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -71,7 +72,6 @@ public class Menu extends Activity {
 //            mMusic.player.release();
             mMusic = new Music(this, R.raw.menu,2);
             mMusic.setLooping(true);
-            mMusic.Play();
         }
 
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +88,7 @@ public class Menu extends Activity {
 
                     private void finish() {
                         // TODO Auto-generated method stub
-                        if (mMusic != null)
+                        if (mMusic != null && mMusic.player.isPlaying())
                             mMusic.Pause();
                     }
                 });
@@ -109,7 +109,7 @@ public class Menu extends Activity {
 
                     private void finish() {
                         // TODO Auto-generated method stub
-                        if (mMusic != null)
+                        if (mMusic != null && mMusic.player.isPlaying())
                             mMusic.Pause();
                     }
                 });
@@ -135,7 +135,7 @@ public class Menu extends Activity {
 
                     private void finish() {
                         // TODO Auto-generated method stub
-                        if (mMusic != null)
+                        if (mMusic != null && mMusic.player.isPlaying())
                             mMusic.Pause();
                     }
                 }, 100);
@@ -156,7 +156,7 @@ public class Menu extends Activity {
 
                     private void finish() {
                         // TODO Auto-generated method stub
-                        if (mMusic != null)
+                        if (mMusic != null && mMusic.player.isPlaying())
                             mMusic.Pause();
                     }
                 });
@@ -170,7 +170,14 @@ public class Menu extends Activity {
             }
         });
 
+        loadSharePreferences();
         logoInit();
+    }
+
+    private void loadSharePreferences() {
+        SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
+        boolean isMusicOn = settings.getBoolean("isMusicOn", false);
+        GameParams.isMusicOn = isMusicOn;
     }
 
     private void logoInit() {
@@ -253,8 +260,11 @@ public class Menu extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!mMusic.player.isPlaying()) {
+        DebugConfig.d("Menu onResume()");
+        if (GameParams.isMusicOn && !mMusic.player.isPlaying()) {
             mMusic.Play();
+        } else if (!GameParams.isMusicOn && mMusic.player.isPlaying()){
+            mMusic.Pause();
         }
         if (mBouncer != null && !mBouncer.isRunning())
             mBouncer.start();

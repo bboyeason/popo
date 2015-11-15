@@ -21,6 +21,8 @@ import com.nosae.game.settings.DebugConfig;
  */
 public class GameParams {
 
+    public static final String PREFS_MUSIC = "Music";
+    public static final String PREFS_SOUND = "Sound";
     public static Resources res = null;
 
     public static Rect screenRect;
@@ -52,6 +54,8 @@ public class GameParams {
 
     public static Music music = null;
     public static SoundPool soundPool = null;
+    public static boolean isMusicOn = true;
+    public static boolean isSoundOn = true;
     public static int soundID = 0;
     public static Vibrator vibrator = null;
     public static VideoPlayer videoPlayer = null;

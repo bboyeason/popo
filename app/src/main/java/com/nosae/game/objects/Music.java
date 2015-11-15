@@ -3,6 +3,8 @@ package com.nosae.game.objects;
 import android.content.Context;
 import android.media.MediaPlayer;
 
+import com.nosae.game.settings.DebugConfig;
+
 /**
  * Created by eason on 2015/10/27.
  */
@@ -10,7 +12,7 @@ public class Music{
     public MediaPlayer player;
     public boolean isComplete;
 
-    public Music(Context context,int music,int volume) {
+    public Music(Context context, int music, int volume) {
         player = MediaPlayer.create(context, music);
 
         // (0~10)
@@ -18,30 +20,26 @@ public class Music{
 
         isComplete = false;
 
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
-        {
-            public void onCompletion(MediaPlayer arg0)
-            {
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer arg0) {
                 isComplete = true;
             }
         });
     }
 
-    public void Play()
-    {
+    public void Play() {
+//        DebugConfig.d("Music Play().isComplete: " + isComplete);
         if (!isComplete)
             if (!player.isPlaying())
                 player.start();
     }
 
-    public void Stop()
-    {
+    public void Stop() {
         player.stop();
         isComplete = false;
     }
 
-    public void Pause()
-    {
+    public void Pause() {
         player.pause();
     }
 
