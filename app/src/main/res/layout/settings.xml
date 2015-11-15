@@ -1,34 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/menu_background">
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Music"
         android:id="@+id/music_switch"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp"
-        android:checked="true" />
+        android:checked="true"
+        android:layout_marginBottom="179dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="32dp" />
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sound"
         android:id="@+id/sound_switch"
-        android:layout_below="@+id/music_switch"
-        android:layout_alignLeft="@+id/music_switch"
-        android:layout_alignStart="@+id/music_switch"
-        android:checked="true" />
+        android:checked="true"
+        android:layout_alignTop="@+id/music_switch"
+        android:layout_alignRight="@+id/music_switch"
+        android:layout_alignEnd="@+id/music_switch"
+        android:layout_marginTop="40dp" />
 
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar"
-        android:layout_below="@+id/sound_switch"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/music_seekBar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/music_switch"
+        android:layout_toRightOf="@+id/music_switch"
+        android:layout_toEndOf="@+id/music_switch"
+        android:layout_alignTop="@+id/music_switch" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sound_seekBar"
+        android:layout_alignBottom="@+id/sound_switch"
+        android:layout_alignTop="@+id/sound_switch"
+        android:layout_alignLeft="@+id/music_seekBar"
+        android:layout_alignStart="@+id/music_seekBar" />
 
 </RelativeLayout>
