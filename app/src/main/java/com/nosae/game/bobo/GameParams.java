@@ -88,10 +88,14 @@ public class GameParams {
     }
 
     public static void playSound(Context context) {
+        if (!isSoundOn)
+            return;
         playSound(context, soundID, 0);
     }
     //播放声音,参数sound是播放音效的id，参数number是播放音效的次数
     public static void playSound(Context context, int sound, int number) {
+        if (!isSoundOn)
+            return;
         AudioManager am = (AudioManager) context.getSystemService(context.AUDIO_SERVICE);//实例化AudioManager对象
         float audioMaxVolumn = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);//返回当前AudioManager对象的最大音量值
         float audioCurrentVolumn = am.getStreamVolume(AudioManager.STREAM_MUSIC);//返回当前AudioManager对象的音量值

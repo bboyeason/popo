@@ -69,6 +69,7 @@ public class MainActivity extends Activity {
         mRestartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GameParams.playSound(mGameEntry.mMainActivity);
 //                mGameEntry.isForceRestart = true;
 //                mGameEntry.Exit();
 //                mGameEntry.Run();
