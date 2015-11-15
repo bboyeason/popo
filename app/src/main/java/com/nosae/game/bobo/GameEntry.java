@@ -30,8 +30,9 @@ public class GameEntry extends Game {
     @Override
     public void Run() {
         DebugConfig.d("GameEntry Run()");
-        if (GameParams.music != null && !GameParams.music.player.isPlaying())
-            GameParams.music.Play();
+        if (GameParams.isMusicOn == true)
+            if (GameParams.music != null && !GameParams.music.player.isPlaying())
+                GameParams.music.Play();
         super.Run();
     }
 
@@ -103,11 +104,13 @@ public class GameEntry extends Game {
                     mStage1 = new Stage1(this);
                     Components.add(mStage1);
 
+                    // TODO move this to somewhere before GameEntry Run()
                     if (GameParams.music == null) {
 //                        GameParams.music.player.release();
                         GameParams.music = new Music(mMainActivity, R.raw.stage1, 1);
                         GameParams.music.setLooping(true);
-                        GameParams.music.Play();
+                        if (GameParams.isMusicOn == true)
+                            GameParams.music.Play();
                     }
                     break;
 
