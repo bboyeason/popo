@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
 
@@ -60,6 +61,9 @@ public class MainActivity extends Activity {
 //            mHandlerThread.start();
 //            DebugConfig.d("Create message handler thread.");
 //        }
+        Initialize();
+        mSurfaceView = (SurfaceView) findViewById(R.id.surfaceViewTest);
+
 
         mRestartButton = (Button) findViewById(R.id.restartButton);
         mRestartButton.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +98,10 @@ public class MainActivity extends Activity {
 
         });
         mToggleButton = (ToggleButton) findViewById(R.id.toggleButton);
-//        mToggleButton.setVisibility(View.INVISIBLE);
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mToggleButton.getLayoutParams();
+        layoutParams.rightMargin = 30;
+        layoutParams.topMargin = (int) (20 * GameParams.density);
+        mToggleButton.setLayoutParams(layoutParams);
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -127,8 +134,6 @@ public class MainActivity extends Activity {
             }
         });
 //        mSurfaceView = new GameSurfaceView(this);
-        Initialize();
-        mSurfaceView = (SurfaceView) findViewById(R.id.surfaceViewTest);
 
     }
 
