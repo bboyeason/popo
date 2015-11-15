@@ -8,6 +8,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.nosae.game.objects.Life2;
+import com.nosae.game.objects.Music;
 import com.nosae.game.objects.Quiz;
 import com.nosae.game.role.Stage2_fish;
 import com.nosae.game.sence.Stage1;
@@ -51,7 +52,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                 if (!Stage1.mFishCollections.get(f).readyToDeath) {
                                     if (Stage1.mFishCollections.get(f).getTouchScore() >= 0) {
                                         Stage1.mTotalScore += Stage1.mFishCollections.get(f).getTouchScore();
-                                        GameParams.playSound(mMainActivity);
+                                        Music.playSound();
                                     } else if (Stage1.mFishCollections.get(f).getTouchScore() == -1) {
                                         GameParams.vibrator.vibrate(50);
                                     }

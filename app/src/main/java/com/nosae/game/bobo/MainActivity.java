@@ -1,13 +1,12 @@
 package com.nosae.game.bobo;
 
+import com.nosae.game.objects.Music;
 import com.nosae.game.sence.Stage1;
 import com.nosae.game.sence.Stage2;
 import com.nosae.game.settings.DebugConfig;
 import android.app.Activity;
 import android.app.Service;
-import android.graphics.Rect;
 import android.os.*;
-import android.util.DisplayMetrics;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
@@ -69,7 +68,7 @@ public class MainActivity extends Activity {
         mRestartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameParams.playSound(mGameEntry.mMainActivity);
+                Music.playSound();
 //                mGameEntry.isForceRestart = true;
 //                mGameEntry.Exit();
 //                mGameEntry.Run();
@@ -106,7 +105,7 @@ public class MainActivity extends Activity {
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                GameParams.playSound(mGameEntry.mMainActivity);
+                Music.playSound();
 //                mToggleButton.setChecked(isChecked);
                 if (mGameEntry != null) {
                     if (isChecked) {

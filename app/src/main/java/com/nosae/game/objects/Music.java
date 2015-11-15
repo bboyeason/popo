@@ -1,7 +1,12 @@
 package com.nosae.game.objects;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.os.Build;
 
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.settings.DebugConfig;
@@ -12,8 +17,10 @@ import com.nosae.game.settings.DebugConfig;
 public class Music{
     public MediaPlayer player;
     public boolean isComplete;
+    public static Context context;
 
     public Music(Context context, int music, int volume) {
+        this.context = context;
         player = MediaPlayer.create(context, music);
 
         // (0~10)
@@ -26,6 +33,56 @@ public class Music{
                 isComplete = true;
             }
         });
+    }
+
+    public static void soundPoolInit() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            createNewSoundPool();
+        } else {
+            createOldSoundPool();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected static void createNewSoundPool() {
+        DebugConfig.d("createNewSoundPool");
+        AudioAttributes attributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        GameParams.soundPool = new SoundPool.Builder()
+                .setAudioAttributes(attributes)
+                .build();
+    }
+
+    @SuppressWarnings("deprecation")
+    protected static void createOldSoundPool() {
+        DebugConfig.d("createOldSoundPool");
+        GameParams.soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+    }
+
+    public static void playSound() {
+        if (!GameParams.isSoundOn)
+            return;
+        playSound(GameParams.soundID, 0);
+    }
+
+    //播放声音,参数sound是播放音效的id，参数number是播放音效的次数
+    public static void playSound(int sound, int number) {
+        if (!GameParams.isSoundOn)
+            return;
+        AudioManager am = (AudioManager) context.getSystemService(context.AUDIO_SERVICE);//实例化AudioManager对象
+        float audioMaxVolumn = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);//返回当前AudioManager对象的最大音量值
+        float audioCurrentVolumn = am.getStreamVolume(AudioManager.STREAM_MUSIC);//返回当前AudioManager对象的音量值
+        float volumnRatio = audioCurrentVolumn/audioMaxVolumn;
+        GameParams.soundPool.play(
+                sound,          //播放的音乐id
+                volumnRatio,    //左声道音量
+                volumnRatio,    //右声道音量
+                1,              //优先级，0为最低
+                number,         //循环次数，0无不循环，-1无永远循环
+                1               //回放速度 ，该值在0.5-2.0之间，1为正常速度
+        );
     }
 
     public void Play() {

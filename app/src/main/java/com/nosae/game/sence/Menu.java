@@ -1,6 +1,5 @@
 package com.nosae.game.sence;
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -8,14 +7,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -36,7 +32,6 @@ import com.nosae.game.settings.DebugConfig;
  * Created by eason on 2015/10/27.
  */
 public class Menu extends Activity {
-    private static Activity sInstance;
     private Music mMusic;
     private ImageView mImageView;
     private Button mSettingsButton;
@@ -49,7 +44,6 @@ public class Menu extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sInstance = this;
         setContentView(R.layout.menu);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -77,7 +71,7 @@ public class Menu extends Activity {
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameParams.playSound(sInstance);
+                Music.playSound();
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
@@ -98,7 +92,7 @@ public class Menu extends Activity {
         mKarnofskyScaleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameParams.playSound(sInstance);
+                Music.playSound();
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
@@ -121,7 +115,7 @@ public class Menu extends Activity {
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameParams.playSound(sInstance);
+                Music.playSound();
                 Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStartButton.getWidth() / 2, mStartButton.getHeight() / 2);
                 amScale.setDuration(100);
                 mStartButton.startAnimation(amScale);
@@ -145,7 +139,7 @@ public class Menu extends Activity {
         mLoadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameParams.playSound(sInstance);
+                Music.playSound();
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
@@ -166,7 +160,7 @@ public class Menu extends Activity {
         mExitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameParams.playSound(sInstance);
+                Music.playSound();
             }
         });
 
@@ -183,7 +177,7 @@ public class Menu extends Activity {
     private void logoInit() {
         DebugConfig.d("Menu logo init");
 
-        GameParams.soundPoolInit();
+        Music.soundPoolInit();
         GameParams.soundID = GameParams.soundPool.load(this, R.raw.sound_01, 1);
 
         mImageView = new ImageView(this);
