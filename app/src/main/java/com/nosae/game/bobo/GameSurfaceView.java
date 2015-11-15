@@ -49,8 +49,9 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                             if (Stage1.mFishCollections.get(f).destRect.contains((int) x, (int) y)) {
                                 DebugConfig.d("Hit!!");
                                 if (!Stage1.mFishCollections.get(f).readyToDeath) {
-                                    if (Stage1.mFishCollections.get(f).getTouchScore() > 0) {
+                                    if (Stage1.mFishCollections.get(f).getTouchScore() >= 0) {
                                         Stage1.mTotalScore += Stage1.mFishCollections.get(f).getTouchScore();
+                                        GameParams.playSound(mMainActivity);
                                     } else if (Stage1.mFishCollections.get(f).getTouchScore() == -1) {
                                         GameParams.vibrator.vibrate(50);
                                     }
