@@ -3,6 +3,7 @@ package com.nosae.game.objects;
 import android.content.Context;
 import android.media.MediaPlayer;
 
+import com.nosae.game.bobo.GameParams;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -29,22 +30,28 @@ public class Music{
 
     public void Play() {
 //        DebugConfig.d("Music Play().isComplete: " + isComplete);
-        if (!isComplete)
-            if (!player.isPlaying())
-                player.start();
+        if (GameParams.isMusicOn)
+            if (!isComplete)
+                if (!player.isPlaying())
+                    player.start();
     }
 
     public void Stop() {
-        player.stop();
-        isComplete = false;
+        if (player != null && player.isPlaying()) {
+            player.stop();
+            isComplete = false;
+        }
     }
 
     public void Pause() {
-        player.pause();
+        if (player != null && player.isPlaying())
+            player.pause();
     }
 
     public void setLooping(boolean looping) {
-        player.setLooping(looping);
+        if (player != null) {
+            player.setLooping(looping);
+        }
     }
 }
 

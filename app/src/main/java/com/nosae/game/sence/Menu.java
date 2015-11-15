@@ -88,7 +88,7 @@ public class Menu extends Activity {
 
                     private void finish() {
                         // TODO Auto-generated method stub
-                        if (mMusic != null && mMusic.player.isPlaying())
+                        if (mMusic != null)
                             mMusic.Pause();
                     }
                 });
@@ -109,7 +109,7 @@ public class Menu extends Activity {
 
                     private void finish() {
                         // TODO Auto-generated method stub
-                        if (mMusic != null && mMusic.player.isPlaying())
+                        if (mMusic != null)
                             mMusic.Pause();
                     }
                 });
@@ -135,7 +135,7 @@ public class Menu extends Activity {
 
                     private void finish() {
                         // TODO Auto-generated method stub
-                        if (mMusic != null && mMusic.player.isPlaying())
+                        if (mMusic != null)
                             mMusic.Pause();
                     }
                 }, 100);
@@ -156,7 +156,7 @@ public class Menu extends Activity {
 
                     private void finish() {
                         // TODO Auto-generated method stub
-                        if (mMusic != null && mMusic.player.isPlaying())
+                        if (mMusic != null)
                             mMusic.Pause();
                     }
                 });
@@ -259,11 +259,8 @@ public class Menu extends Activity {
     protected void onResume() {
         super.onResume();
         DebugConfig.d("Menu onResume()");
-        if (GameParams.isMusicOn && !mMusic.player.isPlaying()) {
+        if (mMusic != null)
             mMusic.Play();
-        } else if (!GameParams.isMusicOn && mMusic.player.isPlaying()){
-            mMusic.Pause();
-        }
         if (mBouncer != null && !mBouncer.isRunning())
             mBouncer.start();
         // if API 19 or later, we can use mBouncer.resume()
@@ -273,7 +270,7 @@ public class Menu extends Activity {
     protected void onPause() {
         super.onPause();
         DebugConfig.d("Menu onPause()");
-        if (mMusic.player.isPlaying())
+        if (mMusic != null)
             mMusic.Pause();
         if (mBouncer != null && mBouncer.isRunning())
             mBouncer.cancel();

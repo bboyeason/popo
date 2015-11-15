@@ -31,9 +31,8 @@ public class SplashScreen extends Activity {
         if (GameParams.videoPlayer.isRuningVideo)
             GameParams.videoPlayer.Resume();
 
-        if (GameParams.isMusicOn == true)
-            if (mMusic != null && !mMusic.player.isPlaying())
-                mMusic.Play();
+        if (mMusic != null)
+            mMusic.Play();
     }
 
     @Override
@@ -42,7 +41,7 @@ public class SplashScreen extends Activity {
         if (GameParams.videoPlayer.isRuningVideo)
             GameParams.videoPlayer.Pause();
 
-        if (mMusic != null && mMusic.player.isPlaying())
+        if (mMusic != null)
             mMusic.Stop();
     }
 
