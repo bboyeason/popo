@@ -222,17 +222,14 @@ public class Menu extends Activity {
         objAnimator1.setRepeatCount(ObjectAnimator.INFINITE);
 //        objAnimator1.setRepeatMode(ObjectAnimator.REVERSE);
 
-        ObjectAnimator objAnimator2 = ObjectAnimator.ofFloat(mImageView, "translationX", fromX, toX, fromX);
+        ObjectAnimator objAnimator2 = ObjectAnimator.ofFloat(mImageView, "translationX", fromX, toX);
 //        objAnimator2.setInterpolator(new AccelerateDecelerateInterpolator());
         objAnimator2.setRepeatCount(ObjectAnimator.INFINITE);
-        objAnimator1.setRepeatMode(ObjectAnimator.REVERSE);
+//        objAnimator2.setRepeatMode(ObjectAnimator.REVERSE);
 
         ObjectAnimator objAnimator3 = ObjectAnimator.ofFloat(mImageView, "translationY", fromY, toY);
         objAnimator3.setRepeatCount(ObjectAnimator.INFINITE);
 //        objAnimator1.setRepeatMode(ObjectAnimator.REVERSE);
-
-        ObjectAnimator objAnimator4 = ObjectAnimator.ofFloat(mImageView, "rotationY", 0.0f, 180.0f);
-        objAnimator4.setRepeatCount(ObjectAnimator.INFINITE);
 
         objAnimator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -245,11 +242,12 @@ public class Menu extends Activity {
         AnimationDrawable animDrawable = (AnimationDrawable) mImageView.getBackground();
         animDrawable.start();
         mBouncer = new AnimatorSet();
-        mBouncer.play(objAnimator1).with(objAnimator2).with(objAnimator3).with(objAnimator4);
-//        AnimatorSet as = new AnimatorSet();
-//        as.playSequentially(mBouncer);
+        mBouncer.play(objAnimator1).with(objAnimator2).with(objAnimator3);
         mBouncer.setDuration(6000);
         mBouncer.start();
+
+//        AnimatorSet as = new AnimatorSet();
+//        as.playSequentially(mBouncer);
     }
 
     @Override
