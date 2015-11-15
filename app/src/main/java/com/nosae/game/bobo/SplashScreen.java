@@ -7,10 +7,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.nosae.game.objects.Music;
 import com.nosae.game.settings.DebugConfig;
 
 public class SplashScreen extends Activity {
     private final static String TAG = "BoBo SplashScreen";
+    private Music mMusic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,9 @@ public class SplashScreen extends Activity {
         super.onResume();
         if (GameParams.videoPlayer.isRuningVideo)
             GameParams.videoPlayer.Resume();
+
+        if (mMusic != null && !mMusic.player.isPlaying())
+            mMusic.Play();
     }
 
     @Override
@@ -35,11 +40,19 @@ public class SplashScreen extends Activity {
         super.onPause();
         if (GameParams.videoPlayer.isRuningVideo)
             GameParams.videoPlayer.Pause();
+
+        if (mMusic != null && mMusic.player.isPlaying())
+            mMusic.Stop();
     }
 
     public void LoadContent() {
         GameParams.videoPlayer = new VideoPlayer(this);
         GameParams.videoPlayer.Play();
 
+        if (mMusic == null) {
+//            mMusic.player.release();
+            mMusic = new Music(this, R.raw.story_music,2);
+            mMusic.setLooping(true);
+        }
     }
 }
