@@ -305,7 +305,7 @@ public class Stage1 extends DrawableGameComponent {
             }
         }
         if (mTimerBar != null) {
-            mTimerBar.setTimer(30);
+            mTimerBar.setTimer(120);
         }
     }
 
