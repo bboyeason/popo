@@ -199,7 +199,9 @@ public class FishObj extends GameObj {
     }
 
     public void recycle() {
-        image.recycle();
-        image = null;
+        if (image != null) {
+            image.recycle();
+            image = null;
+        }
     }
 }
