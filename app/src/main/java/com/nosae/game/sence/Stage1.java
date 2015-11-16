@@ -359,8 +359,8 @@ public class Stage1 extends DrawableGameComponent {
             mFpsText.message = "actual FPS: " + (int) mGameEntry.actualFPS + " FPS (" + (int) mGameEntry.fps
                     + ") " + (int) mGameEntry.totalFrames;
         }
-
-        mScore.setTotalScore(mTotalScore);
+        if (mScore != null)
+            mScore.setTotalScore(mTotalScore);
 
         if (mLife1 != null) {
             mLife1.updateLife();
@@ -368,9 +368,11 @@ public class Stage1 extends DrawableGameComponent {
                 isGameOver = true;
         }
 
-        mTimerBar.action((int) GameEntry.totalFrames);
-        if (mTimerBar.isTimeout)
-            isGameOver = true;
+        if (mTimerBar != null) {
+            mTimerBar.action((int) GameEntry.totalFrames);
+            if (mTimerBar.isTimeout)
+                isGameOver = true;
+        }
 
         if (isGameOver || !mBoboObj.isAlive) {
             mColorMask.Action((int) mGameEntry.totalFrames);
