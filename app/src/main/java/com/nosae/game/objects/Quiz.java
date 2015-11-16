@@ -49,6 +49,12 @@ public class Quiz extends GameObj{
             quizTable[n].syllable = syllables[n % 5];
 //            DebugConfig.d("quizTable[" + n + "]: " + quizTable[n].color + ", " + quizTable[n].syllable);
         }
+
+        initQuiz();
+    }
+
+    private void initQuiz() {
+        oldQuiz = mRandom.nextInt(14);
     }
 
     public void randomQuiz() {

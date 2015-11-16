@@ -278,6 +278,8 @@ public class Stage2 extends DrawableGameComponent {
             mQuiz = new Quiz(GameParams.halfWidth + GameParams.halfWidth / 2 - width / 2,
                     mBoboObj.destRect.top + mBoboObj.destHeight / 2 - height / 2,
                     width, height, 0, 0, width, height, 0, 0, 0);
+            if (mQuiz != null)
+                mQuiz.randomQuiz();
         }
 
         FishGeneration();
