@@ -36,6 +36,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         final float x = event.getX();
         final float y = event.getY();
         final int action = event.getAction();
+        FishObj _object;
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 DebugConfig.d("touch down: " + x + ", " + y);
@@ -48,23 +49,24 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                         if (Stage1.mFishCollections == null)
                             return false;
                         for (f = 0; f < Stage1.mFishCollections.size(); f++) {
-                            if (Stage1.mFishCollections.get(f).destRect.contains((int) x, (int) y)) {
+                            _object = Stage1.mFishCollections.get(f);
+                            if (_object.destRect.contains((int) x, (int) y)) {
                                 DebugConfig.d("Hit!!");
-                                if (!Stage1.mFishCollections.get(f).readyToDeath) {
-                                    if (Stage1.mFishCollections.get(f).getTouchScore() >= 0) {
-                                        Stage1.mTotalScore += Stage1.mFishCollections.get(f).getTouchScore();
+                                if (!_object.readyToDeath) {
+                                    if (_object.getTouchScore() >= 0) {
+                                        Stage1.mTotalScore += _object.getTouchScore();
                                         Music.playSound();
-                                    } else if (Stage1.mFishCollections.get(f).getTouchScore() == -1) {
+                                    } else if (_object.getTouchScore() == -1) {
                                         GameParams.vibrator.vibrate(50);
                                     }
+                                    mMainActivity.mGameEntry.mStage1.mTimerBar.addTimer(_object.getTimerAdd());
+                                    Life1.addLife(_object.getLifeAdd());
                                 }
-                                mMainActivity.mGameEntry.mStage1.mTimerBar.addTimer(Stage1.mFishCollections.get(f).getTimerAdd());
-                                Life1.addLife(Stage1.mFishCollections.get(f).getLifeAdd());
                                 /*if (Stage1.mTotalScore < 0) {
                                     Stage1.mTotalScore = 0;
                                     mMainActivity.mGameEntry.mStage1.mBoboObj.isAlive = false;
                                 }*/
-                                Stage1.mFishCollections.get(f).readyToDeath = true;
+                                _object.readyToDeath = true;
                                 break;
                             }
                         }
@@ -72,36 +74,37 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                     case Stage2:
                         if (Stage2.mFishCollections == null)
                             return false;
-                        FishObj _object;
                         for (f = 0; f < Stage2.mFishCollections.size(); f++) {
                             _object = Stage2.mFishCollections.get(f);
                             if (_object.destRect.contains((int) x, (int) y)) {
-                                if (((Stage2_fish) _object).getColor() == Quiz.quizTable[Quiz.currentQuiz].color) {
-                                    DebugConfig.d("Hit color!!!");
-                                    Stage2.mTotalScore += 10;
-                                    mStage2Hit |= mStage2HitColor;
-                                } else if (!(_object.getLifeAdd() > 0 || _object.getTimerAdd() > 0)) {
+                                if (!Stage2.mFishCollections.get(f).readyToDeath) {
+                                    if (((Stage2_fish) _object).getColor() == Quiz.quizTable[Quiz.currentQuiz].color) {
+                                        DebugConfig.d("Hit color!!!");
+                                        Stage2.mTotalScore += 10;
+                                        mStage2Hit |= mStage2HitColor;
+                                    } else if (!(_object.getLifeAdd() > 0 || _object.getTimerAdd() > 0)) {
                                         Life1.addLife(-1);
                                         GameParams.vibrator.vibrate(50);
-                                }
-                                if (((Stage2_fish) _object).getSyllable() == Quiz.quizTable[Quiz.currentQuiz].syllable) {
-                                    DebugConfig.d("Hit syllable!!!");
-                                    Stage2.mTotalScore += 10;
-                                    mStage2Hit |= mStage2HitSyllable;
-                                } else if (!(_object.getLifeAdd() > 0 || _object.getTimerAdd() > 0)) {
-                                    Life1.addLife(-1);
-                                    GameParams.vibrator.vibrate(50);
-                                }
+                                    }
+                                    if (((Stage2_fish) _object).getSyllable() == Quiz.quizTable[Quiz.currentQuiz].syllable) {
+                                        DebugConfig.d("Hit syllable!!!");
+                                        Stage2.mTotalScore += 10;
+                                        mStage2Hit |= mStage2HitSyllable;
+                                    } else if (!(_object.getLifeAdd() > 0 || _object.getTimerAdd() > 0)) {
+                                        Life1.addLife(-1);
+                                        GameParams.vibrator.vibrate(50);
+                                    }
 
-                                if (mStage2Hit != 0x00) {
-                                    // TODO when hit, new quiz
-                                    Stage2.isQuizHit = true;
-                                    mStage2Hit = 0x00;
+                                    if (mStage2Hit != 0x00) {
+                                        // TODO when hit, new quiz
+                                        Stage2.isQuizHit = true;
+                                        mStage2Hit = 0x00;
+                                    }
+                                    if (_object.getTimerAdd() > 0)
+                                        mMainActivity.mGameEntry.mStage2.mTimerBar.addTimer(_object.getTimerAdd());
+                                    if (_object.getLifeAdd() > 0)
+                                        Life1.addLife(_object.getLifeAdd());
                                 }
-                                if (_object.getTimerAdd() > 0)
-                                    mMainActivity.mGameEntry.mStage2.mTimerBar.addTimer(_object.getTimerAdd());
-                                if (_object.getLifeAdd() > 0)
-                                    Life1.addLife(_object.getLifeAdd());
                                 _object.readyToDeath = true;
                                 break;
                             }
