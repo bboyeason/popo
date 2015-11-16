@@ -106,7 +106,6 @@ public class MainActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Music.playSound();
-//                mToggleButton.setChecked(isChecked);
                 if (mGameEntry != null) {
                     if (isChecked) {
 //                        Stage1.isRunning = true;
@@ -154,10 +153,12 @@ public class MainActivity extends Activity {
     protected void onPause() {
         DebugConfig.d("MainActivity onPause()");
         GameParams.vibrator.cancel();
-        if (mGameEntry != null)
-        {
-            mGameEntry.Exit();
-        }
+        mToggleButton.setChecked(true);
+
+//        if (mGameEntry != null)
+//        {
+//            mGameEntry.Exit();
+//        }
 
         super.onPause();
     }
