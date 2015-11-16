@@ -108,26 +108,17 @@ public class MainActivity extends Activity {
                 Music.playSound();
                 if (mGameEntry != null) {
                     if (isChecked) {
-//                        Stage1.isRunning = true;
-
-                        if (GameStateClass.currentState == GameStateClass.GameState.Stage1) {
-                            Stage1.onOff = false;
-                            Stage1.mHandler.removeMessages(com.nosae.game.bobo.Events.CREATEFISH);
-                        }
                         mGameEntry.Exit();
-
-
                     } else {
-//                        Stage1.isRunning = false;
-
                         mGameEntry.Run();
-
-                        if (GameStateClass.currentState == GameStateClass.GameState.Stage1) {
-                            Stage1.onOff = true;
-                            Message msg = new Message();
-                            msg.what = com.nosae.game.bobo.Events.CREATEFISH;
-                            Stage1.mHandler.sendMessageDelayed(msg, 150);
-                        }
+                    }
+                    switch (GameStateClass.currentState) {
+                        case Stage1:
+                            Stage1.FishGeneration(!isChecked);
+                            break;
+                        case Stage2:
+                            Stage2.FishGeneration(!isChecked);
+                            break;
                     }
                 }
             }

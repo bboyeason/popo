@@ -177,18 +177,22 @@ public class Stage1 extends DrawableGameComponent {
         super.Initialize();
     }
 
-    private void FishGeneration() {
+    public static void FishGeneration(boolean produce) {
+        onOff = produce;
+        if (onOff) {
+            Message msg = new Message();
+            msg.what = Events.CREATEFISH;
+            mHandler.sendMessageDelayed(msg, 150);
 
-        onOff = true;
-        Message msg = new Message();
-        msg.what = Events.CREATEFISH;
-        // TODO msg.obj = something;
-        mHandler.sendMessage(msg);
-//        msg = null;
-        msg = new Message();
-        msg.what = Events.CREATESTAR;
-        mHandler.sendMessageDelayed(msg, 5000);
+            msg = new Message();
+            msg.what = Events.CREATESTAR;
+            mHandler.sendMessageDelayed(msg, 5000);
+        } else {
+            mHandler.removeMessages(Events.CREATEFISH);
+            mHandler.removeMessages(Events.CREATESTAR);
+        }
     }
+
     protected void createFish(int[][] fishTable){
         int width, height;
 
@@ -245,7 +249,7 @@ public class Stage1 extends DrawableGameComponent {
             mBackground.isAlive = true;
         }
         // Random fish generator
-        FishGeneration();
+        FishGeneration(true);
 
         if (mSenceTitle == null) {
             mSenceTitleImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
