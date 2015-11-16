@@ -53,7 +53,7 @@ public class Menu_drawable extends DrawableGameComponent{
 
         menuShadow = new Text(menuText.x + 10, menuText.y - 5, menuText.size, menuText.message, Color.BLACK);
 
-        menuBitmap = BitmapFactory.decodeResource(GameParams.res, R.drawable.menu);
+        menuBitmap = BitmapFactory.decodeResource(GameParams.res, R.drawable.menu_background);
 
         menuObj = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, menuBitmap.getWidth(), menuBitmap.getHeight(), 0, Color.WHITE, 0);
         menuObj.paint.setAlpha(170);

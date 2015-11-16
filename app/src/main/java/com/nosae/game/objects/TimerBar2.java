@@ -13,7 +13,7 @@ public class TimerBar2 extends GameObj {
     public int width = 0;
     public int height = 0;
     private int column = 1;
-    private int row = 11;
+    private int row = 9;
 
     private int mStartFrame = 0;
     private int mRunningFrame = 0; // fps * 30 seconds
@@ -52,7 +52,6 @@ public class TimerBar2 extends GameObj {
 //            if (gap <= mTimeTable.length)
 //                mTimerBarImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mTimeTable[gap - 1]);
             index = gap - 1;
-
         } else {
             isTimeout = true;
         }
