@@ -161,6 +161,8 @@ public class Menu extends Activity {
             @Override
             public void onClick(View v) {
                 Music.playSound();
+                Menu.this.finish();
+//                android.os.Process.killProcess(android.os.Process.myPid());
             }
         });
 
