@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.nosae.game.objects.Life2;
+import com.nosae.game.objects.Life1;
 import com.nosae.game.objects.Music;
 import com.nosae.game.objects.Quiz;
 import com.nosae.game.role.Stage2_fish;
@@ -58,7 +58,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                     }
                                 }
                                 mMainActivity.mGameEntry.mStage1.mTimerBar.addTimer(Stage1.mFishCollections.get(f).getTimerAdd());
-                                Life2.addLife(Stage1.mFishCollections.get(f).getLifeAdd());
+                                Life1.addLife(Stage1.mFishCollections.get(f).getLifeAdd());
                                 /*if (Stage1.mTotalScore < 0) {
                                     Stage1.mTotalScore = 0;
                                     mMainActivity.mGameEntry.mStage1.mBoboObj.isAlive = false;
@@ -78,7 +78,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                     Stage2.mTotalScore += 10;
                                     mStage2Hit |= mStage2HitColor;
                                 } else {
-                                    Life2.addLife(-1);
+                                    Life1.addLife(-1);
                                     GameParams.vibrator.vibrate(50);
                                 }
                                 if (((Stage2_fish) Stage2.mFishCollections.get(f)).getSyllable() == Quiz.quizTable[Quiz.currentQuiz].syllable) {
@@ -86,7 +86,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                     Stage2.mTotalScore += 10;
                                     mStage2Hit |= mStage2HitSyllable;
                                 } else {
-                                    Life2.addLife(-1);
+                                    Life1.addLife(-1);
                                     GameParams.vibrator.vibrate(50);
                                 }
 
