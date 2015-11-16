@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.widget.Toast;
 
 import com.nosae.game.bobo.Events;
 import com.nosae.game.bobo.GameEntry;
@@ -74,7 +75,7 @@ public class Stage2 extends DrawableGameComponent {
     public static boolean isClearStage2 = false;
     public static int mTotalScore;
 
-    private int[][] mFishTable = {
+    private int[][] mFishTable_1 = {
             {
                     R.drawable.b_fish_red_do,
                     R.drawable.b_fish_red_re,
@@ -97,6 +98,22 @@ public class Stage2 extends DrawableGameComponent {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Max index */
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Death animation start */
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Death animation end */
+    };
+
+    private int[][] mFishTable_2 = {
+            {
+                    R.drawable.sea_star,
+                    R.drawable.jellyfish
+            },
+            { 10, 10 }, /* Animation column */
+            {  3,  3 }, /* Animation row */
+            {  0,  0 },  /* Max index */
+            {  1,  1 }, /* Death animation start */
+            { 27, 27 }, /* Death animation end */
+            {  0,  0 }, /* Touch Score */
+            {  0,  0 }, /* Arrival Score */
+            { 10,  0 }, /* Timer add (seconds) */
+            {  0,  1 } /* Life add */
     };
     /* Color, red:0, yellow:1, blue:2 */
     private Quiz.quizColor mFishTableColor[] = {
@@ -154,7 +171,7 @@ public class Stage2 extends DrawableGameComponent {
                     case Events.CREATEFISH:
                         if (isGameOver || isClearStage2)
                             return;
-                        stage2CreateFish();
+                        stage2CreateFish(mFishTable_1, mFishTableColor, mFishTableSyllable);
 
                         if (onOff) {
                             Message m = new Message();
@@ -165,35 +182,60 @@ public class Stage2 extends DrawableGameComponent {
                             //}
                         }
                         break;
+                    case Events.CREATESTAR:
+                        if (isGameOver || isClearStage2)
+                            return;
 
+                        stage2CreateFish(mFishTable_2);
+                        if (onOff) {
+                            Message m = new Message();
+                            m.what = Events.CREATESTAR;
+                            mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
+                        }
+                        break;
                 }
             }
         };
     }
 
-    private void stage2CreateFish() {
+    private  void stage2CreateFish(int[][] objectTable) {
+        stage2CreateFish(objectTable, null, null);
+    }
+
+    private void stage2CreateFish(int[][] objectTable, Quiz.quizColor[] colorTable, Quiz.quizSyllable[] SyllableTable) {
         int width, height;
         int speed;
         int random;
         Random mRandom = new Random();
-        random = mRandom.nextInt(mFishTable[0].length);
-        Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(mFishTable[0][random], 60, 60);
+        random = mRandom.nextInt(objectTable[0].length);
+        Bitmap fishImage = null;
+        try {
+            fishImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, objectTable[0][random]);
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            Toast.makeText(mGameEntry.mMainActivity, "OutOfMemoryError!",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        width = fishImage.getWidth() / mFishTable[1][random];
-        height = fishImage.getHeight() / mFishTable[2][random];
+        width = fishImage.getWidth() / objectTable[1][random];
+        height = fishImage.getHeight() / objectTable[2][random];
         DebugConfig.d("width: " + width + ", height: " + height);
         speed = mRandom.nextInt(GameParams.stage2FishRandomSpeed) + GameParams.stage2FishRandomSpeed;
         mFishObj = new Stage2_fish(fishImage, 0, 0, width, height, 0, 0, width, height, speed, Color.WHITE, 90);
 
         mFishObj.randomTop();
-        mFishObj.setCol(mFishTable[1][random]);
-        mFishObj.setMaxIndex(mFishTable[3][random]);
-        mFishObj.setDeathIndexStart(mFishTable[4][random]);
-        mFishObj.setDeathIndexEnd(mFishTable[5][random]);
-//        mFishObj.setTouchScore(mFishTable[6][random]);
-//        mFishObj.setTimerAdd(mFishTable[7][random]);
-        mFishObj.setColor(mFishTableColor[random]);
-        mFishObj.setSyllable(mFishTableSyllable[random]);
+        mFishObj.setCol(objectTable[1][random]);
+        mFishObj.setMaxIndex(objectTable[3][random]);
+        mFishObj.setDeathIndexStart(objectTable[4][random]);
+        mFishObj.setDeathIndexEnd(objectTable[5][random]);
+        if (colorTable != null && SyllableTable != null) {
+            mFishObj.setColor(mFishTableColor[random]);
+            mFishObj.setSyllable(mFishTableSyllable[random]);
+        } else {
+            mFishObj.setTimerAdd(objectTable[8][random]);
+            mFishObj.setLifeAdd(objectTable[9][random]);
+        }
         mFishObj.isAlive = true;
         mFishCollections.add(mFishObj);
         DebugConfig.d("create fish: " + mFishCollections.size());
@@ -204,6 +246,10 @@ public class Stage2 extends DrawableGameComponent {
         Message msg = new Message();
         msg.what = Events.CREATEFISH;
         mHandler.sendMessage(msg);
+
+        msg = new Message();
+        msg.what = Events.CREATESTAR;
+        mHandler.sendMessageDelayed(msg, 5000);
     }
 
     @Override

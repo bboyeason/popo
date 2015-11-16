@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.nosae.game.objects.FishObj;
 import com.nosae.game.objects.Life1;
 import com.nosae.game.objects.Music;
 import com.nosae.game.objects.Quiz;
@@ -71,21 +72,23 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                     case Stage2:
                         if (Stage2.mFishCollections == null)
                             return false;
+                        FishObj _object;
                         for (f = 0; f < Stage2.mFishCollections.size(); f++) {
-                            if (Stage2.mFishCollections.get(f).destRect.contains((int) x, (int) y)) {
-                                if (((Stage2_fish) Stage2.mFishCollections.get(f)).getColor() == Quiz.quizTable[Quiz.currentQuiz].color) {
+                            _object = Stage2.mFishCollections.get(f);
+                            if (_object.destRect.contains((int) x, (int) y)) {
+                                if (((Stage2_fish) _object).getColor() == Quiz.quizTable[Quiz.currentQuiz].color) {
                                     DebugConfig.d("Hit color!!!");
                                     Stage2.mTotalScore += 10;
                                     mStage2Hit |= mStage2HitColor;
-                                } else {
-                                    Life1.addLife(-1);
-                                    GameParams.vibrator.vibrate(50);
+                                } else if (!(_object.getLifeAdd() > 0 || _object.getTimerAdd() > 0)) {
+                                        Life1.addLife(-1);
+                                        GameParams.vibrator.vibrate(50);
                                 }
-                                if (((Stage2_fish) Stage2.mFishCollections.get(f)).getSyllable() == Quiz.quizTable[Quiz.currentQuiz].syllable) {
+                                if (((Stage2_fish) _object).getSyllable() == Quiz.quizTable[Quiz.currentQuiz].syllable) {
                                     DebugConfig.d("Hit syllable!!!");
                                     Stage2.mTotalScore += 10;
                                     mStage2Hit |= mStage2HitSyllable;
-                                } else {
+                                } else if (!(_object.getLifeAdd() > 0 || _object.getTimerAdd() > 0)) {
                                     Life1.addLife(-1);
                                     GameParams.vibrator.vibrate(50);
                                 }
@@ -95,7 +98,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                     Stage2.isQuizHit = true;
                                     mStage2Hit = 0x00;
                                 }
-                                Stage2.mFishCollections.get(f).readyToDeath = true;
+                                if (_object.getTimerAdd() > 0)
+                                    mMainActivity.mGameEntry.mStage2.mTimerBar.addTimer(_object.getTimerAdd());
+                                if (_object.getLifeAdd() > 0)
+                                    Life1.addLife(_object.getLifeAdd());
+                                _object.readyToDeath = true;
                                 break;
                             }
                         }
