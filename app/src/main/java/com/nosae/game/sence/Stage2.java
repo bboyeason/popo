@@ -286,7 +286,7 @@ public class Stage2 extends DrawableGameComponent {
             options.inSampleSize = 2;
             Bitmap numBitmap = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
             mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth(), numBitmap.getHeight());
-            Life1.setLife(5);
+            Life1.setLife(GameParams.stage2Life);
             numBitmap.recycle();
             numBitmap = null;
         }
@@ -302,7 +302,7 @@ public class Stage2 extends DrawableGameComponent {
             }
         }
         if (mTimerBar != null) {
-            mTimerBar.setTimer(60);
+            mTimerBar.setTimer(GameParams.stage2RunningTime);
         }
 
         if (mBoboObj == null) {
