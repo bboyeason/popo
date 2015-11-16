@@ -6,9 +6,9 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.view.MotionEvent;
+import android.widget.MediaController;
 import android.widget.VideoView;
 
-import com.nosae.game.sence.Menu;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -24,7 +24,6 @@ public class VideoPlayer
 
     public VideoPlayer(SplashScreen splashScreen) {
         this.splashScreen = splashScreen;
-
         videoView = new myVideo(this.splashScreen);
         Load(R.raw.story);
 
@@ -91,10 +90,40 @@ public class VideoPlayer
         }, splashInterval);
     }
 
-    public class myVideo extends VideoView
+    public class myVideo extends VideoView implements MediaPlayer.OnPreparedListener
     {
+        private MediaPlayer mediaPlayer;
+
         public myVideo(Context context) {
             super(context);
+            this.setOnPreparedListener(this);
+        }
+
+        public void mute() {
+            this.setVolume(0);
+        }
+
+        public void unmute() {
+            this.setVolume(100);
+        }
+
+        private void setVolume(int volume) {
+            DebugConfig.d("VideoView setVolume: " + volume);
+            final int max = 100;
+            final double numerator = max - volume > 0 ? Math.log(max - volume) : 0;
+            final float _volume = (float) (1 - (numerator / Math.log(max)));
+            mediaPlayer.setVolume(_volume, _volume);
+        }
+
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            this.mediaPlayer = mp;
+            if (GameParams.isMusicOn) {
+                unmute();
+            }
+            else if (!GameParams.isMusicOn) {
+                mute();
+            }
         }
 
         @Override
