@@ -175,7 +175,7 @@ public class Menu extends Activity {
         SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
         GameParams.isMusicOn = settings.getBoolean(GameParams.PREFS_MUSIC_KEY, true);
 
-        getSharedPreferences(GameParams.PREFS_SOUND, 0);
+        settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
         GameParams.isSoundOn = settings.getBoolean(GameParams.PREFS_SOUND_KEY, true);
     }
 
