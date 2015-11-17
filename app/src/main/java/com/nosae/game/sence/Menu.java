@@ -62,6 +62,7 @@ public class Menu extends Activity {
         mStartButton.setSoundEffectsEnabled(false);
         mLoadButton.setSoundEffectsEnabled(false);
         mExitButton.setSoundEffectsEnabled(false);
+
         if (mMusic == null) {
 //            mMusic.player.release();
             mMusic = new Music(this, R.raw.menu,2);
@@ -172,8 +173,10 @@ public class Menu extends Activity {
 
     private void loadSharePreferences() {
         SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
-        boolean isMusicOn = settings.getBoolean("isMusicOn", true);
-        GameParams.isMusicOn = isMusicOn;
+        GameParams.isMusicOn = settings.getBoolean(GameParams.PREFS_MUSIC_KEY, true);
+
+        getSharedPreferences(GameParams.PREFS_SOUND, 0);
+        GameParams.isSoundOn = settings.getBoolean(GameParams.PREFS_SOUND_KEY, true);
     }
 
     private void logoInit() {

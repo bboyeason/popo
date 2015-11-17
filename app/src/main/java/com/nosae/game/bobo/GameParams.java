@@ -22,7 +22,11 @@ import com.nosae.game.settings.DebugConfig;
 public class GameParams {
 
     public static final String PREFS_MUSIC = "Music";
+    public static final String PREFS_MUSIC_KEY = "isMusicOn";
+    public static final String PREFS_MUSIC_VOLUME_KEY = "MusicVolume";
     public static final String PREFS_SOUND = "Sound";
+    public static final String PREFS_SOUND_KEY = "isSoundOn";
+    public static final String PREFS_SOUND_VOLUME_KEY = "SoundVolume";
     public static Resources res = null;
 
     public static Rect screenRect;
@@ -60,6 +64,8 @@ public class GameParams {
     public static SoundPool soundPool = null;
     public static boolean isMusicOn = true;
     public static boolean isSoundOn = true;
+    public static int musicVolume = 2;
+    public static int soundVolume = 2;
     public static int soundID = 0;
     public static Vibrator vibrator = null;
     public static VideoPlayer videoPlayer = null;

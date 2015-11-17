@@ -3,6 +3,10 @@ package com.nosae.game.sence;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
 
 import com.nosae.game.bobo.GameParams;
@@ -14,8 +18,11 @@ import com.nosae.game.settings.DebugConfig;
  */
 public class Settings extends Activity {
 
-    private static Switch musicSwitch;
-    private static Switch soundSwitch;
+    private static Switch mMusicSwitch;
+    private static Switch mSoundSwitch;
+
+    private static SeekBar mMusicSeekBar;
+    private static SeekBar mSoundSeekBar;
     @Override
     protected void onStart() {
         super.onStart();
@@ -30,37 +37,96 @@ public class Settings extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
-        musicSwitch = (Switch) findViewById(R.id.music_switch);
-        soundSwitch = (Switch) findViewById(R.id.sound_switch);
+        mMusicSwitch = (Switch) findViewById(R.id.music_switch);
+        mSoundSwitch = (Switch) findViewById(R.id.sound_switch);
+
+        mMusicSeekBar = (SeekBar) findViewById(R.id.music_seekBar);
+        mSoundSeekBar = (SeekBar) findViewById(R.id.sound_seekBar);
 
         SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
-        boolean isMusicOn = settings.getBoolean("isMusicOn", true);
-        musicSwitch.setChecked(isMusicOn);
-        GameParams.isMusicOn = isMusicOn;
+        GameParams.isMusicOn = settings.getBoolean(GameParams.PREFS_MUSIC_KEY, true);
+        mMusicSwitch.setChecked(GameParams.isMusicOn);
 
         settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
-        boolean isSoundOn = settings.getBoolean("isSoundOn", true);
-        soundSwitch.setChecked(isSoundOn);
+        GameParams.isSoundOn = settings.getBoolean(GameParams.PREFS_SOUND_KEY, true);
+        mSoundSwitch.setChecked(GameParams.isSoundOn);
+
+        settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
+        GameParams.musicVolume = settings.getInt(GameParams.PREFS_MUSIC_VOLUME_KEY, 2);
+        mMusicSeekBar.setProgress(GameParams.musicVolume);
+
+        settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
+        GameParams.soundVolume = settings.getInt(GameParams.PREFS_SOUND_VOLUME_KEY, 2);
+        mSoundSeekBar.setProgress(GameParams.soundVolume);
+
+        mMusicSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                GameParams.isMusicOn = isChecked;
+                DebugConfig.d("Settings: music => " + GameParams.isMusicOn);
+                SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(GameParams.PREFS_MUSIC_KEY, GameParams.isMusicOn);
+                editor.commit();
+            }
+        });
+
+        mSoundSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                GameParams.isSoundOn = isChecked;
+                DebugConfig.d("Settings: sound => " + GameParams.isSoundOn);
+                SharedPreferences settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(GameParams.PREFS_SOUND_KEY, GameParams.isSoundOn);
+                editor.commit();
+            }
+        });
+
+        mMusicSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                GameParams.musicVolume = seekBar.getProgress();
+                DebugConfig.d("Music volume: " + GameParams.musicVolume);
+                SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putInt(GameParams.PREFS_MUSIC_VOLUME_KEY, GameParams.musicVolume);
+                editor.commit();
+            }
+        });
+
+        mSoundSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                GameParams.soundVolume = seekBar.getProgress();
+                DebugConfig.d("Sound volume: " +  GameParams.soundVolume);
+                SharedPreferences settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putInt(GameParams.PREFS_SOUND_VOLUME_KEY, GameParams.soundVolume);
+                editor.commit();
+            }
+        });
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        boolean isMusicOn = musicSwitch.isChecked();
-        DebugConfig.d("Settings onPause(): Music => " + isMusicOn);
-        SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("isMusicOn", isMusicOn);
-        GameParams.isMusicOn = isMusicOn;
-        editor.commit();
-
-        boolean isSoundOn = soundSwitch.isChecked();
-        DebugConfig.d("Settings onPause(): Sound => " + isSoundOn);
-        settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
-        editor = settings.edit();
-        editor.putBoolean("isSoundOn", isSoundOn);
-        GameParams.isSoundOn = isSoundOn;
-        editor.commit();
     }
 
     @Override
