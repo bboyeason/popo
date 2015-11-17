@@ -15,17 +15,14 @@ import com.nosae.game.settings.DebugConfig;
  * Created by eason on 2015/10/27.
  */
 public class Music{
-    private static float volumeRatio;
     public MediaPlayer player;
-    public static int volume;
     public boolean isComplete;
     public static Context context;
 
-    public Music(Context context, int music, int volume) {
+    public Music(Context context, int music, float volume) {
         this.context = context;
         player = MediaPlayer.create(context, music);
-
-        setVolume(volume);
+        player.setVolume(volume, volume);
         isComplete = false;
 
         player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -35,16 +32,9 @@ public class Music{
         });
     }
 
-    public void setVolume(int volume) {
-        // (0~10)
-        this.volume = volume;
+    public void setMusicVolume(float volume) {
         player.setVolume(volume, volume);
     }
-
-    public void setVolumeRatio(float volumeRatio) {
-        this.volumeRatio = volumeRatio;
-    }
-
     public static void soundPoolInit() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             createNewSoundPool();
@@ -52,10 +42,10 @@ public class Music{
             createOldSoundPool();
         }
 
-        AudioManager audioManager = (AudioManager) context.getSystemService(context.AUDIO_SERVICE);
-        float audioMaxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        float audioCurrentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        volumeRatio = audioCurrentVolume/audioMaxVolume;
+//        AudioManager audioManager = (AudioManager) context.getSystemService(context.AUDIO_SERVICE);
+//        float audioMaxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+//        float audioCurrentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+//        volumeRatio = audioCurrentVolume/audioMaxVolume;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -83,16 +73,16 @@ public class Music{
     }
 
     //播放声音,参数sound是播放音效的id，参数number是播放音效的次数
-    public static void playSound(int sound, int number) {
+    public static void playSound(int sound, int repeat) {
         if (!GameParams.isSoundOn)
             return;
 
         GameParams.soundPool.play(
                 sound,          //播放的音乐id
-                volumeRatio,    //左声道音量
-                volumeRatio,    //右声道音量
+                GameParams.soundVolumeRatio,    //左声道音量
+                GameParams.soundVolumeRatio,    //右声道音量
                 1,              //优先级，0为最低
-                number,         //循环次数，0无不循环，-1无永远循环
+                repeat,         //循环次数，0无不循环，-1无永远循环
                 1               //回放速度 ，该值在0.5-2.0之间，1为正常速度
         );
     }

@@ -56,6 +56,8 @@ public class GameEntry extends Game {
     @Override
     protected void LoadContent() {
         super.LoadContent();
+        if (GameParams.music != null)
+            GameParams.music.setMusicVolume(GameParams.musicVolumeRatio);
     }
 
     @Override
@@ -71,6 +73,7 @@ public class GameEntry extends Game {
             Message m = new Message();
             m.what = 1;
             mMainActivity.mMsgHandler.sendMessage(m);
+            //TODO send one shot
         }
 
         if (mStage1 != null && !Stage1.isClearStage1
@@ -106,7 +109,7 @@ public class GameEntry extends Game {
                     // TODO move this to somewhere before GameEntry Run()
                     if (GameParams.music == null) {
 //                        GameParams.music.player.release();
-                        GameParams.music = new Music(mMainActivity, R.raw.stage1, 1);
+                        GameParams.music = new Music(mMainActivity, R.raw.stage1, GameParams.musicVolumeRatio);
                         GameParams.music.setLooping(true);
                         GameParams.music.Play();
                     }

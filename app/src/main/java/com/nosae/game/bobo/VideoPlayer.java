@@ -108,10 +108,10 @@ public class VideoPlayer
         }
 
         private void setVolume(int volume) {
-            DebugConfig.d("VideoView setVolume: " + volume);
             final int max = 100;
             final double numerator = max - volume > 0 ? Math.log(max - volume) : 0;
             final float _volume = (float) (1 - (numerator / Math.log(max)));
+            DebugConfig.d("VideoView setVolume: " + _volume);
             mediaPlayer.setVolume(_volume, _volume);
         }
 

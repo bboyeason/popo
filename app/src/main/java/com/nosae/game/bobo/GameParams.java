@@ -64,12 +64,19 @@ public class GameParams {
     public static SoundPool soundPool = null;
     public static boolean isMusicOn = true;
     public static boolean isSoundOn = true;
-    public static int musicVolume = 2;
-    public static int soundVolume = 2;
+    public static float musicVolumeRatio = 1.0f;
+    public static float soundVolumeRatio = 1.0f;
     public static int soundID = 0;
     public static Vibrator vibrator = null;
     public static VideoPlayer videoPlayer = null;
 
+    public static void setMusicVolume(float volume) {
+        musicVolumeRatio = volume / 100.0f;
+    }
+
+    public static void setSoundVolume(float volume) {
+        soundVolumeRatio = volume / 100.0f;
+    }
 
     public static boolean outOfScreenBottom(Rect r) {
         if (screenRect.bottom < r.top) {

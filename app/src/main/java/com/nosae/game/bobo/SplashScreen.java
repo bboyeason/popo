@@ -41,8 +41,8 @@ public class SplashScreen extends Activity {
         if (GameParams.videoPlayer.isRuningVideo)
             GameParams.videoPlayer.Pause();
 
-        if (mMusic != null)
-            mMusic.Stop();
+        if (mMusic != null && mMusic.player.isPlaying())
+            mMusic.Pause();
     }
 
     public void LoadContent() {
@@ -51,7 +51,7 @@ public class SplashScreen extends Activity {
 
         if (mMusic == null) {
 //            mMusic.player.release();
-            mMusic = new Music(this, R.raw.story_music,2);
+            mMusic = new Music(this, R.raw.story_music, GameParams.musicVolumeRatio);
             mMusic.setLooping(true);
         }
     }

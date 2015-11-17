@@ -11,6 +11,7 @@ import android.widget.Switch;
 
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.R;
+import com.nosae.game.objects.Music;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -52,12 +53,12 @@ public class Settings extends Activity {
         mSoundSwitch.setChecked(GameParams.isSoundOn);
 
         settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
-        GameParams.musicVolume = settings.getInt(GameParams.PREFS_MUSIC_VOLUME_KEY, 2);
-        mMusicSeekBar.setProgress(GameParams.musicVolume);
+        GameParams.setMusicVolume(settings.getInt(GameParams.PREFS_MUSIC_VOLUME_KEY, 100));
+        mMusicSeekBar.setProgress((int) (GameParams.musicVolumeRatio * 100));
 
         settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
-        GameParams.soundVolume = settings.getInt(GameParams.PREFS_SOUND_VOLUME_KEY, 2);
-        mSoundSeekBar.setProgress(GameParams.soundVolume);
+        GameParams.setSoundVolume(settings.getInt(GameParams.PREFS_SOUND_VOLUME_KEY, 100));
+        mSoundSeekBar.setProgress((int) (GameParams.soundVolumeRatio * 100));
 
         mMusicSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -94,11 +95,11 @@ public class Settings extends Activity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                GameParams.musicVolume = seekBar.getProgress();
-                DebugConfig.d("Music volume: " + GameParams.musicVolume);
+                GameParams.setMusicVolume(seekBar.getProgress());
+                DebugConfig.d("Music volume: " + GameParams.musicVolumeRatio);
                 SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putInt(GameParams.PREFS_MUSIC_VOLUME_KEY, GameParams.musicVolume);
+                editor.putInt(GameParams.PREFS_MUSIC_VOLUME_KEY, (int) (GameParams.musicVolumeRatio * 100));
                 editor.commit();
             }
         });
@@ -114,11 +115,11 @@ public class Settings extends Activity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                GameParams.soundVolume = seekBar.getProgress();
-                DebugConfig.d("Sound volume: " +  GameParams.soundVolume);
+                GameParams.setSoundVolume(seekBar.getProgress());
+                DebugConfig.d("Sound volume: " +  GameParams.soundVolumeRatio);
                 SharedPreferences settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putInt(GameParams.PREFS_SOUND_VOLUME_KEY, GameParams.soundVolume);
+                editor.putInt(GameParams.PREFS_SOUND_VOLUME_KEY, (int) (GameParams.soundVolumeRatio * 100));
                 editor.commit();
             }
         });

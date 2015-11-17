@@ -51,6 +51,7 @@ public class Menu extends Activity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         GameParams.getScreenInfo(dm);
+        loadSharePreferences();
 
         mSettingsButton = (Button) findViewById(R.id.settingsButton);
         mKarnofskyScaleButton = (Button) findViewById(R.id.karnofskyButton);
@@ -65,7 +66,7 @@ public class Menu extends Activity {
 
         if (mMusic == null) {
 //            mMusic.player.release();
-            mMusic = new Music(this, R.raw.menu,2);
+            mMusic = new Music(this, R.raw.menu, GameParams.musicVolumeRatio);
             mMusic.setLooping(true);
         }
 
@@ -167,16 +168,16 @@ public class Menu extends Activity {
             }
         });
 
-        loadSharePreferences();
         logoInit();
     }
 
     private void loadSharePreferences() {
         SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
         GameParams.isMusicOn = settings.getBoolean(GameParams.PREFS_MUSIC_KEY, true);
-
+        GameParams.setMusicVolume(settings.getInt(GameParams.PREFS_MUSIC_VOLUME_KEY, 100));
         settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
         GameParams.isSoundOn = settings.getBoolean(GameParams.PREFS_SOUND_KEY, true);
+        GameParams.setSoundVolume(settings.getInt(GameParams.PREFS_SOUND_VOLUME_KEY, 100));
     }
 
     private void logoInit() {
@@ -258,8 +259,10 @@ public class Menu extends Activity {
     protected void onResume() {
         super.onResume();
         DebugConfig.d("Menu onResume()");
-        if (mMusic != null)
+        if (mMusic != null) {
+            mMusic.setMusicVolume(GameParams.musicVolumeRatio);
             mMusic.Play();
+        }
         if (mBouncer != null && !mBouncer.isRunning())
             mBouncer.start();
         // if API 19 or later, we can use mBouncer.resume()
