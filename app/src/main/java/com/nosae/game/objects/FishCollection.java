@@ -1,4 +1,4 @@
-package lbs;
+package com.nosae.game.objects;
 
 import java.util.ArrayList;
 import java.util.Collection;

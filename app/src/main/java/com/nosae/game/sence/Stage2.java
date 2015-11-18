@@ -16,7 +16,7 @@ import com.nosae.game.bobo.R;
 import com.nosae.game.bobo.Text;
 
 import lbs.DrawableGameComponent;
-import lbs.FishCollection;
+import com.nosae.game.objects.FishCollection;
 
 import com.nosae.game.objects.GameObj;
 import com.nosae.game.objects.Life1;

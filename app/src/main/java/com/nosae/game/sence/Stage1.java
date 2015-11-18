@@ -16,7 +16,7 @@ import com.nosae.game.bobo.Text;
 import java.util.Random;
 
 import lbs.DrawableGameComponent;
-import lbs.FishCollection;
+import com.nosae.game.objects.FishCollection;
 
 import com.nosae.game.objects.Life1;
 import com.nosae.game.role.Bobo;
