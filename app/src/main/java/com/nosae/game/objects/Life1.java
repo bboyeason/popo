@@ -14,6 +14,9 @@ import com.nosae.game.bobo.R;
 public class Life1 extends GameObj {
     private static int mLife = 5;
     private static int oldLife = mLife;
+    private int scaleTotal = 10;
+    private static int scaleOffset = 0;
+    private int scaleCount = 0;
 
     private Bitmap mNumberImage;
     BitmapFactory.Options mOptions;
@@ -46,6 +49,7 @@ public class Life1 extends GameObj {
     }
 
     public static void addLife(int life) {
+        scaleOffset = 1;
         mLife += life;
 
         if (mLife > 5)
@@ -59,6 +63,24 @@ public class Life1 extends GameObj {
             mNumberImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mNumberTable[getLife()], mOptions);
             oldLife = getLife();
         }
+    }
+
+    public void action() {
+        if (scaleOffset == 0)
+            return;
+
+        if (scaleOffset == 1) {
+            scale(1, 1);
+            scaleCount ++;
+        } else if (scaleOffset == -1) {
+            scale(-1, -1);
+            scaleCount--;
+        }
+
+        if (scaleCount >= scaleTotal)
+            scaleOffset = -1;
+        else if (scaleCount <= 0)
+            scaleOffset = 0;
     }
 
     public void draw(Canvas canvas) {

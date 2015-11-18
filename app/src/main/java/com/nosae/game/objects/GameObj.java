@@ -121,12 +121,12 @@ public class GameObj {
         setY(destRect.top + speed);
     }
 
-/*    public void scale(int addScaleX, int addScaleY) {
+    public void scale(int addScaleX, int addScaleY) {
         destRect.left -= addScaleX;
         destRect.top -= addScaleY;
         destRect.right += addScaleX;
         destRect.bottom += addScaleY;
-    }*/
+    }
 
     public void moveTo(int x, int y) {
         setX(x);
