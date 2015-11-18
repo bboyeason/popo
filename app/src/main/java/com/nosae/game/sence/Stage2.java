@@ -290,7 +290,7 @@ public class Stage2 extends DrawableGameComponent {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
             Bitmap numBitmap = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
-            mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth(), numBitmap.getHeight());
+            mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
             Life1.setLife(GameParams.stage2Life);
             numBitmap.recycle();
             numBitmap = null;
@@ -359,6 +359,7 @@ public class Stage2 extends DrawableGameComponent {
 
         if (mLife1 != null) {
             mLife1.updateLife();
+            mLife1.action();
             if (Life1.getLife() <= 0)
                 isGameOver = true;
         }
