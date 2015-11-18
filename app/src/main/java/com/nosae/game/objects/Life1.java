@@ -35,9 +35,7 @@ public class Life1 extends GameObj {
 
     public Life1(int destX, int destY, int destWidth, int destHeight, int srcX, int srcY, int srcWidth, int srcHeight) {
         super(destX, destY, destWidth, destHeight, srcX, srcY, srcWidth, srcHeight, 0, 0, 0);
-        mOptions = new BitmapFactory.Options();
-        mOptions.inSampleSize = 2;
-        mNumberImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mNumberTable[getLife()], mOptions);
+        mNumberImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mNumberTable[getLife()]);
     }
 
     public static int getLife() {
@@ -49,7 +47,8 @@ public class Life1 extends GameObj {
     }
 
     public static void addLife(int life) {
-        scaleOffset = 1;
+        if (life != 0)
+            scaleOffset = 1;
         mLife += life;
 
         if (mLife > 5)
@@ -60,7 +59,7 @@ public class Life1 extends GameObj {
 
     public void updateLife() {
         if (getLife() != oldLife) {
-            mNumberImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mNumberTable[getLife()], mOptions);
+            mNumberImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mNumberTable[getLife()]);
             oldLife = getLife();
         }
     }
