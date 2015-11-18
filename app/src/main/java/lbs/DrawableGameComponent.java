@@ -1,9 +1,3 @@
-/* copyright(c) 2010/11/21 by ��ߪ����j�Ǹ�u�|�B�f��
- * 
- * 
- * 
- */
-
 package lbs;
 
 public class DrawableGameComponent {
