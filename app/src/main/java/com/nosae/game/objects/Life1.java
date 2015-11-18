@@ -12,11 +12,8 @@ import com.nosae.game.bobo.R;
  * Created by eason on 2015/10/31.
  */
 public class Life1 extends GameObj {
-//    public int width = 0;
-//    public int height = 0;
-    private int column = 5;
     private static int mLife = 5;
-    private int destX;
+    private static int oldLife = mLife;
 
     private Bitmap mNumberImage;
     BitmapFactory.Options mOptions;
@@ -37,6 +34,7 @@ public class Life1 extends GameObj {
         super(destX, destY, destWidth, destHeight, srcX, srcY, srcWidth, srcHeight, 0, 0, 0);
         mOptions = new BitmapFactory.Options();
         mOptions.inSampleSize = 2;
+        mNumberImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mNumberTable[getLife()], mOptions);
     }
 
     public static int getLife() {
@@ -48,16 +46,19 @@ public class Life1 extends GameObj {
     }
 
     public static void addLife(int life) {
-        Life1.mLife += life;
+        mLife += life;
 
-        if (Life1.mLife > 5)
-            Life1.mLife = 5;
-        else if (Life1.mLife < 0)
-            Life1.mLife = 0;
+        if (mLife > 5)
+            mLife = 5;
+        else if (mLife < 0)
+            mLife = 0;
     }
 
     public void updateLife() {
-        mNumberImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mNumberTable[getLife()], mOptions);
+        if (getLife() != oldLife) {
+            mNumberImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mNumberTable[getLife()], mOptions);
+            oldLife = getLife();
+        }
     }
 
     public void draw(Canvas canvas) {
