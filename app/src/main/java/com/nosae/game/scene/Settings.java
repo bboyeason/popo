@@ -1,4 +1,4 @@
-package com.nosae.game.sence;
+package com.nosae.game.scene;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -11,7 +11,6 @@ import android.widget.Switch;
 
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.R;
-import com.nosae.game.objects.Music;
 import com.nosae.game.settings.DebugConfig;
 
 /**

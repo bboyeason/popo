@@ -1,4 +1,4 @@
-package com.nosae.game.sence;
+package com.nosae.game.scene;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

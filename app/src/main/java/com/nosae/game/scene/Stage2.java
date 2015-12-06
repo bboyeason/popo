@@ -1,4 +1,4 @@
-package com.nosae.game.sence;
+package com.nosae.game.scene;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,8 +43,8 @@ public class Stage2 extends DrawableGameComponent {
     private GameObj mBackground;
     private Bitmap mBackGroundImage;
 
-    private GameObj mSenceTitle;
-    private Bitmap mSenceTitleImage;
+    private GameObj mSceneTitle;
+    private Bitmap mSceneTitleImage;
 
     private Score mScore;
 
@@ -271,9 +271,9 @@ public class Stage2 extends DrawableGameComponent {
             mBackground.isAlive = true;
         }
 
-        if (mSenceTitle == null) {
-            mSenceTitleImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_stage_title);
-            mSenceTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSenceTitleImage.getWidth(), mSenceTitleImage.getHeight(), 0, 0, mSenceTitleImage.getWidth(), mSenceTitleImage.getHeight(), 0, 0, 0);
+        if (mSceneTitle == null) {
+            mSceneTitleImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_stage_title);
+            mSceneTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, 0);
         }
 
         if (mScore == null)
@@ -411,8 +411,8 @@ public class Stage2 extends DrawableGameComponent {
             mSubCanvas.drawText(mFpsText.message, mFpsText.x, mFpsText.y, mFpsText.paint);
         }
 
-        if (mSenceTitle != null) {
-            mSubCanvas.drawBitmap(mSenceTitleImage, mSenceTitle.srcRect, mSenceTitle.destRect, mSenceTitle.paint);
+        if (mSceneTitle != null) {
+            mSubCanvas.drawBitmap(mSceneTitleImage, mSceneTitle.srcRect, mSceneTitle.destRect, mSceneTitle.paint);
         }
 
         if (mScore != null)

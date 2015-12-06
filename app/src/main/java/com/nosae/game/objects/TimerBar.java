@@ -10,8 +10,8 @@ import com.nosae.game.bobo.GameEntry;
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.R;
 
-import com.nosae.game.sence.Stage1;
-import com.nosae.game.sence.Stage2;
+import com.nosae.game.scene.Stage1;
+import com.nosae.game.scene.Stage2;
 
 import lbs.Game;
 

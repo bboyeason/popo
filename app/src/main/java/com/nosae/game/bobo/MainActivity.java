@@ -1,8 +1,8 @@
 package com.nosae.game.bobo;
 
 import com.nosae.game.objects.Music;
-import com.nosae.game.sence.Stage1;
-import com.nosae.game.sence.Stage2;
+import com.nosae.game.scene.Stage1;
+import com.nosae.game.scene.Stage2;
 import com.nosae.game.settings.DebugConfig;
 import android.app.Activity;
 import android.app.Service;

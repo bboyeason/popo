@@ -12,8 +12,8 @@ import com.nosae.game.objects.Life1;
 import com.nosae.game.objects.Music;
 import com.nosae.game.objects.Quiz;
 import com.nosae.game.role.Stage2_fish;
-import com.nosae.game.sence.Stage1;
-import com.nosae.game.sence.Stage2;
+import com.nosae.game.scene.Stage1;
+import com.nosae.game.scene.Stage2;
 import com.nosae.game.settings.DebugConfig;
 
 /**

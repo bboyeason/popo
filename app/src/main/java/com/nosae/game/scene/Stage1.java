@@ -1,4 +1,4 @@
-package com.nosae.game.sence;
+package com.nosae.game.scene;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,8 +36,8 @@ public class Stage1 extends DrawableGameComponent {
     private GameObj mBackground;
     private Bitmap mBackGroundImage;
 
-    private GameObj mSenceTitle;
-    private Bitmap mSenceTitleImage;
+    private GameObj mSceneTitle;
+    private Bitmap mSceneTitleImage;
 
     private NormalFish mFishObj;
     private NormalFish mSubFishObj;
@@ -251,9 +251,9 @@ public class Stage1 extends DrawableGameComponent {
         // Random fish generator
         FishGeneration(true);
 
-        if (mSenceTitle == null) {
-            mSenceTitleImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
-            mSenceTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSenceTitleImage.getWidth(), mSenceTitleImage.getHeight(), 0, 0, mSenceTitleImage.getWidth(), mSenceTitleImage.getHeight(), 0, 0, 0);
+        if (mSceneTitle == null) {
+            mSceneTitleImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
+            mSceneTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, 0);
         }
 
         if (mBoboObj == null) {
@@ -408,8 +408,8 @@ public class Stage1 extends DrawableGameComponent {
 */
         }
 
-        if (mSenceTitle != null) {
-            mSubCanvas.drawBitmap(mSenceTitleImage, mSenceTitle.srcRect, mSenceTitle.destRect, mSenceTitle.paint);
+        if (mSceneTitle != null) {
+            mSubCanvas.drawBitmap(mSceneTitleImage, mSceneTitle.srcRect, mSceneTitle.destRect, mSceneTitle.paint);
         }
 
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {

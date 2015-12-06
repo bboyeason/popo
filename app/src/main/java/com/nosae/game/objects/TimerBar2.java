@@ -1,7 +1,7 @@
 package com.nosae.game.objects;
 
-import com.nosae.game.sence.Stage1;
-import com.nosae.game.sence.Stage2;
+import com.nosae.game.scene.Stage1;
+import com.nosae.game.scene.Stage2;
 import com.nosae.game.settings.DebugConfig;
 
 import lbs.Game;
