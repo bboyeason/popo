@@ -242,7 +242,8 @@ public class Menu extends Activity {
         AnimationDrawable animDrawable = (AnimationDrawable) mImageView.getBackground();
         animDrawable.start();
         mBouncer = new AnimatorSet();
-        mBouncer.play(objAnimator1).with(objAnimator2).with(objAnimator3);
+//        mBouncer.play(objAnimator1).with(objAnimator2).with(objAnimator3);
+        mBouncer.play(objAnimator2).with(objAnimator3);
         mBouncer.setDuration(6000);
         mBouncer.start();
 
