@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.nosae.game.bobo.GameParams;
+import com.nosae.game.bobo.MainActivity;
 import com.nosae.game.bobo.R;
 
 import com.nosae.game.bobo.SplashScreen;
@@ -124,7 +125,7 @@ public class Menu extends Activity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent i = new Intent(Menu.this, SplashScreen.class);
+                        Intent i = new Intent(Menu.this, MainActivity.class);
                         startActivity(i);
                         this.finish();
                     }
