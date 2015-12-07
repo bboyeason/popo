@@ -40,9 +40,6 @@ public class Stage3 extends DrawableGameComponent {
     private Bitmap mLifeImage;
     private Life1 mLife1;
 
-    // TODO move below to GameParams class
-    public static boolean isClearStage3 = false;
-    public static int mTotalScore = 0;
     public static boolean isGameOver = false;
 
 
@@ -120,7 +117,7 @@ public class Stage3 extends DrawableGameComponent {
                     + ") " + (int) mGameEntry.totalFrames;
         }
         if (mScore != null)
-            mScore.setTotalScore(mTotalScore);
+            mScore.setTotalScore(GameParams.stage3TotalScore);
 
         if (mLife1 != null) {
             mLife1.updateLife();

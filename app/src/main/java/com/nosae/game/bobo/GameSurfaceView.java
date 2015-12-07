@@ -54,7 +54,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                 DebugConfig.d("Hit!!");
                                 if (!_object.readyToDeath) {
                                     if (_object.getTouchScore() >= 0) {
-                                        Stage1.mTotalScore += _object.getTouchScore();
+                                        GameParams.stage1TotalScore += _object.getTouchScore();
                                         Music.playSound();
                                     } else if (_object.getTouchScore() == -1) {
                                         GameParams.vibrator.vibrate(50);
@@ -62,8 +62,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                     mMainActivity.mGameEntry.mStage1.mTimerBar.addTimer(_object.getTimerAdd());
                                     Life1.addLife(_object.getLifeAdd());
                                 }
-                                /*if (Stage1.mTotalScore < 0) {
-                                    Stage1.mTotalScore = 0;
+                                /*if (Stage1.stage1TotalScore < 0) {
+                                    Stage1.stage1TotalScore = 0;
                                     mMainActivity.mGameEntry.mStage1.mBoboObj.isAlive = false;
                                 }*/
                                 _object.readyToDeath = true;
@@ -80,7 +80,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                 if (!Stage2.mFishCollections.get(f).readyToDeath) {
                                     if (((Stage2_fish) _object).getColor() == Quiz.quizTable[Quiz.currentQuiz].color) {
                                         DebugConfig.d("Hit color!!!");
-                                        Stage2.mTotalScore += 10;
+                                        GameParams.stage2TotalScore += 10;
                                         mStage2Hit |= mStage2HitColor;
                                     } else if (!(_object.getLifeAdd() > 0 || _object.getTimerAdd() > 0)) {
                                         Life1.addLife(-1);
@@ -88,7 +88,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                     }
                                     if (((Stage2_fish) _object).getSyllable() == Quiz.quizTable[Quiz.currentQuiz].syllable) {
                                         DebugConfig.d("Hit syllable!!!");
-                                        Stage2.mTotalScore += 10;
+                                        GameParams.stage2TotalScore += 10;
                                         mStage2Hit |= mStage2HitSyllable;
                                     } else if (!(_object.getLifeAdd() > 0 || _object.getTimerAdd() > 0)) {
                                         Life1.addLife(-1);

@@ -72,8 +72,6 @@ public class Stage2 extends DrawableGameComponent {
     int f, j;
 
     public static boolean isGameOver = false;
-    public static boolean isClearStage2 = false;
-    public static int mTotalScore;
 
     private int[][] mFishTable_1 = {
             {
@@ -154,7 +152,6 @@ public class Stage2 extends DrawableGameComponent {
 
         mFishCollections = new FishCollection();
         mRandom = new Random();
-        mTotalScore = 0;
 
         if (mHandlerThread == null) {
             mHandlerThread = new HandlerThread(THREADNAME,
@@ -169,7 +166,7 @@ public class Stage2 extends DrawableGameComponent {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case Events.CREATEFISH:
-                        if (isGameOver || isClearStage2)
+                        if (isGameOver || GameParams.isClearStage2)
                             return;
                         stage2CreateFish(mFishTable_1, mFishTableColor, mFishTableSyllable);
 
@@ -183,7 +180,7 @@ public class Stage2 extends DrawableGameComponent {
                         }
                         break;
                     case Events.CREATESTAR:
-                        if (isGameOver || isClearStage2)
+                        if (isGameOver || GameParams.isClearStage2)
                             return;
 
                         stage2CreateFish(mFishTable_2);
@@ -354,7 +351,7 @@ public class Stage2 extends DrawableGameComponent {
         }
 
         if (mScore != null) {
-            mScore.setTotalScore(mTotalScore);
+            mScore.setTotalScore(GameParams.stage2TotalScore);
         }
 
         if (mLife1 != null) {

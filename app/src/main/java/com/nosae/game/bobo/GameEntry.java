@@ -76,15 +76,15 @@ public class GameEntry extends Game {
             //TODO send one shot
         }
 
-        if (mStage1 != null && !Stage1.isClearStage1
-                && Stage1.mTotalScore >= GameParams.stage1BreakScore
+        if (mStage1 != null && !GameParams.isClearStage1
+                && GameParams.stage1TotalScore >= GameParams.stage1BreakScore
                 && GameStateClass.currentState != GameStateClass.GameState.Stage2) {
-            Stage1.isClearStage1 = true;
+            GameParams.isClearStage1 = true;
             GameStateClass.changeState(GameStateClass.GameState.Stage2, mStage1, this);
-        } else if (mStage2 != null && !Stage2.isClearStage2
-                && Stage2.mTotalScore >= GameParams.stage2BreakScore
+        } else if (mStage2 != null && !GameParams.isClearStage2
+                && GameParams.stage2TotalScore >= GameParams.stage2BreakScore
                 && GameStateClass.currentState != GameStateClass.GameState.Stage3) {
-            Stage2.isClearStage2 = true;
+            GameParams.isClearStage2 = true;
             GameStateClass.changeState(GameStateClass.GameState.Stage3, mStage2, this);
         }
 //        if (isForceRestart)

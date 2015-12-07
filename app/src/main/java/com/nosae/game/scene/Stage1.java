@@ -102,10 +102,8 @@ public class Stage1 extends DrawableGameComponent {
     public static Handler mHandler;
     public static HandlerThread mHandlerThread;
 
-    public static int mTotalScore;
     public static boolean onOff = true;
     public static boolean isGameOver = false;
-    public static boolean isClearStage1 = false;
 
     public Stage1(GameEntry mGameEntry) {
         DebugConfig.d("Stage1 Constructor");
@@ -134,15 +132,13 @@ public class Stage1 extends DrawableGameComponent {
         mColorMask = new ColorMask(Color.RED, 0);
         mColorMask.isAlive = false;
 
-        mTotalScore = 0;
-
         mHandler = new Handler(mHandlerThread.getLooper()){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case Events.CREATEFISH:
-                        if (isGameOver || isClearStage1)
+                        if (isGameOver || GameParams.isClearStage1)
                             return;
                         createFish(mFishTable1);
 
@@ -156,7 +152,7 @@ public class Stage1 extends DrawableGameComponent {
                         }
                         break;
                     case Events.CREATESTAR:
-                        if (isGameOver || isClearStage1)
+                        if (isGameOver || GameParams.isClearStage1)
                             return;
 
                         createFish(mFishTable2);
@@ -339,12 +335,12 @@ public class Stage1 extends DrawableGameComponent {
 //                DebugConfig.d("Arrive screen bottom, remove it.");
                 if (!isGameOver) {
                     if (mSubFishObj.getArrivalScore() > 0) {
-                        mTotalScore += mSubFishObj.getArrivalScore();
+                        GameParams.stage1TotalScore += mSubFishObj.getArrivalScore();
                     } else if (mSubFishObj.getArrivalScore() < 0) {
                         Life1.addLife(mSubFishObj.getArrivalScore());
                     }
-                    if (mTotalScore < 0 || Life1.getLife() <= 0) {
-                        mTotalScore = 0;
+                    if (GameParams.stage1TotalScore < 0 || Life1.getLife() <= 0) {
+                        GameParams.stage1TotalScore = 0;
                         mBoboObj.isAlive = false;
                     }
                 }
@@ -364,7 +360,7 @@ public class Stage1 extends DrawableGameComponent {
                     + ") " + (int) mGameEntry.totalFrames;
         }
         if (mScore != null)
-            mScore.setTotalScore(mTotalScore);
+            mScore.setTotalScore(GameParams.stage1TotalScore);
 
         if (mLife1 != null) {
             mLife1.updateLife();

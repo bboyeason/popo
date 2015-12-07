@@ -71,6 +71,12 @@ public class GameParams {
     public static int soundID = 0;
     public static Vibrator vibrator = null;
     public static VideoPlayer videoPlayer = null;
+    public static int stage1TotalScore = 0;
+    public static int stage2TotalScore = 0;
+    public static int stage3TotalScore = 0;
+    public static boolean isClearStage1 = false;
+    public static boolean isClearStage2 = false;
+    public static boolean isClearStage3 = false;
 
     public static void setMusicVolume(float volume) {
         musicVolumeRatio = volume / 100.0f;
