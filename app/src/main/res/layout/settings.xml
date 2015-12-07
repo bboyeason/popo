@@ -37,7 +37,8 @@
         android:layout_alignBottom="@+id/music_switch"
         android:layout_toRightOf="@+id/music_switch"
         android:layout_toEndOf="@+id/music_switch"
-        android:layout_alignTop="@+id/music_switch" />
+        android:layout_alignTop="@+id/music_switch"
+        android:visibility="invisible" />
 
     <SeekBar
         android:layout_width="match_parent"
@@ -46,6 +47,7 @@
         android:layout_alignBottom="@+id/sound_switch"
         android:layout_alignTop="@+id/sound_switch"
         android:layout_alignLeft="@+id/music_seekBar"
-        android:layout_alignStart="@+id/music_seekBar" />
+        android:layout_alignStart="@+id/music_seekBar"
+        android:visibility="invisible" />
 
 </RelativeLayout>
