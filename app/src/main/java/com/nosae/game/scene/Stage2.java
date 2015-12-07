@@ -153,6 +153,8 @@ public class Stage2 extends DrawableGameComponent {
         mFishCollections = new FishCollection();
         mRandom = new Random();
 
+        GameParams.stage2TotalScore = 0;
+
         if (mHandlerThread == null) {
             mHandlerThread = new HandlerThread(THREADNAME,
                     android.os.Process.THREAD_PRIORITY_BACKGROUND);

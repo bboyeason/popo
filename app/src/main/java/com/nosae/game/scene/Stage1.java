@@ -132,6 +132,8 @@ public class Stage1 extends DrawableGameComponent {
         mColorMask = new ColorMask(Color.RED, 0);
         mColorMask.isAlive = false;
 
+        GameParams.stage1TotalScore = 0;
+
         mHandler = new Handler(mHandlerThread.getLooper()){
             @Override
             public void handleMessage(Message msg) {

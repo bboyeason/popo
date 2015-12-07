@@ -51,6 +51,7 @@ public class Stage3 extends DrawableGameComponent {
     @Override
     protected void Initialize() {
         super.Initialize();
+        GameParams.stage3TotalScore = 0;
     }
 
     @Override
