@@ -9,6 +9,7 @@ import com.nosae.game.objects.Music;
 import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;
 import com.nosae.game.scene.Stage3;
+import com.nosae.game.scene.Stage4;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -18,6 +19,7 @@ public class GameEntry extends Game {
     public Stage1 mStage1;
     public Stage2 mStage2;
     public Stage3 mStage3;
+    public Stage4 mStage4;
     public MainActivity mMainActivity;
     public boolean isForceRestart = false;
 
@@ -68,7 +70,7 @@ public class GameEntry extends Game {
     @Override
     protected void Update() {
 //        DebugConfig.d("GameEntry Update()");
-        if ((Stage1.isGameOver || Stage2.isGameOver || Stage3.isGameOver)
+        if ((Stage1.isGameOver || Stage2.isGameOver || Stage3.isGameOver || Stage4.isGameOver)
                 && (mMainActivity.mRestartButton.getVisibility() == View.INVISIBLE)) {
             Message m = new Message();
             m.what = 1;
@@ -86,6 +88,11 @@ public class GameEntry extends Game {
                 && GameStateClass.currentState != GameStateClass.GameState.Stage3) {
             GameParams.isClearStage2 = true;
             GameStateClass.changeState(GameStateClass.GameState.Stage3, mStage2, this);
+        } else if (mStage3 != null && !GameParams.isClearStage3
+                && GameParams.stage3TotalScore >= GameParams.stage3BreakScore
+                && GameStateClass.currentState != GameStateClass.GameState.Stage4) {
+            GameParams.isClearStage3 = true;
+            GameStateClass.changeState(GameStateClass.GameState.Stage4, mStage3, this);
         }
 //        if (isForceRestart)
 //            GameStateClass.changeState(GameStateClass.GameState.Stage1, mStage1, this);
@@ -127,6 +134,12 @@ public class GameEntry extends Game {
                     DebugConfig.d("Start stage 3.");
                     mStage3 = new Stage3(this);
                     Components.add(mStage3);
+                    break;
+
+                case Stage4:
+                    DebugConfig.d("Start stage 4.");
+                    mStage4 = new Stage4(this);
+                    Components.add(mStage4);
                     break;
             }
 

@@ -15,6 +15,7 @@ import com.nosae.game.role.Stage2_fish;
 import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;
 import com.nosae.game.scene.Stage3;
+import com.nosae.game.scene.Stage4;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -136,18 +137,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         return false;
     }
 
-
-    // Update object
-    protected interface Events {
-        int UPDATE_FISH = 0;
-        int UPDATE_BOBO = 1;
-        int UPDATE_POINT = 2;
-        int UPDATE_SOMETHING = 3;
-    }
-
     public GameSurfaceView(Context context) {
         super(context);
-//        mMainActivity = (MainActivity)context;
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
     }

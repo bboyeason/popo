@@ -4,6 +4,7 @@ import com.nosae.game.objects.Music;
 import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;
 import com.nosae.game.scene.Stage3;
+import com.nosae.game.scene.Stage4;
 import com.nosae.game.settings.DebugConfig;
 import android.app.Activity;
 import android.app.Service;
@@ -103,6 +104,16 @@ public class MainActivity extends Activity {
                         e.printStackTrace();
                     }
                     GameStateClass.changeState(GameStateClass.GameState.Stage3, null, mGameEntry);
+                } else if (GameStateClass.currentState == GameStateClass.GameState.Stage4) {
+                    Stage4.isGameOver = false;
+                    GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage4, mGameEntry);
+                    // FIXME don't use sleep
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    GameStateClass.changeState(GameStateClass.GameState.Stage4, null, mGameEntry);
                 }
                 mRestartButton.setVisibility(View.INVISIBLE);
             }
@@ -132,6 +143,9 @@ public class MainActivity extends Activity {
                             break;
                         case Stage3:
                             Stage3.ObjectGeneration(!isChecked);
+                            break;
+                        case Stage4:
+                            Stage4.ObjectGeneration(!isChecked);
                             break;
                     }
                 }
@@ -186,6 +200,10 @@ public class MainActivity extends Activity {
             Stage3.onOff = false;
             Stage3.mHandler.removeMessages(Events.CREATESTAR);
         }
+        if (Stage4.mHandler != null) {
+            Stage4.onOff = false;
+            Stage4.mHandler.removeMessages(Events.CREATESTAR);
+        }
         super.onStop();
     }
 
@@ -216,6 +234,12 @@ public class MainActivity extends Activity {
             Stage3.mHandlerThread.quit();
             Stage3.mHandlerThread = null;
         }
+        if (Stage4.mHandlerThread != null) {
+            DebugConfig.d("mHandlerThread " + Stage4.mHandlerThread.getThreadId());
+            Stage4.mHandlerThread.interrupt();
+            Stage4.mHandlerThread.quit();
+            Stage4.mHandlerThread = null;
+        }
     }
 
     private void Initialize() {
@@ -229,10 +253,14 @@ public class MainActivity extends Activity {
         mGameEntry = new GameEntry(this);
         GameStateClass.oldState = GameStateClass.GameState.None;
         if (GameParams.isClearStage1) {
-            if (GameParams.isClearStage2)
-                GameStateClass.currentState = GameStateClass.GameState.Stage3;
-            else
+            if (GameParams.isClearStage2) {
+                if (GameParams.isClearStage3)
+                    GameStateClass.currentState = GameStateClass.GameState.Stage4;
+                else
+                    GameStateClass.currentState = GameStateClass.GameState.Stage3;
+            } else {
                 GameStateClass.currentState = GameStateClass.GameState.Stage2;
+            }
         } else {
             GameStateClass.currentState = GameStateClass.GameState.Stage1;
         }
