@@ -3,6 +3,7 @@ package com.nosae.game.scene;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar;
@@ -23,6 +24,13 @@ public class Settings extends Activity {
 
     private static SeekBar mMusicSeekBar;
     private static SeekBar mSoundSeekBar;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        finish();
+        return super.onTouchEvent(event);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();

@@ -23,7 +23,7 @@
             android:name="com.nosae.game.scene.Settings"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/GameTheme" >
+            android:theme="@style/SettingsDialogStyle" >
         </activity>
 
         <!-- Karnofsky scale activity -->
