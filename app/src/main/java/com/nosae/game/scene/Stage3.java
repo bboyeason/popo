@@ -90,6 +90,7 @@ public class Stage3 extends DrawableGameComponent {
             height = objImage.getHeight();
             mObj = new FishObj(objImage, 0, 0, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
             mObj.random(limitRect);
+            mObj.setTouchScore(objectTable[1][i]);
             mObj.isAlive = true;
             mObjCollections.add(mObj);
         }

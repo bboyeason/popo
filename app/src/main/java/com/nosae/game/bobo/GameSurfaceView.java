@@ -14,6 +14,7 @@ import com.nosae.game.objects.Quiz;
 import com.nosae.game.role.Stage2_fish;
 import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;
+import com.nosae.game.scene.Stage3;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -109,6 +110,19 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                 break;
                             }
                         }
+                        break;
+                    case Stage3:
+                        for (f = 0; f < Stage3.mObjCollections.size(); f++) {
+                            _object = Stage3.mObjCollections.get(f);
+                            if (_object.destRect.contains((int) x, (int) y)) {
+                                GameParams.stage3TotalScore += _object.getTouchScore();
+                                _object.isAlive = false;
+                                DebugConfig.d("Hit object, score: " + _object.getTouchScore());
+                                return true;
+                            }
+                        }
+                        Life1.addLife(-1);
+                        DebugConfig.d("no Hit!!!");
                         break;
                 }
                 break;
