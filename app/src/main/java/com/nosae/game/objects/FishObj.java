@@ -13,7 +13,6 @@ import com.nosae.game.bobo.GameParams;
 public class FishObj extends GameObj {
 //TODO implement OnClick
 
-    private Rect mActRect;
     private Random r = new Random();
     private int touchScore = 0;
     private int arrivalScore = 0;
@@ -160,18 +159,16 @@ public class FishObj extends GameObj {
     }
 
     public void random(Rect limitRect) {
-//        this.mActRect = limitRect;
-//        this.moveTo(mActRect.left + r.nextInt(mActRect.width() - this.getWidth()),
-//                mActRect.top + r.nextInt(mActRect.height() - this.getHeight()));
+        this.moveTo(limitRect.left + r.nextInt(limitRect.width() - srcWidth),
+                limitRect.top + r.nextInt(limitRect.height() - srcHeight));
     }
 
     public void random() {
-        this.random(this.mActRect);
+        this.random(GameParams.screenRect);
     }
 
     public void randomTop() {
         this.moveTo(GameParams.screenRect.left + r.nextInt(GameParams.scaleWidth - srcWidth), GameParams.screenRect.top - srcHeight + 1);
-//        this.moveTo(mActRect.left + r.nextInt(mActRect.width() - this.getWidth()), GameParams.screenRect.top - this.getRect().height() + 1);
     }
 
 

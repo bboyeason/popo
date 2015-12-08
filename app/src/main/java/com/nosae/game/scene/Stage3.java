@@ -4,11 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.widget.Toast;
 
 import com.nosae.game.bobo.GameEntry;
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.R;
 import com.nosae.game.bobo.Text;
+import com.nosae.game.objects.FishCollection;
+import com.nosae.game.objects.FishObj;
 import com.nosae.game.objects.GameObj;
 import com.nosae.game.objects.Life1;
 import com.nosae.game.objects.Score;
@@ -42,16 +46,62 @@ public class Stage3 extends DrawableGameComponent {
 
     public static boolean isGameOver = false;
 
+    private FishObj mObj;
+    private FishObj mSubObj;
+    public static FishCollection mObjCollections;
+    private int[][] mObjTable_1 = {
+            {
+                    R.drawable.s_0,
+                    R.drawable.s_1,
+                    R.drawable.s_2,
+                    R.drawable.s_3,
+                    R.drawable.s_4,
+                    R.drawable.s_5,
+                    R.drawable.s_6,
+                    R.drawable.s_7,
+                    R.drawable.s_8,
+                    R.drawable.s_9,
+            },
+            { 0, 10, 10, 10, 20, 20 ,20, 0, 0, 0 } // Score
+    };
 
     public Stage3(GameEntry gameEntry) {
         DebugConfig.d("Stage3 Constructor");
         this.mGameEntry = gameEntry;
     }
 
+    public void CreateObj(int[][] objectTable) {
+        int width, height;
+        Bitmap objImage;
+        // Can't assign GameParams.screenRect to limitRect,
+        // or modify limitRect.top will also modify GameParams.screenRect.top
+        Rect limitRect = new Rect(GameParams.screenRect);
+        limitRect.top = mLifeIcon.destRect.bottom;
+        for (int i = 0; i < objectTable[0].length; i++) {
+            try {
+                objImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, objectTable[0][i]);
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+                Toast.makeText(mGameEntry.mMainActivity, "OutOfMemoryError!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            width = objImage.getWidth();
+            height = objImage.getHeight();
+            mObj = new FishObj(objImage, 0, 0, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
+            mObj.random(limitRect);
+            mObj.isAlive = true;
+            mObjCollections.add(mObj);
+        }
+    }
+
     @Override
     protected void Initialize() {
         super.Initialize();
+        DebugConfig.d("Stage3 Initialize()");
         GameParams.stage3TotalScore = 0;
+
+        mObjCollections = new FishCollection();
     }
 
     @Override
@@ -108,6 +158,8 @@ public class Stage3 extends DrawableGameComponent {
         if (mTimerBar != null) {
             mTimerBar.setTimer(GameParams.stage3RunningTime);
         }
+
+        CreateObj(mObjTable_1);
     }
 
     @Override
@@ -166,6 +218,14 @@ public class Stage3 extends DrawableGameComponent {
 
         if (mTimerBar != null) {
             mSubCanvas.drawBitmap(mTimerBarImage, mTimerBar.srcRect, mTimerBar.destRect, null);
+        }
+
+        for (int f = mObjCollections.size() -1 ; f >= 0; f--) {
+            mSubObj = mObjCollections.get(f);
+            if (mSubObj.isAlive) {
+                mSubCanvas.drawBitmap(mSubObj.image, mSubObj.srcRect, mSubObj.destRect, mSubObj.paint);
+            }
+
         }
     }
 }
