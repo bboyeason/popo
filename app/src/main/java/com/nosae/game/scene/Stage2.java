@@ -16,6 +16,8 @@ import com.nosae.game.bobo.R;
 import com.nosae.game.bobo.Text;
 
 import lbs.DrawableGameComponent;
+
+import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.FishCollection;
 
 import com.nosae.game.objects.GameObj;
@@ -68,6 +70,7 @@ public class Stage2 extends DrawableGameComponent {
     public static boolean isQuizHit = true;
 
     private Text mFpsText;
+    private ColorMask mColorMask;
 
     int f, j;
 
@@ -149,6 +152,8 @@ public class Stage2 extends DrawableGameComponent {
         if (DebugConfig.isFpsDebugOn) {
             mFpsText = new Text(GameParams.halfWidth - 50, 20, 12, "FPS", Color.BLUE);
         }
+        mColorMask = new ColorMask(Color.RED, 0);
+        mColorMask.isAlive = false;
 
         mFishCollections = new FishCollection();
         mRandom = new Random();
@@ -314,6 +319,7 @@ public class Stage2 extends DrawableGameComponent {
             mRule2Image = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role2);
             mBoboObj = new Bobo(mBoboImage, GameParams.halfWidth - mBoboImage.getWidth() / 2, GameParams.scaleHeight - mBoboImage.getHeight(), mBoboImage.getWidth(), mBoboImage.getHeight(), 0, 0, mBoboImage.getWidth(), mBoboImage.getHeight(), 0, 0, 0);
             mBoboObj.role2 = mBoboObj.new Role2(mRule2Image, mBoboObj.getX() - mRule2Image.getWidth(), GameParams.scaleHeight - mRule2Image.getHeight(), mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, 0);
+            mBoboObj.isAlive = true;
         }
 
         if (mStaff == null) {
@@ -386,6 +392,9 @@ public class Stage2 extends DrawableGameComponent {
             if (!mSubFishObj.isAlive)
                 mFishCollections.remove(mSubFishObj);
         }
+        if (isGameOver || !mBoboObj.isAlive) {
+            mColorMask.Action((int) mGameEntry.totalFrames);
+        }
     }
 
     @Override
@@ -455,6 +464,12 @@ public class Stage2 extends DrawableGameComponent {
 //                mSubCanvas.restore();
             }
 
+        }
+
+        if ((isGameOver || !mBoboObj.isAlive) && mColorMask.isAlive)
+        {
+            mSubCanvas.drawRect(mColorMask.destRect, mColorMask.paint);
+            mSubCanvas.drawText(mColorMask.text.message, mColorMask.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, mColorMask.text.paint);
         }
     }
 }
