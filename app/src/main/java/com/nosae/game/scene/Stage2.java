@@ -101,21 +101,6 @@ public class Stage2 extends DrawableGameComponent {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Death animation end */
     };
 
-    private int[][] mFishTable_2 = {
-            {
-                    R.drawable.sea_star,
-                    R.drawable.jellyfish
-            },
-            { 10, 10 }, /* Animation column */
-            {  3,  3 }, /* Animation row */
-            {  0,  0 },  /* Max index */
-            {  1,  1 }, /* Death animation start */
-            { 27, 27 }, /* Death animation end */
-            {  0,  0 }, /* Touch Score */
-            {  0,  0 }, /* Arrival Score */
-            { 10,  0 }, /* Timer add (seconds) */
-            {  0,  1 } /* Life add */
-    };
     /* Color, red:0, yellow:1, blue:2 */
     private Quiz.quizColor mFishTableColor[] = {
             Quiz.quizColor.red, Quiz.quizColor.red, Quiz.quizColor.red, Quiz.quizColor.red, Quiz.quizColor.red,
@@ -190,7 +175,7 @@ public class Stage2 extends DrawableGameComponent {
                         if (isGameOver || GameParams.isClearStage2)
                             return;
 
-                        stage2CreateFish(mFishTable_2);
+                        CreateSpecialObjects(GameParams.specialObjectTable);
                         if (onOff) {
                             Message m = new Message();
                             m.what = Events.CREATESTAR;
@@ -202,7 +187,7 @@ public class Stage2 extends DrawableGameComponent {
         };
     }
 
-    private  void stage2CreateFish(int[][] objectTable) {
+    private  void CreateSpecialObjects(int[][] objectTable) {
         stage2CreateFish(objectTable, null, null);
     }
 

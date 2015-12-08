@@ -80,21 +80,6 @@ public class Stage3 extends DrawableGameComponent {
             { 0, 10, 10, 10, 20, 20 ,20, 0, 0, 0 } // Score
     };
 
-    private int[][] mObjTable_2 = {
-            {
-                    R.drawable.sea_star,
-                    R.drawable.jellyfish
-            },
-            { 10, 10 }, /* Animation column */
-            {  3,  3 }, /* Animation row */
-            {  0,  0 },  /* Max index */
-            {  1,  1 }, /* Death animation start */
-            { 27, 27 }, /* Death animation end */
-            {  0,  0 }, /* Touch Score */
-            {  0,  0 }, /* Arrival Score */
-            { 10,  0 }, /* Timer add (seconds) */
-            {  0,  1 } /* Life add */
-    };
     private Rect mLimitRect;
 
     public Stage3(GameEntry gameEntry) {
@@ -125,7 +110,7 @@ public class Stage3 extends DrawableGameComponent {
         }
     }
 
-    private void CreateSpecialObj(int[][] objectTable) {
+    private void CreateSpecialObjects(int[][] objectTable) {
         int width, height;
         int random;
         Random _random = new Random();
@@ -181,7 +166,7 @@ public class Stage3 extends DrawableGameComponent {
                         if (isGameOver || GameParams.isClearStage3)
                             return;
 
-                        CreateSpecialObj(mObjTable_2);
+                        CreateSpecialObjects(GameParams.specialObjectTable);
                         if (onOff) {
                             Message m = new Message();
                             m.what = Events.CREATESTAR;

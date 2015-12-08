@@ -81,24 +81,6 @@ public class Stage1 extends DrawableGameComponent {
             {  0,  0,  0,  0,  0 } /* Life add */
     };
 
-    private int[][] mFishTable2 = {
-            {
-                    R.drawable.sea_star,
-                    R.drawable.jellyfish
-            },
-            { 10, 10 }, /* Animation column */
-            {  3,  3 }, /* Animation row */
-            {  0,  0 },  /* Max index */
-            {  1,  1 }, /* Death animation start */
-            { 27, 27 }, /* Death animation end */
-            {  0,  0 }, /* Touch Score */
-            {  0,  0 }, /* Arrival Score */
-            { 10,  0 }, /* Timer add (seconds) */
-            {  0,  1 } /* Life add */
-    };
-
-
-
     public static Handler mHandler;
     public static HandlerThread mHandlerThread;
 
@@ -157,7 +139,7 @@ public class Stage1 extends DrawableGameComponent {
                         if (isGameOver || GameParams.isClearStage1)
                             return;
 
-                        createFish(mFishTable2);
+                        createFish(GameParams.specialObjectTable);
                         if (onOff) {
                             Message m = new Message();
                             m.what = Events.CREATESTAR;

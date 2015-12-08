@@ -58,6 +58,7 @@ public class GameParams {
     public static final int stage3Life = 5;
     public static final int stage1BreakScore = 500;
     public static final int stage2BreakScore = 100;
+    public static final int stage3BreakScore = 90;
 
     public static float[] Cosine = new float[360];
     public static float[] Sine = new float[360];
@@ -77,6 +78,21 @@ public class GameParams {
     public static boolean isClearStage1 = false;
     public static boolean isClearStage2 = false;
     public static boolean isClearStage3 = false;
+    public static int[][] specialObjectTable = {
+            {
+                    R.drawable.sea_star,
+                    R.drawable.jellyfish
+            },
+            { 10, 10 }, /* Animation column */
+            {  3,  3 }, /* Animation row */
+            {  0,  0 },  /* Max index */
+            {  1,  1 }, /* Death animation start */
+            { 27, 27 }, /* Death animation end */
+            {  0,  0 }, /* Touch Score */
+            {  0,  0 }, /* Arrival Score */
+            { 10,  0 }, /* Timer add (seconds) */
+            {  0,  1 } /* Life add */
+    };
 
     public static void setMusicVolume(float volume) {
         musicVolumeRatio = volume / 100.0f;
