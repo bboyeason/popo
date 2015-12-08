@@ -3,6 +3,7 @@ package com.nosae.game.bobo;
 import com.nosae.game.objects.Music;
 import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;
+import com.nosae.game.scene.Stage3;
 import com.nosae.game.settings.DebugConfig;
 import android.app.Activity;
 import android.app.Service;
@@ -119,6 +120,9 @@ public class MainActivity extends Activity {
                         case Stage2:
                             Stage2.FishGeneration(!isChecked);
                             break;
+                        case Stage3:
+                            Stage3.ObjectGeneration(!isChecked);
+                            break;
                     }
                 }
             }
@@ -160,11 +164,17 @@ public class MainActivity extends Activity {
 //            mToggleButton.setChecked(true);
         if (Stage1.mHandler != null) {
             Stage1.onOff = false;
-            Stage1.mHandler.removeMessages(com.nosae.game.bobo.Events.CREATEFISH);
+            Stage1.mHandler.removeMessages(Events.CREATEFISH);
+            Stage1.mHandler.removeMessages(Events.CREATESTAR);
         }
         if (Stage2.mHandler != null) {
             Stage2.onOff = false;
-            Stage2.mHandler.removeMessages(com.nosae.game.bobo.Events.CREATEFISH);
+            Stage2.mHandler.removeMessages(Events.CREATEFISH);
+            Stage2.mHandler.removeMessages(Events.CREATESTAR);
+        }
+        if (Stage3.mHandler != null) {
+            Stage3.onOff = false;
+            Stage3.mHandler.removeMessages(Events.CREATESTAR);
         }
         super.onStop();
     }
@@ -189,6 +199,12 @@ public class MainActivity extends Activity {
             Stage2.mHandlerThread.interrupt();
             Stage2.mHandlerThread.quit();
             Stage2.mHandlerThread = null;
+        }
+        if (Stage3.mHandlerThread != null) {
+            DebugConfig.d("mHandlerThread " + Stage3.mHandlerThread.getThreadId());
+            Stage3.mHandlerThread.interrupt();
+            Stage3.mHandlerThread.quit();
+            Stage3.mHandlerThread = null;
         }
     }
 
@@ -228,28 +244,4 @@ public class MainActivity extends Activity {
             }
         };
     }
-
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu_drawable menu) {
-        // Inflate the Menu_drawable; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
-
 }

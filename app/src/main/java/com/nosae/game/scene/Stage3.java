@@ -5,8 +5,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.widget.Toast;
 
+import com.nosae.game.bobo.Events;
 import com.nosae.game.bobo.GameEntry;
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.R;
@@ -17,7 +21,10 @@ import com.nosae.game.objects.GameObj;
 import com.nosae.game.objects.Life1;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar2;
+import com.nosae.game.role.NormalFish;
 import com.nosae.game.settings.DebugConfig;
+
+import java.util.Random;
 
 import lbs.DrawableGameComponent;
 
@@ -25,6 +32,11 @@ import lbs.DrawableGameComponent;
  * Created by eason on 2015/11/9.
  */
 public class Stage3 extends DrawableGameComponent {
+
+    public static Handler mHandler;
+    public static HandlerThread mHandlerThread;
+    public static final String THREADNAME = "Stage3_object_generator";
+
     private final GameEntry mGameEntry;
 
     private GameObj mBackground;
@@ -45,9 +57,11 @@ public class Stage3 extends DrawableGameComponent {
     private Life1 mLife1;
 
     public static boolean isGameOver = false;
+    public static boolean onOff;
+    private Random mRandom;
 
-    private FishObj mObj;
-    private FishObj mSubObj;
+    private NormalFish mObj;
+    private NormalFish mSubObj;
     public static FishCollection mObjCollections;
     private int[][] mObjTable_1 = {
             {
@@ -65,6 +79,23 @@ public class Stage3 extends DrawableGameComponent {
             { 0, 10, 10, 10, 20, 20 ,20, 0, 0, 0 } // Score
     };
 
+    private int[][] mObjTable_2 = {
+            {
+                    R.drawable.sea_star,
+                    R.drawable.jellyfish
+            },
+            { 10, 10 }, /* Animation column */
+            {  3,  3 }, /* Animation row */
+            {  0,  0 },  /* Max index */
+            {  1,  1 }, /* Death animation start */
+            { 27, 27 }, /* Death animation end */
+            {  0,  0 }, /* Touch Score */
+            {  0,  0 }, /* Arrival Score */
+            { 10,  0 }, /* Timer add (seconds) */
+            {  0,  1 } /* Life add */
+    };
+    private Rect mLimitRect;
+
     public Stage3(GameEntry gameEntry) {
         DebugConfig.d("Stage3 Constructor");
         this.mGameEntry = gameEntry;
@@ -73,10 +104,7 @@ public class Stage3 extends DrawableGameComponent {
     public void CreateObj(int[][] objectTable) {
         int width, height;
         Bitmap objImage;
-        // Can't assign GameParams.screenRect to limitRect,
-        // or modify limitRect.top will also modify GameParams.screenRect.top
-        Rect limitRect = new Rect(GameParams.screenRect);
-        limitRect.top = mLifeIcon.destRect.bottom;
+
         for (int i = 0; i < objectTable[0].length; i++) {
             try {
                 objImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, objectTable[0][i]);
@@ -88,12 +116,41 @@ public class Stage3 extends DrawableGameComponent {
             }
             width = objImage.getWidth();
             height = objImage.getHeight();
-            mObj = new FishObj(objImage, 0, 0, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
-            mObj.random(limitRect);
+            mObj = new NormalFish(objImage, 0, 0, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
+            mObj.random(mLimitRect);
             mObj.setTouchScore(objectTable[1][i]);
             mObj.isAlive = true;
             mObjCollections.add(mObj);
         }
+    }
+
+    private void CreateSpecialObj(int[][] objectTable) {
+        int width, height;
+        int random;
+        Random _random = new Random();
+        random = _random.nextInt(objectTable[0].length);
+        Bitmap objImage = null;
+        try {
+            objImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, objectTable[0][random]);
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            Toast.makeText(mGameEntry.mMainActivity, "OutOfMemoryError!",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        width = objImage.getWidth() / objectTable[1][random];
+        height = objImage.getHeight() / objectTable[2][random];
+        mObj = new NormalFish(objImage, 0, 0, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
+        mObj.random(mLimitRect);
+        mObj.setCol(objectTable[1][random]);
+        mObj.setMaxIndex(objectTable[3][random]);
+        mObj.setDeathIndexStart(objectTable[4][random]);
+        mObj.setDeathIndexEnd(objectTable[5][random]);
+        mObj.setTimerAdd(objectTable[8][random]);
+        mObj.setLifeAdd(objectTable[9][random]);
+        mObj.isAlive = true;
+        mObjCollections.add(mObj);
     }
 
     @Override
@@ -101,10 +158,47 @@ public class Stage3 extends DrawableGameComponent {
         super.Initialize();
         DebugConfig.d("Stage3 Initialize()");
         GameParams.stage3TotalScore = 0;
+        mRandom = new Random();
 
         mObjCollections = new FishCollection();
-    }
 
+        if (mHandlerThread == null) {
+            mHandlerThread = new HandlerThread(THREADNAME,
+                    android.os.Process.THREAD_PRIORITY_BACKGROUND);
+            mHandlerThread.start();
+            DebugConfig.d("Create thread: " + THREADNAME);
+        }
+
+        mHandler = new Handler(mHandlerThread.getLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case Events.CREATESTAR:
+                        if (isGameOver || GameParams.isClearStage3)
+                            return;
+
+                        CreateSpecialObj(mObjTable_2);
+                        if (onOff) {
+                            Message m = new Message();
+                            m.what = Events.CREATESTAR;
+                            mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
+                        }
+                        break;
+                }
+            }
+        };
+    }
+    public static void ObjectGeneration(boolean produce) {
+        onOff = produce;
+        if (onOff) {
+            Message msg = new Message();
+            msg.what = Events.CREATESTAR;
+            mHandler.sendMessageDelayed(msg, 5000);
+        } else {
+            mHandler.removeMessages(Events.CREATESTAR);
+        }
+    }
     @Override
     protected void LoadContent() {
         super.LoadContent();
@@ -135,6 +229,10 @@ public class Stage3 extends DrawableGameComponent {
             mLifeImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
             mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + (int) (5 * GameParams.density), mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
         }
+        // Can't assign GameParams.screenRect to mLimitRect,
+        // or modify mLimitRect.top will also modify GameParams.screenRect.top
+        mLimitRect = new Rect(GameParams.screenRect);
+        mLimitRect.top = mLifeIcon.destRect.bottom;
 
         if (mLife1 == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -161,6 +259,7 @@ public class Stage3 extends DrawableGameComponent {
         }
 
         CreateObj(mObjTable_1);
+        ObjectGeneration(true);
     }
 
     @Override
@@ -186,6 +285,13 @@ public class Stage3 extends DrawableGameComponent {
                 isGameOver = true;
         }
 
+        for (int f = mObjCollections.size() -1 ; f >= 0; f--) {
+            mSubObj = (NormalFish) mObjCollections.get(f);
+            mSubObj.Animation();
+
+            if (!mSubObj.isAlive)
+                mObjCollections.remove(mSubObj);
+        }
     }
 
     @Override
@@ -222,7 +328,7 @@ public class Stage3 extends DrawableGameComponent {
         }
 
         for (int f = mObjCollections.size() -1 ; f >= 0; f--) {
-            mSubObj = mObjCollections.get(f);
+            mSubObj = (NormalFish) mObjCollections.get(f);
             if (mSubObj.isAlive) {
                 mSubCanvas.drawBitmap(mSubObj.image, mSubObj.srcRect, mSubObj.destRect, mSubObj.paint);
             }

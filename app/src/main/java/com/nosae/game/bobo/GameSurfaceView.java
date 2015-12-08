@@ -115,9 +115,15 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                         for (f = 0; f < Stage3.mObjCollections.size(); f++) {
                             _object = Stage3.mObjCollections.get(f);
                             if (_object.destRect.contains((int) x, (int) y)) {
-                                GameParams.stage3TotalScore += _object.getTouchScore();
-                                _object.isAlive = false;
-                                DebugConfig.d("Hit object, score: " + _object.getTouchScore());
+                                if (!_object.readyToDeath) {
+                                    GameParams.stage3TotalScore += _object.getTouchScore();
+//                                    _object.isAlive = false;
+                                    DebugConfig.d("Hit object, score: " + _object.getTouchScore());
+
+                                    mMainActivity.mGameEntry.mStage3.mTimerBar.addTimer(_object.getTimerAdd());
+                                    Life1.addLife(_object.getLifeAdd());
+                                    _object.readyToDeath = true;
+                                }
                                 return true;
                             }
                         }
