@@ -68,7 +68,7 @@ public class GameEntry extends Game {
     @Override
     protected void Update() {
 //        DebugConfig.d("GameEntry Update()");
-        if ((Stage1.isGameOver || Stage2.isGameOver)
+        if ((Stage1.isGameOver || Stage2.isGameOver || Stage3.isGameOver)
                 && (mMainActivity.mRestartButton.getVisibility() == View.INVISIBLE)) {
             Message m = new Message();
             m.what = 1;

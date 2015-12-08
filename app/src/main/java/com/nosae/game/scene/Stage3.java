@@ -15,8 +15,8 @@ import com.nosae.game.bobo.GameEntry;
 import com.nosae.game.bobo.GameParams;
 import com.nosae.game.bobo.R;
 import com.nosae.game.bobo.Text;
+import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.FishCollection;
-import com.nosae.game.objects.FishObj;
 import com.nosae.game.objects.GameObj;
 import com.nosae.game.objects.Life1;
 import com.nosae.game.objects.Score;
@@ -48,6 +48,7 @@ public class Stage3 extends DrawableGameComponent {
     private Score mScore;
 
     private Text mFpsText;
+    private ColorMask mColorMask;
 
     public TimerBar2 mTimerBar;
     public Bitmap mTimerBarImage;
@@ -159,6 +160,8 @@ public class Stage3 extends DrawableGameComponent {
         DebugConfig.d("Stage3 Initialize()");
         GameParams.stage3TotalScore = 0;
         mRandom = new Random();
+        mColorMask = new ColorMask(Color.RED, 0);
+        mColorMask.isAlive = false;
 
         mObjCollections = new FishCollection();
 
@@ -292,6 +295,9 @@ public class Stage3 extends DrawableGameComponent {
             if (!mSubObj.isAlive)
                 mObjCollections.remove(mSubObj);
         }
+        if (isGameOver) {
+            mColorMask.Action((int) mGameEntry.totalFrames);
+        }
     }
 
     @Override
@@ -333,6 +339,12 @@ public class Stage3 extends DrawableGameComponent {
                 mSubCanvas.drawBitmap(mSubObj.image, mSubObj.srcRect, mSubObj.destRect, mSubObj.paint);
             }
 
+        }
+
+        if ((isGameOver) && mColorMask.isAlive)
+        {
+            mSubCanvas.drawRect(mColorMask.destRect, mColorMask.paint);
+            mSubCanvas.drawText(mColorMask.text.message, mColorMask.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, mColorMask.text.paint);
         }
     }
 }

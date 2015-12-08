@@ -93,6 +93,16 @@ public class MainActivity extends Activity {
                         e.printStackTrace();
                     }
                     GameStateClass.changeState(GameStateClass.GameState.Stage2, null, mGameEntry);
+                } else if (GameStateClass.currentState == GameStateClass.GameState.Stage3) {
+                    Stage3.isGameOver = false;
+                    GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage3, mGameEntry);
+                    // FIXME don't use sleep
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    GameStateClass.changeState(GameStateClass.GameState.Stage3, null, mGameEntry);
                 }
                 mRestartButton.setVisibility(View.INVISIBLE);
             }
