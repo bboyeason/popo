@@ -47,6 +47,7 @@ public class Popo extends FishObj {
 
     public void draw(Canvas canvas) {
         canvas.drawBitmap(popoImage, srcRect, destRect, null);
-        role2.draw(canvas);
+        if (role2 != null)
+            role2.draw(canvas);
     }
 }
