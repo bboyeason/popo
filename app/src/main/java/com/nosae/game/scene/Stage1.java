@@ -173,13 +173,12 @@ public class Stage1 extends DrawableGameComponent {
         }
     }
 
-    protected void createFish(int[][] fishTable){
+    protected void createFish(int[][] fishTable) {
         int width, height;
-
         int speed = 5;
         int random;
 //        for (int i = 0; i < mMaximum; i++) {
-            random = mRandom.nextInt(fishTable[0].length);
+        random = mRandom.nextInt(fishTable[0].length);
 //            Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(fishTable[0][random], (int) (50 * fishTable[1][random] / GameParams.density), (int) (50 * fishTable[2][random] / GameParams.density));
         Bitmap fishImage = null;
         try {
@@ -191,29 +190,25 @@ public class Stage1 extends DrawableGameComponent {
             return;
         }
 
-            width = fishImage.getWidth() / fishTable[1][random];
-            height = fishImage.getHeight() / fishTable[2][random];
-            DebugConfig.d("Image ID: " + random + "=> width: " + width + ", height: " + height);
+        width = fishImage.getWidth() / fishTable[1][random];
+        height = fishImage.getHeight() / fishTable[2][random];
+        DebugConfig.d("Image ID: " + random + "=> width: " + width + ", height: " + height);
 
-            speed = mRandom.nextInt(GameParams.stage1FishRandomSpeed) + GameParams.stage1FishRandomSpeed;
-            mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, (int) (speed * GameParams.density), Color.WHITE, 90);
+        speed = mRandom.nextInt(GameParams.stage1FishRandomSpeed) + GameParams.stage1FishRandomSpeed;
+        mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, (int) (speed * GameParams.density), Color.WHITE, 90);
 
-            mFishObj.randomTop();
-            mFishObj.setCol(fishTable[1][random]);
-            mFishObj.setMaxIndex(fishTable[3][random]);
-            mFishObj.setDeathIndexStart(fishTable[4][random]);
-            mFishObj.setDeathIndexEnd(fishTable[5][random]);
-            mFishObj.setTouchScore(fishTable[6][random]);
-            mFishObj.setArrivalScore(fishTable[7][random]);
-            mFishObj.setTimerAdd(fishTable[8][random]);
-            mFishObj.setLifeAdd(fishTable[9][random]);
-            mFishObj.isAlive = true;
-            mFishCollections.add(mFishObj);
-            DebugConfig.d("create fish: " + mFishCollections.size());
-            fishImage = null;
-//                mFishObj = null;
-
-//        }
+        mFishObj.randomTop();
+        mFishObj.setCol(fishTable[1][random]);
+        mFishObj.setMaxIndex(fishTable[3][random]);
+        mFishObj.setDeathIndexStart(fishTable[4][random]);
+        mFishObj.setDeathIndexEnd(fishTable[5][random]);
+        mFishObj.setTouchScore(fishTable[6][random]);
+        mFishObj.setArrivalScore(fishTable[7][random]);
+        mFishObj.setTimerAdd(fishTable[8][random]);
+        mFishObj.setLifeAdd(fishTable[9][random]);
+        mFishObj.isAlive = true;
+        mFishCollections.add(mFishObj);
+        DebugConfig.d("create fish: " + mFishCollections.size());
     }
 
     @Override
@@ -272,7 +267,6 @@ public class Stage1 extends DrawableGameComponent {
             mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
             Life1.setLife(GameParams.stage1Life);
             numBitmap.recycle();
-            numBitmap = null;
         }
 
         if (mTimerBar == null) {
