@@ -300,7 +300,7 @@ public class Stage2 extends DrawableGameComponent {
         }
 
         if (mPopoObj == null) {
-            mPopoImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role1);
+            mPopoImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.popo);
             mRule2Image = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role2);
             mPopoObj = new Popo(mPopoImage, GameParams.halfWidth - mPopoImage.getWidth() / 2, GameParams.scaleHeight - mPopoImage.getHeight(), mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, 0);
             mPopoObj.role2 = mPopoObj.new Role2(mRule2Image, mPopoObj.getX() - mRule2Image.getWidth(), GameParams.scaleHeight - mRule2Image.getHeight(), mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, 0);
