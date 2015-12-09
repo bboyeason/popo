@@ -8,7 +8,7 @@ import com.nosae.game.objects.FishObj;
 /**
  * Created by eason on 2015/10/23.
  */
-public class Bobo extends FishObj {
+public class Popo extends FishObj {
 
     public class Role2 extends FishObj {
         private Bitmap role2Image;
@@ -25,12 +25,12 @@ public class Bobo extends FishObj {
     public static int height = 0;
     public static int halfWidth = 0;
     public static int halfHeight = 0;
-    public Bitmap boboImage;
+    public Bitmap popoImage;
     public Role2 role2;
 
-    public Bobo(Bitmap fishImage, int destX, int destY, int destWidth, int destHeight, int srcX, int srcY, int srcWidth, int srcHeight, int speed, int color, int theta) {
+    public Popo(Bitmap fishImage, int destX, int destY, int destWidth, int destHeight, int srcX, int srcY, int srcWidth, int srcHeight, int speed, int color, int theta) {
         super(fishImage, destX, destY, destWidth, destHeight, srcX, srcY, srcWidth, srcHeight, speed, color, theta);
-        this.boboImage = fishImage;
+        this.popoImage = fishImage;
         role2 = null;
     }
 
@@ -46,7 +46,7 @@ public class Bobo extends FishObj {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(boboImage, srcRect, destRect, null);
+        canvas.drawBitmap(popoImage, srcRect, destRect, null);
         role2.draw(canvas);
     }
 }

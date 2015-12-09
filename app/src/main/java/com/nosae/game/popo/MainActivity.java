@@ -1,4 +1,4 @@
-package com.nosae.game.bobo;
+package com.nosae.game.popo;
 
 import com.nosae.game.objects.Music;
 import com.nosae.game.scene.Stage1;
@@ -19,7 +19,7 @@ import android.widget.ToggleButton;
 
 
 public class MainActivity extends Activity {
-    private final static String TAG = "BoBo";
+    private final static String TAG = "PoPo";
 //    private static Handler mHandler;
     protected static Handler mMsgHandler;
 //    private static HandlerThread mHandlerThread;

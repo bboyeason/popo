@@ -1,4 +1,4 @@
-package com.nosae.game.bobo;
+package com.nosae.game.popo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -2,7 +2,7 @@ package lbs;
 
 import android.graphics.Canvas;
 
-import com.nosae.game.bobo.MainActivity;
+import com.nosae.game.popo.MainActivity;
 
 import com.nosae.game.settings.DebugConfig;
 

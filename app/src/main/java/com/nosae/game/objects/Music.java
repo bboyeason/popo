@@ -8,7 +8,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 
-import com.nosae.game.bobo.GameParams;
+import com.nosae.game.popo.GameParams;
 import com.nosae.game.settings.DebugConfig;
 
 /**

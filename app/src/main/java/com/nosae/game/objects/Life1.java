@@ -3,10 +3,9 @@ package com.nosae.game.objects;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 
-import com.nosae.game.bobo.GameParams;
-import com.nosae.game.bobo.R;
+import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.R;
 
 /**
  * Created by eason on 2015/10/31.

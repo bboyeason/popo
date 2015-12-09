@@ -1,4 +1,4 @@
-package com.nosae.game.bobo;
+package com.nosae.game.popo;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.view.MotionEvent;
-import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.nosae.game.settings.DebugConfig;

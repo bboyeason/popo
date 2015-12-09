@@ -5,14 +5,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
-import com.nosae.game.bobo.GameEntry;
+import com.nosae.game.popo.GameEntry;
 
 import lbs.DrawableGameComponent;
 import com.nosae.game.objects.GameObj;
 
-import com.nosae.game.bobo.GameParams;
-import com.nosae.game.bobo.R;
-import com.nosae.game.bobo.Text;
+import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.R;
+import com.nosae.game.popo.Text;
 
 /**
  * Created by eason on 2015/10/27.
@@ -44,7 +44,7 @@ public class Menu_drawable extends DrawableGameComponent{
 
     @Override
     protected void Initialize() {
-        menuTitleText = new Text(65, 50, 36, "BoBo", Color.YELLOW);
+        menuTitleText = new Text(65, 50, 36, "PoPo", Color.YELLOW);
 
         menuTitleShadow = new Text(menuTitleText.x + 10, menuTitleText.y - 5, menuTitleText.size, menuTitleText.message, Color.BLACK);
 

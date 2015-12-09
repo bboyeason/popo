@@ -10,6 +10,6 @@ public class People extends GameObj {
         super(destX, destY, destWidth, destHeight, srcX, srcY, srcWidth, srcHeight, speed, color, theta);
     }
 
-//    BoboAnimation();
+//    PoPoAnimation();
 
 }

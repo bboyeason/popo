@@ -2,8 +2,8 @@ package com.nosae.game.objects;
 
 import android.graphics.Color;
 
-import com.nosae.game.bobo.GameParams;
-import com.nosae.game.bobo.Text;
+import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.Text;
 
 /**
  * Created by eason on 2015/10/27.

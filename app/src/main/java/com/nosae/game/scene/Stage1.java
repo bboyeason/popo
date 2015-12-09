@@ -7,11 +7,11 @@ import android.graphics.Color;
 import android.os.*;
 import android.widget.Toast;
 
-import com.nosae.game.bobo.Events;
-import com.nosae.game.bobo.GameEntry;
-import com.nosae.game.bobo.GameParams;
-import com.nosae.game.bobo.R;
-import com.nosae.game.bobo.Text;
+import com.nosae.game.popo.Events;
+import com.nosae.game.popo.GameEntry;
+import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.R;
+import com.nosae.game.popo.Text;
 
 import java.util.Random;
 
@@ -19,7 +19,7 @@ import lbs.DrawableGameComponent;
 import com.nosae.game.objects.FishCollection;
 
 import com.nosae.game.objects.Life1;
-import com.nosae.game.role.Bobo;
+import com.nosae.game.role.Popo;
 import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.GameObj;
 import com.nosae.game.role.NormalFish;
@@ -42,8 +42,8 @@ public class Stage1 extends DrawableGameComponent {
     private NormalFish mFishObj;
     private NormalFish mSubFishObj;
 
-    public Bobo mBoboObj;
-    private Bitmap mBoboImage;
+    public Popo mPopoObj;
+    private Bitmap mPopoImage;
 
     private Text mFpsText;
 
@@ -236,19 +236,19 @@ public class Stage1 extends DrawableGameComponent {
             mSceneTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, 0);
         }
 
-        if (mBoboObj == null) {
-            mBoboImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
+        if (mPopoObj == null) {
+            mPopoImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
                     R.drawable.bobo);
-            width = mBoboImage.getWidth() / 4;
-            height = mBoboImage.getHeight() / 5;
-            Bobo.width = width;
-            Bobo.height = height;
-            Bobo.halfWidth = width >> 1;
-            Bobo.halfHeight = height >> 1;
-            mBoboObj = new Bobo(mBoboImage, GameParams.halfWidth - width/2, GameParams.scaleHeight - height, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
-            mBoboObj.setCol(4);
-            mBoboObj.setMaxIndex(20);
-            mBoboObj.isAlive = true;
+            width = mPopoImage.getWidth() / 4;
+            height = mPopoImage.getHeight() / 5;
+            Popo.width = width;
+            Popo.height = height;
+            Popo.halfWidth = width >> 1;
+            Popo.halfHeight = height >> 1;
+            mPopoObj = new Popo(mPopoImage, GameParams.halfWidth - width/2, GameParams.scaleHeight - height, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
+            mPopoObj.setCol(4);
+            mPopoObj.setMaxIndex(20);
+            mPopoObj.isAlive = true;
         }
 
         if (DebugConfig.isFpsDebugOn) {
@@ -307,15 +307,15 @@ public class Stage1 extends DrawableGameComponent {
             //TODO maybe background rolling
         }
 
-        if (mBoboObj != null) {
-//            mBoboObj.Animation();
+        if (mPopoObj != null) {
+//            mPopoObj.Animation();
         }
 
 //        DebugConfig.d("size " + mFishCollections.size());
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (NormalFish) mFishCollections.get(f);
             mSubFishObj.Animation();
-            if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mBoboObj.srcHeight)) {
+            if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mPopoObj.srcHeight)) {
 //                DebugConfig.d("Arrive screen bottom, remove it.");
                 if (!isGameOver) {
                     if (mSubFishObj.getArrivalScore() > 0) {
@@ -325,13 +325,13 @@ public class Stage1 extends DrawableGameComponent {
                     }
                     if (GameParams.stage1TotalScore < 0 || Life1.getLife() <= 0) {
                         GameParams.stage1TotalScore = 0;
-                        mBoboObj.isAlive = false;
+                        mPopoObj.isAlive = false;
                     }
                 }
                 mFishCollections.remove(mSubFishObj);
                 mSubFishObj.recycle();
             }
-            if (!mBoboObj.isAlive)
+            if (!mPopoObj.isAlive)
                 isGameOver = true;
 
             if (!mSubFishObj.isAlive) {
@@ -359,7 +359,7 @@ public class Stage1 extends DrawableGameComponent {
                 isGameOver = true;
         }
 
-        if (isGameOver || !mBoboObj.isAlive) {
+        if (isGameOver || !mPopoObj.isAlive) {
             mColorMask.Action((int) mGameEntry.totalFrames);
         }
         super.Update();
@@ -401,9 +401,9 @@ public class Stage1 extends DrawableGameComponent {
 
         }
 
-        if (mBoboObj != null && mBoboObj.isAlive) {
-//            mSubCanvas.drawBitmap(mBoboObj.boboImage, mBoboObj.srcRect, mBoboObj.destRect,
-//                    mBoboObj.paint);
+        if (mPopoObj != null && mPopoObj.isAlive) {
+//            mSubCanvas.drawBitmap(mPopoObj.popoImage, mPopoObj.srcRect, mPopoObj.destRect,
+//                    mPopoObj.paint);
 //            DebugConfig.d("srcRect: " + mGoldenFishObj.srcRect.left + ", " + mGoldenFishObj.srcRect.top + ", " + mGoldenFishObj.srcRect.right + ", " + mGoldenFishObj.srcRect.bottom);
 //            DebugConfig.d("destRect: " + mGoldenFishObj.destRect.left + ", " + mGoldenFishObj.destRect.top + ", " + mGoldenFishObj.destRect.right + ", " + mGoldenFishObj.destRect.bottom);
         }
@@ -428,7 +428,7 @@ public class Stage1 extends DrawableGameComponent {
             mSubCanvas.drawBitmap(mTimerBarImage, mTimerBar.srcRect, mTimerBar.destRect, null);
         }
 
-        if ((isGameOver || !mBoboObj.isAlive) && mColorMask.isAlive)
+        if ((isGameOver || !mPopoObj.isAlive) && mColorMask.isAlive)
         {
             // Mask
             mSubCanvas.drawRect(mColorMask.destRect, mColorMask.paint);

@@ -1,4 +1,4 @@
-package com.nosae.game.bobo;
+package com.nosae.game.popo;
 
 import android.content.Context;
 import android.os.Handler;
@@ -15,7 +15,6 @@ import com.nosae.game.role.Stage2_fish;
 import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;
 import com.nosae.game.scene.Stage3;
-import com.nosae.game.scene.Stage4;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -66,7 +65,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                 }
                                 /*if (Stage1.stage1TotalScore < 0) {
                                     Stage1.stage1TotalScore = 0;
-                                    mMainActivity.mGameEntry.mStage1.mBoboObj.isAlive = false;
+                                    mMainActivity.mGameEntry.mStage1.mPopoObj.isAlive = false;
                                 }*/
                                 _object.readyToDeath = true;
                                 break;

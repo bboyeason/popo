@@ -1,15 +1,10 @@
-package com.nosae.game.bobo;
+package com.nosae.game.popo;
 
-import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.SoundPool;
-import android.os.Build;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 

@@ -9,11 +9,11 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.nosae.game.bobo.Events;
-import com.nosae.game.bobo.GameEntry;
-import com.nosae.game.bobo.GameParams;
-import com.nosae.game.bobo.R;
-import com.nosae.game.bobo.Text;
+import com.nosae.game.popo.Events;
+import com.nosae.game.popo.GameEntry;
+import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.R;
+import com.nosae.game.popo.Text;
 
 import lbs.DrawableGameComponent;
 
@@ -25,7 +25,7 @@ import com.nosae.game.objects.Life1;
 import com.nosae.game.objects.Quiz;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar2;
-import com.nosae.game.role.Bobo;
+import com.nosae.game.role.Popo;
 import com.nosae.game.role.Stage2_fish;
 import com.nosae.game.settings.DebugConfig;
 
@@ -57,8 +57,8 @@ public class Stage2 extends DrawableGameComponent {
     public TimerBar2 mTimerBar;
     public Bitmap mTimerBarImage;
 
-    private Bobo mBoboObj;
-    private Bitmap mBoboImage;
+    private Popo mPopoObj;
+    private Bitmap mPopoImage;
 
     private Bitmap mRule2Image;
     private GameObj mStaff;
@@ -299,17 +299,17 @@ public class Stage2 extends DrawableGameComponent {
             mTimerBar.setTimer(GameParams.stage2RunningTime);
         }
 
-        if (mBoboObj == null) {
-            mBoboImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role1);
+        if (mPopoObj == null) {
+            mPopoImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role1);
             mRule2Image = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role2);
-            mBoboObj = new Bobo(mBoboImage, GameParams.halfWidth - mBoboImage.getWidth() / 2, GameParams.scaleHeight - mBoboImage.getHeight(), mBoboImage.getWidth(), mBoboImage.getHeight(), 0, 0, mBoboImage.getWidth(), mBoboImage.getHeight(), 0, 0, 0);
-            mBoboObj.role2 = mBoboObj.new Role2(mRule2Image, mBoboObj.getX() - mRule2Image.getWidth(), GameParams.scaleHeight - mRule2Image.getHeight(), mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, 0);
-            mBoboObj.isAlive = true;
+            mPopoObj = new Popo(mPopoImage, GameParams.halfWidth - mPopoImage.getWidth() / 2, GameParams.scaleHeight - mPopoImage.getHeight(), mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, 0);
+            mPopoObj.role2 = mPopoObj.new Role2(mRule2Image, mPopoObj.getX() - mRule2Image.getWidth(), GameParams.scaleHeight - mRule2Image.getHeight(), mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, 0);
+            mPopoObj.isAlive = true;
         }
 
         if (mStaff == null) {
             mStaffImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_staff);
-            mStaff = new GameObj(0, GameParams.scaleHeight - mBoboImage.getHeight() - mStaffImage.getHeight(), GameParams.scaleWidth, mStaffImage.getHeight(), 0, 0, mStaffImage.getWidth(), mStaffImage.getHeight(), 0, 0, 0);
+            mStaff = new GameObj(0, GameParams.scaleHeight - mPopoImage.getHeight() - mStaffImage.getHeight(), GameParams.scaleWidth, mStaffImage.getHeight(), 0, 0, mStaffImage.getWidth(), mStaffImage.getHeight(), 0, 0, 0);
         }
 
         if (mQuiz == null) {
@@ -317,7 +317,7 @@ public class Stage2 extends DrawableGameComponent {
             width = mQuizImage.getWidth() / 5;
             height = mQuizImage.getHeight() / 3;
             mQuiz = new Quiz(GameParams.halfWidth + GameParams.halfWidth / 2 - width / 2,
-                    mBoboObj.destRect.top + mBoboObj.destHeight / 2 - height / 2,
+                    mPopoObj.destRect.top + mPopoObj.destHeight / 2 - height / 2,
                     width, height, 0, 0, width, height, 0, 0, 0);
             if (mQuiz != null)
                 mQuiz.randomQuiz();
@@ -339,7 +339,7 @@ public class Stage2 extends DrawableGameComponent {
                     + ") " + (int) mGameEntry.totalFrames;
         }
 
-        if (mBoboObj != null){
+        if (mPopoObj != null){
             /* FIXME: Role animation */
         }
 
@@ -368,16 +368,16 @@ public class Stage2 extends DrawableGameComponent {
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (Stage2_fish) mFishCollections.get(f);
             mSubFishObj.Animation();
-            if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mBoboObj.srcHeight)) {
+            if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mPopoObj.srcHeight)) {
                 mFishCollections.remove(mSubFishObj);
             }
-//            if (!mBoboObj.isAlive)
+//            if (!mPopoObj.isAlive)
 //                isGameOver = true;
 
             if (!mSubFishObj.isAlive)
                 mFishCollections.remove(mSubFishObj);
         }
-        if (isGameOver || !mBoboObj.isAlive) {
+        if (isGameOver || !mPopoObj.isAlive) {
             mColorMask.Action((int) mGameEntry.totalFrames);
         }
     }
@@ -423,8 +423,8 @@ public class Stage2 extends DrawableGameComponent {
             mSubCanvas.drawBitmap(mTimerBarImage, mTimerBar.srcRect, mTimerBar.destRect, null);
         }
 
-        if (mBoboObj != null) {
-            mBoboObj.draw(mSubCanvas);
+        if (mPopoObj != null) {
+            mPopoObj.draw(mSubCanvas);
         }
 
         if (mStaff != null) {
@@ -451,7 +451,7 @@ public class Stage2 extends DrawableGameComponent {
 
         }
 
-        if ((isGameOver || !mBoboObj.isAlive) && mColorMask.isAlive)
+        if ((isGameOver || !mPopoObj.isAlive) && mColorMask.isAlive)
         {
             mSubCanvas.drawRect(mColorMask.destRect, mColorMask.paint);
             mSubCanvas.drawText(mColorMask.text.message, mColorMask.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, mColorMask.text.paint);

@@ -10,11 +10,11 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.nosae.game.bobo.Events;
-import com.nosae.game.bobo.GameEntry;
-import com.nosae.game.bobo.GameParams;
-import com.nosae.game.bobo.R;
-import com.nosae.game.bobo.Text;
+import com.nosae.game.popo.Events;
+import com.nosae.game.popo.GameEntry;
+import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.R;
+import com.nosae.game.popo.Text;
 import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.FishCollection;
 import com.nosae.game.objects.GameObj;

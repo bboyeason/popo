@@ -10,8 +10,8 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
 
-import com.nosae.game.bobo.GameParams;
-import com.nosae.game.bobo.R;
+import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.R;
 import com.nosae.game.settings.DebugConfig;
 
 /**

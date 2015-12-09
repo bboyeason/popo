@@ -9,7 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 
-import com.nosae.game.bobo.GameParams;
+import com.nosae.game.popo.GameParams;
 
 public class GameObj {
 

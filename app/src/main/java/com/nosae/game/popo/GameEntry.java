@@ -1,4 +1,4 @@
-package com.nosae.game.bobo;
+package com.nosae.game.popo;
 
 import android.graphics.Color;
 import android.os.Message;

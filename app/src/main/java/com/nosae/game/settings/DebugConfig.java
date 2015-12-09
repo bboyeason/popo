@@ -9,7 +9,7 @@ public class DebugConfig {
     // Debug switch
     public static final boolean isDebugOn = true;
     public static final boolean isFpsDebugOn = true;
-    public static String TAG = "BoBo";
+    public static String TAG = "PoPo";
 //    public static final boolean DEBUG_OTHER = isDebugOn && true;
 
     public static void setTag(String tag) {

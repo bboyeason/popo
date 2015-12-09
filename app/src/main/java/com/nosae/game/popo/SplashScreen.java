@@ -1,4 +1,4 @@
-package com.nosae.game.bobo;
+package com.nosae.game.popo;
 
 /**
  * Created by eason on 2015/10/14.
@@ -11,7 +11,7 @@ import com.nosae.game.objects.Music;
 import com.nosae.game.settings.DebugConfig;
 
 public class SplashScreen extends Activity {
-    private final static String TAG = "BoBo SplashScreen";
+    private final static String TAG = "PoPo SplashScreen";
     private Music mMusic;
 
     @Override

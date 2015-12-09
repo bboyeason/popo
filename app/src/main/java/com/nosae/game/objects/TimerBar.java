@@ -6,9 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 
-import com.nosae.game.bobo.GameEntry;
-import com.nosae.game.bobo.GameParams;
-import com.nosae.game.bobo.R;
+import com.nosae.game.popo.GameEntry;
+import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.R;
 
 import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;

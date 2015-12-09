@@ -5,7 +5,7 @@ import java.util.Random;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 
-import com.nosae.game.bobo.GameParams;
+import com.nosae.game.popo.GameParams;
 
 /**
  * Created by eason on 2015/10/14.

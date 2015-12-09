@@ -21,11 +21,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.nosae.game.bobo.GameParams;
-import com.nosae.game.bobo.MainActivity;
-import com.nosae.game.bobo.R;
+import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.MainActivity;
+import com.nosae.game.popo.R;
 
-import com.nosae.game.bobo.SplashScreen;
 import com.nosae.game.objects.Music;
 import com.nosae.game.settings.DebugConfig;
 
