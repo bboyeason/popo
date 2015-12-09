@@ -281,6 +281,14 @@ public class Stage4 extends DrawableGameComponent {
                 mSubObj.recycle();
             }
 
+            if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
+                if (!mSubObj.readyToDeath) {
+                    Life1.addLife(mSubObj.getLifeAdd());
+                    mTimerBar.addTimer(mSubObj.getTimerAdd());
+                    mSubObj.readyToDeath = true;
+                }
+            }
+
             if (!mSubObj.isAlive) {
                 mObjCollections.remove(mSubObj);
                 mSubObj.recycle();
