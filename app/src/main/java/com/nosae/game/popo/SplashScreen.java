@@ -11,13 +11,11 @@ import com.nosae.game.objects.Music;
 import com.nosae.game.settings.DebugConfig;
 
 public class SplashScreen extends Activity {
-    private final static String TAG = "PoPo SplashScreen";
     private Music mMusic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DebugConfig.setTag(TAG);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);

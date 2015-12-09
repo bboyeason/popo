@@ -19,7 +19,6 @@ import android.widget.ToggleButton;
 
 
 public class MainActivity extends Activity {
-    private final static String TAG = "PoPo";
 //    private static Handler mHandler;
     protected static Handler mMsgHandler;
 //    private static HandlerThread mHandlerThread;
@@ -54,7 +53,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DebugConfig.setTag(TAG);
 //        mHandler = new Handler();
 //        if (mHandlerThread == null) {
 //            mHandlerThread = new HandlerThread("sdfasdfasd",
