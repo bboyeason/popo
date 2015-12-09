@@ -1,9 +1,14 @@
 package com.nosae.game.scene;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -32,10 +37,12 @@ import lbs.DrawableGameComponent;
  * Created by eason on 2015/11/9.
  */
 public class Stage4 extends DrawableGameComponent {
-
     public static Handler mHandler;
     public static HandlerThread mHandlerThread;
     public static final String THREADNAME = "Stage4_object_generator";
+
+    private SensorManager mSensorManager;
+    private Sensor mSensor;
 
     private final GameEntry mGameEntry;
 
@@ -104,10 +111,33 @@ public class Stage4 extends DrawableGameComponent {
         mObjCollections.add(mObj);
     }
 
+    private SensorEventListener sensorEventListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+//            DebugConfig.d("onSensorChanged: " + event.values[0]);
+            if (mPopoObj != null) {
+                mPopoObj.addX((int) -event.values[SensorManager.DATA_X] << 2);
+                if (mPopoObj.getX() < GameParams.screenRect.left - (mPopoObj.srcWidth >> 1))
+                    mPopoObj.setX(GameParams.screenRect.left - (mPopoObj.srcWidth >> 1));
+                else if (mPopoObj.getX() + mPopoObj.destWidth > GameParams.screenRect.right)
+                    mPopoObj.setX(GameParams.screenRect.right - mPopoObj.destWidth);
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
+
     @Override
     protected void Initialize() {
         super.Initialize();
         DebugConfig.d("Stage4 Initialize()");
+        mSensorManager = (SensorManager) mGameEntry.mMainActivity.getSystemService(Context.SENSOR_SERVICE);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        registerListener();
+
         GameParams.stage4TotalScore = 0;
         mRandom = new Random();
         mColorMask = new ColorMask(Color.RED, 0);
@@ -312,5 +342,15 @@ public class Stage4 extends DrawableGameComponent {
             mSubCanvas.drawRect(mColorMask.destRect, mColorMask.paint);
             mSubCanvas.drawText(mColorMask.text.message, mColorMask.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, mColorMask.text.paint);
         }
+    }
+
+    public void registerListener() {
+        if (mSensorManager != null)
+            mSensorManager.registerListener(sensorEventListener, mSensor, SensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+    public void unregisterListener() {
+        if (mSensorManager != null)
+            mSensorManager.unregisterListener(sensorEventListener);
     }
 }

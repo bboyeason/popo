@@ -98,7 +98,7 @@ public class GameObj {
         return destRect.top;
     }
 
-    protected void setX(int x)
+    public void setX(int x)
     {
         destRect.left = x;
         destRect.right = x + destWidth;
@@ -111,7 +111,7 @@ public class GameObj {
     }
 
 
-    protected void addX(int speed)
+    public void addX(int speed)
     {
         setX(destRect.left + speed);
     }

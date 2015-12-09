@@ -34,6 +34,8 @@ public class GameEntry extends Game {
         DebugConfig.d("GameEntry Run()");
         if (GameParams.music != null)
             GameParams.music.Play();
+        if (mStage4 != null)
+            mStage4.registerListener();
         super.Run();
     }
 
@@ -42,6 +44,8 @@ public class GameEntry extends Game {
         DebugConfig.d("GameEntry Exit()");
         if (GameParams.music != null && GameParams.music.player.isPlaying())
             GameParams.music.Pause();
+        if (mStage4 != null)
+            mStage4.unregisterListener();
         super.Exit();
     }
 
