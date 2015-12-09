@@ -437,7 +437,7 @@ public class Stage2 extends DrawableGameComponent {
 
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (Stage2_fish) mFishCollections.get(f);
-            if (mFishObj.isAlive) {
+            if (mFishObj != null && mFishObj.isAlive) {
 //                mSubCanvas.save();
 
 //                mSubCanvas.rotate(mSubFishObj.theta - 90, mSubFishObj.getX()
