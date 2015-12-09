@@ -277,7 +277,7 @@ public class Stage1 extends DrawableGameComponent {
             if (mTimerBarImage != null) {
                 width = mTimerBarImage.getWidth() / 1;
                 height = mTimerBarImage.getHeight() / 9;
-                mTimerBar = new TimerBar2(mLife1.destRect.right + 10, mScore.getY() + (mLife1.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
+                mTimerBar = new TimerBar2(mScore.edge_X_right + 5, mScore.getY() + (mLife1.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
                 if (mTimerBar != null)
                     mTimerBar.setStartFrame((int) GameEntry.totalFrames);
             }
