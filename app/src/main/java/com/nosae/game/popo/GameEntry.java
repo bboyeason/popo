@@ -97,6 +97,11 @@ public class GameEntry extends Game {
                 && GameStateClass.currentState != GameStateClass.GameState.Stage4) {
             GameParams.isClearStage3 = true;
             GameStateClass.changeState(GameStateClass.GameState.Stage4, mStage3, this);
+        } else if (mStage4 != null && !GameParams.isClearStage4
+                && GameParams.stage4TotalScore >= GameParams.stage4BreakScore
+                && GameStateClass.currentState != GameStateClass.GameState.Stage5) {
+//            GameParams.isClearStage4 = true;
+//            GameStateClass.changeState(GameStateClass.GameState.Stage4, mStage3, this);
         }
 //        if (isForceRestart)
 //            GameStateClass.changeState(GameStateClass.GameState.Stage1, mStage1, this);

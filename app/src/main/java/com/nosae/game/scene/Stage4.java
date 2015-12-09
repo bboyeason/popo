@@ -75,12 +75,30 @@ public class Stage4 extends DrawableGameComponent {
     private NormalFish mSubObj;
     public static FishCollection mObjCollections;
 
+    private int[][] mFishTable = {
+            {
+                    R.drawable.d_fish_01,
+                    R.drawable.d_fish_02,
+                    R.drawable.d_fish_03,
+                    R.drawable.d_fish_04
+            },
+            {  3,  3,  3,  3 }, /* Animation column */
+            {  2,  2,  2,  2 }, /* Animation row */
+            {  5,  5,  5,  5 }, /* Max index */
+            {  5,  5,  5,  5 }, /* Death animation start */
+            {  5,  5,  5,  5 }, /* Death animation end */
+            { 10, 20,  0,  0 }, /* Touch Score */
+            { -1, -1, -1, -1 }, /* Arrival Score */
+            {  0,  0,  0,  0 }, /* Timer add */
+            {  0,  0, -1, -2 } /* Life add */
+    };
+
     public Stage4(GameEntry gameEntry) {
         DebugConfig.d("Stage4 Constructor");
         this.mGameEntry = gameEntry;
     }
 
-    private void CreateSpecialObjects(int[][] objectTable) {
+    private void CreateObjects(int[][] objectTable) {
         int width, height;
         int speed;
         int random;
@@ -105,6 +123,7 @@ public class Stage4 extends DrawableGameComponent {
         mObj.setMaxIndex(objectTable[3][random]);
         mObj.setDeathIndexStart(objectTable[4][random]);
         mObj.setDeathIndexEnd(objectTable[5][random]);
+        mObj.setTouchScore(objectTable[6][random]);
         mObj.setTimerAdd(objectTable[8][random]);
         mObj.setLifeAdd(objectTable[9][random]);
         mObj.isAlive = true;
@@ -157,11 +176,22 @@ public class Stage4 extends DrawableGameComponent {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what) {
+                    case Events.CREATEFISH:
+                        if (isGameOver || GameParams.isClearStage4)
+                            return;
+
+                        CreateObjects(mFishTable);
+                        if (onOff) {
+                            Message m = new Message();
+                            m.what = Events.CREATEFISH;
+                            mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage4FishRebirthMax) + GameParams.stage4FishRebirthMin);
+                        }
+                        break;
                     case Events.CREATESTAR:
                         if (isGameOver || GameParams.isClearStage4)
                             return;
 
-                        CreateSpecialObjects(GameParams.specialObjectTable);
+                        CreateObjects(GameParams.specialObjectTable);
                         if (onOff) {
                             Message m = new Message();
                             m.what = Events.CREATESTAR;
@@ -172,16 +202,23 @@ public class Stage4 extends DrawableGameComponent {
             }
         };
     }
+
     public static void ObjectGeneration(boolean produce) {
         onOff = produce;
         if (onOff) {
             Message msg = new Message();
+            msg.what = Events.CREATEFISH;
+            mHandler.sendMessageDelayed(msg, 150);
+
+            msg = new Message();
             msg.what = Events.CREATESTAR;
             mHandler.sendMessageDelayed(msg, 5000);
         } else {
+            mHandler.removeMessages(Events.CREATEFISH);
             mHandler.removeMessages(Events.CREATESTAR);
         }
     }
+
     @Override
     protected void LoadContent() {
         super.LoadContent();
@@ -273,8 +310,8 @@ public class Stage4 extends DrawableGameComponent {
             mSubObj.Animation();
             if (mSubObj.smartMoveDown(GameParams.screenRect.height())) {
                 if (!isGameOver) {
-                    if (GameParams.stage1TotalScore < 0 || Life1.getLife() <= 0) {
-                        GameParams.stage1TotalScore = 0;
+                    if (GameParams.stage4TotalScore < 0 || Life1.getLife() <= 0) {
+                        GameParams.stage4TotalScore = 0;
                     }
                 }
                 mObjCollections.remove(mSubObj);
@@ -283,9 +320,12 @@ public class Stage4 extends DrawableGameComponent {
 
             if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
                 if (!mSubObj.readyToDeath) {
+                    GameParams.stage4TotalScore += mSubObj.getTouchScore();
                     Life1.addLife(mSubObj.getLifeAdd());
                     mTimerBar.addTimer(mSubObj.getTimerAdd());
                     mSubObj.readyToDeath = true;
+                    if (mSubObj.getLifeAdd() < 0)
+                        GameParams.vibrator.vibrate(50);
                 }
             }
 
