@@ -74,13 +74,26 @@ public class Stage5 extends DrawableGameComponent {
     private NormalFish mObj;
     private NormalFish mSubObj;
     public static FishCollection mObjCollections;
-
+    private int[][] mFishTable = {
+            {
+                    R.drawable.d_fish_03
+            },
+            {  3  }, /* Animation column */
+            {  2  }, /* Animation row */
+            {  5  }, /* Max index */
+            {  5  }, /* Death animation start */
+            {  5  }, /* Death animation end */
+            {  0  }, /* Touch Score */
+            { -1  }, /* Arrival Score */
+            {  0  }, /* Timer add */
+            { -1  } /* Life add */
+    };
     public Stage5(GameEntry gameEntry) {
         DebugConfig.d("Stage5 Constructor");
         this.mGameEntry = gameEntry;
     }
 
-    private void CreateSpecialObjects(int[][] objectTable) {
+    private void CreateObjects(int[][] objectTable) {
         int width, height;
         int speed;
         int random;
@@ -157,11 +170,22 @@ public class Stage5 extends DrawableGameComponent {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what) {
+                    case Events.CREATEFISH:
+                        if (isGameOver || GameParams.isClearStage5)
+                            return;
+
+                        CreateObjects(mFishTable);
+                        if (onOff) {
+                            Message m = new Message();
+                            m.what = Events.CREATEFISH;
+                            mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage5FishRebirthMax) + GameParams.stage5FishRebirthMin);
+                        }
+                        break;
                     case Events.CREATESTAR:
                         if (isGameOver || GameParams.isClearStage5)
                             return;
 
-                        CreateSpecialObjects(GameParams.specialObjectTable);
+                        CreateObjects(GameParams.specialObjectTable);
                         if (onOff) {
                             Message m = new Message();
                             m.what = Events.CREATESTAR;
@@ -176,9 +200,14 @@ public class Stage5 extends DrawableGameComponent {
         onOff = produce;
         if (onOff) {
             Message msg = new Message();
+            msg.what = Events.CREATEFISH;
+            mHandler.sendMessageDelayed(msg, 150);
+
+            msg = new Message();
             msg.what = Events.CREATESTAR;
             mHandler.sendMessageDelayed(msg, 5000);
         } else {
+            mHandler.removeMessages(Events.CREATEFISH);
             mHandler.removeMessages(Events.CREATESTAR);
         }
     }
