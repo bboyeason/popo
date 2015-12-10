@@ -84,7 +84,7 @@ public class GameEntry extends Game {
                 && (mMainActivity.mRestartButton.getVisibility() == View.INVISIBLE)) {
             Message m = new Message();
             m.what = 1;
-            mMainActivity.mMsgHandler.sendMessage(m);
+            MainActivity.mMsgHandler.sendMessage(m);
             //TODO send one shot
         }
 
@@ -178,7 +178,7 @@ public class GameEntry extends Game {
 
     @Override
     protected void Draw() {
-        canvas = mMainActivity.mSurfaceView.getHolder().lockCanvas(null);
+        canvas = MainActivity.mSurfaceView.getHolder().lockCanvas(null);
         canvas.drawColor(Color.BLACK);
         super.Draw();
     }

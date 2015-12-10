@@ -19,12 +19,6 @@ import com.nosae.game.settings.DebugConfig;
  */
 public class Settings extends Activity {
 
-    private static Switch mMusicSwitch;
-    private static Switch mSoundSwitch;
-
-    private static SeekBar mMusicSeekBar;
-    private static SeekBar mSoundSeekBar;
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         finish();
@@ -45,11 +39,11 @@ public class Settings extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
-        mMusicSwitch = (Switch) findViewById(R.id.music_switch);
-        mSoundSwitch = (Switch) findViewById(R.id.sound_switch);
+        Switch mMusicSwitch = (Switch) findViewById(R.id.music_switch);
+        Switch mSoundSwitch = (Switch) findViewById(R.id.sound_switch);
 
-        mMusicSeekBar = (SeekBar) findViewById(R.id.music_seekBar);
-        mSoundSeekBar = (SeekBar) findViewById(R.id.sound_seekBar);
+        SeekBar mMusicSeekBar = (SeekBar) findViewById(R.id.music_seekBar);
+        SeekBar mSoundSeekBar = (SeekBar) findViewById(R.id.sound_seekBar);
 
         SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
         GameParams.isMusicOn = settings.getBoolean(GameParams.PREFS_MUSIC_KEY, true);
@@ -75,7 +69,7 @@ public class Settings extends Activity {
                 SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean(GameParams.PREFS_MUSIC_KEY, GameParams.isMusicOn);
-                editor.commit();
+                editor.apply();
             }
         });
 
@@ -87,7 +81,7 @@ public class Settings extends Activity {
                 SharedPreferences settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean(GameParams.PREFS_SOUND_KEY, GameParams.isSoundOn);
-                editor.commit();
+                editor.apply();
             }
         });
 
@@ -107,7 +101,7 @@ public class Settings extends Activity {
                 SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt(GameParams.PREFS_MUSIC_VOLUME_KEY, (int) (GameParams.musicVolumeRatio * 100));
-                editor.commit();
+                editor.apply();
             }
         });
 
@@ -123,7 +117,7 @@ public class Settings extends Activity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 GameParams.setSoundVolume(seekBar.getProgress());
-                DebugConfig.d("Sound volume: " +  GameParams.soundVolumeRatio);
+                DebugConfig.d("Sound volume: " + GameParams.soundVolumeRatio);
                 SharedPreferences settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt(GameParams.PREFS_SOUND_VOLUME_KEY, (int) (GameParams.soundVolumeRatio * 100));

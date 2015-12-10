@@ -12,8 +12,6 @@ import lbs.Game;
 public class TimerBar2 extends GameObj {
     public int width = 0;
     public int height = 0;
-    private int column = 1;
-    private int row = 9;
 
     private int mStartFrame = 0;
     private int mRunningFrame = 0; // fps * 30 seconds
@@ -46,6 +44,7 @@ public class TimerBar2 extends GameObj {
         if (frameGap < 0)
             mStartFrame = totalFrame;
         if (frameGap <= mRunningFrame) {
+            int row = 9;
             gap = row * (totalFrame - mStartFrame) / mRunningFrame;
             if (gap == 0)
                 gap = 1;
@@ -56,6 +55,7 @@ public class TimerBar2 extends GameObj {
             isTimeout = true;
         }
 
+        int column = 1;
         setAnimationIndex(column);
     }
 }

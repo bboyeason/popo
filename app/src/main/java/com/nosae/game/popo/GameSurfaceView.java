@@ -25,7 +25,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     public SurfaceHolder mSurfaceHolder;
     private static Handler mMsgHandler;
     private MainActivity mMainActivity;
-    private int f;
     private int mStage2Hit = 0x00;
     private int mStage2HitColor = 0x01;
     private int mStage2HitSyllable = 0x10;
@@ -36,6 +35,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             return false;
         final float x = event.getX();
         final float y = event.getY();
+        int f;
         final int action = event.getAction();
         FishObj _object;
         switch (action & MotionEvent.ACTION_MASK) {

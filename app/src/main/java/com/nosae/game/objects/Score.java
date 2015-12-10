@@ -36,7 +36,7 @@ public class Score extends GameObj {
         super(destX, destY, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         this.destX = destX;
         this.destY = destY;
-        bitmap  = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mScore[0]);
+        bitmap  = BitmapFactory.decodeResource(GameParams.res, mScore[0]);
         width = bitmap.getWidth();
         height = bitmap.getHeight();
         edge_X_right = destX + 3 * width;

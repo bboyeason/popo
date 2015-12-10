@@ -16,20 +16,15 @@ public class Quiz extends GameObj{
     public enum quizColor {red, yellow, blue}
     public enum quizSyllable {Do, Re, Mi, Fa, So}
 
-    private quizColor[] colors = {quizColor.red, quizColor.yellow, quizColor.blue};
-    private quizSyllable[] syllables = {quizSyllable.Do, quizSyllable.Re, quizSyllable.Mi, quizSyllable.Fa, quizSyllable.So};
-
     public static QuizItem quizTable[];
     public static int currentQuiz;
     private static int oldQuiz;
-    public static boolean isQuizHit = false;
 
     public int width = 0;
     public int height = 0;
     public int halfWidth = 0;
     public int halfHeight = 0;
 
-    private int col = 5;
     private static Random mRandom;
 
     public Quiz(int destX, int destY, int destWidth, int destHeight, int srcX, int srcY, int srcWidth, int srcHeight, int speed, int color, int theta) {
@@ -45,7 +40,9 @@ public class Quiz extends GameObj{
         quizTable = new QuizItem[15];
         for (int n = 0; n < quizTable.length; n++) {
             quizTable[n] = new QuizItem();
+            quizColor[] colors = {quizColor.red, quizColor.yellow, quizColor.blue};
             quizTable[n].color = colors[n / 5];
+            quizSyllable[] syllables = {quizSyllable.Do, quizSyllable.Re, quizSyllable.Mi, quizSyllable.Fa, quizSyllable.So};
             quizTable[n].syllable = syllables[n % 5];
 //            DebugConfig.d("quizTable[" + n + "]: " + quizTable[n].color + ", " + quizTable[n].syllable);
         }
@@ -61,12 +58,12 @@ public class Quiz extends GameObj{
 //        if (!isQuizHit)
 //            return;
 //        isQuizHit = false;
-        int quiz = mRandom.nextInt(14);
-        currentQuiz = quiz;
+        currentQuiz = mRandom.nextInt(14);
         if (currentQuiz != oldQuiz) {
             index = currentQuiz;
             oldQuiz = currentQuiz;
             DebugConfig.d("Current quiz: " + quizTable[index].color + ", " + quizTable[index].syllable);
+            int col = 5;
             setAnimationIndex(col);
         } else {
             DebugConfig.d("Same quiz, random select again.");

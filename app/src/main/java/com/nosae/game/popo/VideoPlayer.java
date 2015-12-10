@@ -19,7 +19,6 @@ public class VideoPlayer
     private int videoPosition = 0;
     private SplashScreen splashScreen;
     public boolean isRuningVideo;
-    private static int splashInterval = 100;
 
     public VideoPlayer(SplashScreen splashScreen) {
         this.splashScreen = splashScreen;
@@ -74,6 +73,7 @@ public class VideoPlayer
         videoView.destroyDrawingCache();
         videoView.clearAnimation();
         videoView.clearFocus();
+        int splashInterval = 100;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

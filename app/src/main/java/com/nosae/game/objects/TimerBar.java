@@ -24,9 +24,6 @@ public class TimerBar extends GameObj {
     private int mStartFrame = 0;
     private int mRunningFrame = 0; // fps * 30 seconds
     public boolean isTimeout = false;
-    private ColorMask mTimerBar;
-    private int destX;
-    private int destY;
     public static Integer[] mTimeTable = {
             R.drawable.time_9,
             R.drawable.time_8,
@@ -46,18 +43,18 @@ public class TimerBar extends GameObj {
         mStartFrame = (int) GameEntry.totalFrames;
         mRunningFrame = Game.setFPS * gamingTime;
 
-        mTimerBar = new ColorMask(Color.BLUE, 0);
-        mTimerBar.isAlive = true;
+//        ColorMask mTimerBar = new ColorMask(Color.BLUE, 0);
+//        mTimerBar.isAlive = true;
 
-        mTimerBarImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mTimeTable[9]);
+        mTimerBarImage = BitmapFactory.decodeResource(GameParams.res, mTimeTable[9]);
 
         srcWidth = mTimerBarImage.getWidth();
         srcHeight = mTimerBarImage.getHeight();
         destWidth = srcWidth / 2;
         destHeight = srcHeight;
-        this.destX = GameParams.halfWidth - destWidth / 2;
+        int destX = GameParams.halfWidth - destWidth / 2;
         srcRect = new Rect(0, 0, srcWidth , srcHeight);
-        destRect = new Rect(this.destX, 0, this.destX + destWidth , destHeight);
+        destRect = new Rect(destX, 0, destX + destWidth , destHeight);
     }
 
     public void addTime(int senonds) {
@@ -77,7 +74,7 @@ public class TimerBar extends GameObj {
             if (gap == 0)
                 gap = 1;
             if (gap <= mTimeTable.length)
-                mTimerBarImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mTimeTable[gap - 1]);
+                mTimerBarImage = BitmapFactory.decodeResource(GameParams.res, mTimeTable[gap - 1]);
 
         } else {
             isTimeout = true;
