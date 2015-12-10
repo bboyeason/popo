@@ -127,6 +127,15 @@ public class GameParams {
         return false;
     }
 
+    public static boolean isCollisionFromTop(Rect a, Rect b) {
+        if (a.left < b.right)
+            if (a.right > b.left)
+                if (Math.abs(a.top - b.bottom) <= 10)
+                        return true;
+
+        return false;
+    }
+
     // Collision detection
     public static boolean isCollision(Rect a, Rect b) {
         if (a.left < b.right)

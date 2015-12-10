@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -29,6 +30,7 @@ import com.nosae.game.role.NormalFish;
 import com.nosae.game.role.Popo;
 import com.nosae.game.settings.DebugConfig;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import lbs.DrawableGameComponent;
@@ -74,19 +76,24 @@ public class Stage5 extends DrawableGameComponent {
     private NormalFish mObj;
     private NormalFish mSubObj;
     public static FishCollection mObjCollections;
+    public ArrayList<NormalFish> mCakes = new ArrayList<NormalFish>();
+    private int f, i, p;
+    private Rect stackRect;
     private int[][] mFishTable = {
             {
-                    R.drawable.d_fish_03
+                    R.drawable.d_fish_03,
+                    R.drawable.play
             },
-            {  3  }, /* Animation column */
-            {  2  }, /* Animation row */
-            {  5  }, /* Max index */
-            {  5  }, /* Death animation start */
-            {  5  }, /* Death animation end */
-            {  0  }, /* Touch Score */
-            { -1  }, /* Arrival Score */
-            {  0  }, /* Timer add */
-            { -1  } /* Life add */
+            {  3,  1 }, /* 1. Animation column */
+            {  2,  1 }, /* 2. Animation row */
+            {  5,  0 }, /* 3. Max index */
+            {  5,  0 }, /* 4. Death animation start */
+            {  5,  0 }, /* 5. Death animation end */
+            {  0,  0 }, /* 6. Touch Score */
+            { -1,  0 }, /* 7. Arrival Score */
+            {  0,  0 }, /* 8. Timer add */
+            { -1,  0 }, /* 9. Life add */
+            {  0,  1 }, /* 10. Is cake */
     };
 
     public Stage5(GameEntry gameEntry) {
@@ -121,6 +128,8 @@ public class Stage5 extends DrawableGameComponent {
         mObj.setDeathIndexEnd(objectTable[5][random]);
         mObj.setTimerAdd(objectTable[8][random]);
         mObj.setLifeAdd(objectTable[9][random]);
+        if (objectTable.length > 10)
+            mObj.isStackable = (objectTable[10][random] == 1) ? true : false;
         mObj.isAlive = true;
         mObjCollections.add(mObj);
     }
@@ -135,6 +144,19 @@ public class Stage5 extends DrawableGameComponent {
                     mPopoObj.setX(GameParams.screenRect.left - (mPopoObj.srcWidth >> 1));
                 else if (mPopoObj.getX() + mPopoObj.destWidth > GameParams.screenRect.right)
                     mPopoObj.setX(GameParams.screenRect.right - mPopoObj.destWidth);
+
+                p = mCakes.size();
+                if (p == 0)
+                    stackRect = mPopoObj.destRect;
+
+                for (i = mCakes.size() -1 ; i >= 0; i--) {
+                    mSubObj = (NormalFish) mCakes.get(i);
+                    mSubObj.setX(mPopoObj.getX());
+                    mSubObj.setY(mPopoObj.getY() - p * mSubObj.destHeight);
+                    if (p == mCakes.size())
+                        stackRect = mSubObj.destRect;
+                    p--;
+                }
             }
         }
 
@@ -298,24 +320,26 @@ public class Stage5 extends DrawableGameComponent {
                 isGameOver = true;
         }
 
-        for (int f = mObjCollections.size() -1 ; f >= 0; f--) {
+        for (f = mObjCollections.size() -1 ; f >= 0; f--) {
             mSubObj = (NormalFish) mObjCollections.get(f);
             mSubObj.Animation();
             if (mSubObj.smartMoveDown(GameParams.screenRect.height())) {
-                if (!isGameOver) {
-                    if (GameParams.stage1TotalScore < 0 || Life1.getLife() <= 0) {
-                        GameParams.stage1TotalScore = 0;
-                    }
-                }
                 mObjCollections.remove(mSubObj);
                 mSubObj.recycle();
             }
 
-            if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
-                if (!mSubObj.readyToDeath) {
-                    Life1.addLife(mSubObj.getLifeAdd());
-                    mTimerBar.addTimer(mSubObj.getTimerAdd());
-                    mSubObj.readyToDeath = true;
+            if (mSubObj.isStackable) {
+                if (GameParams.isCollisionFromTop(stackRect, mSubObj.destRect)) {
+                    mCakes.add(mSubObj);
+                    mObjCollections.remove(mSubObj);
+                }
+            } else {
+                if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
+                    if (!mSubObj.readyToDeath) {
+                        Life1.addLife(mSubObj.getLifeAdd());
+                        mTimerBar.addTimer(mSubObj.getTimerAdd());
+                        mSubObj.readyToDeath = true;
+                    }
                 }
             }
 
@@ -367,8 +391,16 @@ public class Stage5 extends DrawableGameComponent {
             mPopoObj.draw(mSubCanvas);
         }
 
-        for (int f = mObjCollections.size() -1 ; f >= 0; f--) {
+        for (f = mObjCollections.size() -1 ; f >= 0; f--) {
             mSubObj = (NormalFish) mObjCollections.get(f);
+            if (mSubObj.isAlive) {
+                mSubCanvas.drawBitmap(mSubObj.image, mSubObj.srcRect, mSubObj.destRect, mSubObj.paint);
+            }
+
+        }
+
+        for (f = mCakes.size() -1 ; f >= 0; f--) {
+            mSubObj = (NormalFish) mCakes.get(f);
             if (mSubObj.isAlive) {
                 mSubCanvas.drawBitmap(mSubObj.image, mSubObj.srcRect, mSubObj.destRect, mSubObj.paint);
             }
