@@ -10,6 +10,7 @@ import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;
 import com.nosae.game.scene.Stage3;
 import com.nosae.game.scene.Stage4;
+import com.nosae.game.scene.Stage5;
 import com.nosae.game.settings.DebugConfig;
 
 /**
@@ -20,6 +21,7 @@ public class GameEntry extends Game {
     public Stage2 mStage2;
     public Stage3 mStage3;
     public Stage4 mStage4;
+    public Stage5 mStage5;
     public MainActivity mMainActivity;
     public boolean isForceRestart = false;
 
@@ -74,7 +76,11 @@ public class GameEntry extends Game {
     @Override
     protected void Update() {
 //        DebugConfig.d("GameEntry Update()");
-        if ((Stage1.isGameOver || Stage2.isGameOver || Stage3.isGameOver || Stage4.isGameOver)
+        if ((Stage1.isGameOver
+                || Stage2.isGameOver
+                || Stage3.isGameOver
+                || Stage4.isGameOver
+                || Stage5.isGameOver)
                 && (mMainActivity.mRestartButton.getVisibility() == View.INVISIBLE)) {
             Message m = new Message();
             m.what = 1;
@@ -100,8 +106,13 @@ public class GameEntry extends Game {
         } else if (mStage4 != null && !GameParams.isClearStage4
                 && GameParams.stage4TotalScore >= GameParams.stage4BreakScore
                 && GameStateClass.currentState != GameStateClass.GameState.Stage5) {
-//            GameParams.isClearStage4 = true;
-//            GameStateClass.changeState(GameStateClass.GameState.Stage4, mStage3, this);
+            GameParams.isClearStage4 = true;
+            GameStateClass.changeState(GameStateClass.GameState.Stage5, mStage4, this);
+        } else if (mStage5 != null && !GameParams.isClearStage5
+                && GameParams.stage5TotalScore >= GameParams.stage5BreakScore
+                && GameStateClass.currentState != GameStateClass.GameState.Stage5) {
+            // TODO break all stage...
+//            GameParams.isClearStage5 = true;
         }
 //        if (isForceRestart)
 //            GameStateClass.changeState(GameStateClass.GameState.Stage1, mStage1, this);
@@ -150,6 +161,12 @@ public class GameEntry extends Game {
                     mStage4 = new Stage4(this);
                     Components.add(mStage4);
                     break;
+
+                case Stage5:
+                    DebugConfig.d("Start stage 5.");
+                    mStage5 = new Stage5(this);
+                    Components.add(mStage5);
+                    break;
             }
 
             DebugConfig.d("oldState: " + GameStateClass.oldState + ", currentState: " + GameStateClass.currentState);
@@ -161,10 +178,7 @@ public class GameEntry extends Game {
 
     @Override
     protected void Draw() {
-//        canvas = GV.surface.mHolder.lockCanvas(null);
         canvas = mMainActivity.mSurfaceView.getHolder().lockCanvas(null);
-
-        // 清空
         canvas.drawColor(Color.BLACK);
         super.Draw();
     }
