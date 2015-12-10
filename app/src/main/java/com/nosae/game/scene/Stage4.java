@@ -309,11 +309,6 @@ public class Stage4 extends DrawableGameComponent {
             mSubObj = (NormalFish) mObjCollections.get(f);
             mSubObj.Animation();
             if (mSubObj.smartMoveDown(GameParams.screenRect.height())) {
-                if (!isGameOver) {
-                    if (GameParams.stage4TotalScore < 0 || Life1.getLife() <= 0) {
-                        GameParams.stage4TotalScore = 0;
-                    }
-                }
                 mObjCollections.remove(mSubObj);
                 mSubObj.recycle();
             }
