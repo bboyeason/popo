@@ -114,32 +114,32 @@ public class Stage1 extends DrawableGameComponent {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what) {
-                    case Events.CREATEFISH:
+                    case Events.CREATE_FISH:
                         if (isGameOver || GameParams.isClearStage1)
                             return;
                         createFish(mFishTable1);
 
                         if (onOff) {
                             Message m = new Message();
-                            m.what = Events.CREATEFISH;
+                            m.what = Events.CREATE_FISH;
                             // TODO msg.obj = something;
                             //if (msg.obj != null) {
                             mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage1FishRebirthMax) + GameParams.stage1FishRebirthMin);
                             //}
                         }
                         break;
-                    case Events.CREATESTAR:
+                    case Events.CREATE_OBJECT:
                         if (isGameOver || GameParams.isClearStage1)
                             return;
 
                         createFish(GameParams.specialObjectTable);
                         if (onOff) {
                             Message m = new Message();
-                            m.what = Events.CREATESTAR;
+                            m.what = Events.CREATE_OBJECT;
                             mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
                         }
                         break;
-                    case Events.CREATELIFE:
+                    case Events.CREATE_CAKE:
                         break;
                 }
 
@@ -154,15 +154,15 @@ public class Stage1 extends DrawableGameComponent {
         onOff = produce;
         if (onOff) {
             Message msg = new Message();
-            msg.what = Events.CREATEFISH;
+            msg.what = Events.CREATE_FISH;
             mHandler.sendMessageDelayed(msg, 150);
 
             msg = new Message();
-            msg.what = Events.CREATESTAR;
+            msg.what = Events.CREATE_OBJECT;
             mHandler.sendMessageDelayed(msg, 5000);
         } else {
-            mHandler.removeMessages(Events.CREATEFISH);
-            mHandler.removeMessages(Events.CREATESTAR);
+            mHandler.removeMessages(Events.CREATE_FISH);
+            mHandler.removeMessages(Events.CREATE_OBJECT);
         }
     }
 

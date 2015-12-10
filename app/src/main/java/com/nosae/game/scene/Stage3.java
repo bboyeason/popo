@@ -162,14 +162,14 @@ public class Stage3 extends DrawableGameComponent {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what) {
-                    case Events.CREATESTAR:
+                    case Events.CREATE_OBJECT:
                         if (isGameOver || GameParams.isClearStage3)
                             return;
 
                         CreateSpecialObjects(GameParams.specialObjectTable);
                         if (onOff) {
                             Message m = new Message();
-                            m.what = Events.CREATESTAR;
+                            m.what = Events.CREATE_OBJECT;
                             mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
                         }
                         break;
@@ -181,10 +181,10 @@ public class Stage3 extends DrawableGameComponent {
         onOff = produce;
         if (onOff) {
             Message msg = new Message();
-            msg.what = Events.CREATESTAR;
+            msg.what = Events.CREATE_OBJECT;
             mHandler.sendMessageDelayed(msg, 5000);
         } else {
-            mHandler.removeMessages(Events.CREATESTAR);
+            mHandler.removeMessages(Events.CREATE_OBJECT);
         }
     }
     @Override

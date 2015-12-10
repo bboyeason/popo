@@ -199,27 +199,27 @@ public class MainActivity extends Activity {
 //            mToggleButton.setChecked(true);
         if (Stage1.mHandler != null) {
             Stage1.onOff = false;
-            Stage1.mHandler.removeMessages(Events.CREATEFISH);
-            Stage1.mHandler.removeMessages(Events.CREATESTAR);
+            Stage1.mHandler.removeMessages(Events.CREATE_FISH);
+            Stage1.mHandler.removeMessages(Events.CREATE_OBJECT);
         }
         if (Stage2.mHandler != null) {
             Stage2.onOff = false;
-            Stage2.mHandler.removeMessages(Events.CREATEFISH);
-            Stage2.mHandler.removeMessages(Events.CREATESTAR);
+            Stage2.mHandler.removeMessages(Events.CREATE_FISH);
+            Stage2.mHandler.removeMessages(Events.CREATE_OBJECT);
         }
         if (Stage3.mHandler != null) {
             Stage3.onOff = false;
-            Stage3.mHandler.removeMessages(Events.CREATESTAR);
+            Stage3.mHandler.removeMessages(Events.CREATE_OBJECT);
         }
         if (Stage4.mHandler != null) {
             Stage4.onOff = false;
-            Stage4.mHandler.removeMessages(Events.CREATEFISH);
-            Stage4.mHandler.removeMessages(Events.CREATESTAR);
+            Stage4.mHandler.removeMessages(Events.CREATE_FISH);
+            Stage4.mHandler.removeMessages(Events.CREATE_OBJECT);
         }
         if (Stage5.mHandler != null) {
             Stage5.onOff = false;
-            Stage5.mHandler.removeMessages(Events.CREATEFISH);
-            Stage5.mHandler.removeMessages(Events.CREATESTAR);
+            Stage5.mHandler.removeMessages(Events.CREATE_FISH);
+            Stage5.mHandler.removeMessages(Events.CREATE_OBJECT);
         }
         super.onStop();
     }
