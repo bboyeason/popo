@@ -39,7 +39,7 @@ import lbs.DrawableGameComponent;
 public class Stage5 extends DrawableGameComponent {
     public static Handler mHandler;
     public static HandlerThread mHandlerThread;
-    public static final String THREADNAME = "Stage4_object_generator";
+    public static final String THREADNAME = "Stage5_object_generator";
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
@@ -76,7 +76,7 @@ public class Stage5 extends DrawableGameComponent {
     public static FishCollection mObjCollections;
 
     public Stage5(GameEntry gameEntry) {
-        DebugConfig.d("Stage4 Constructor");
+        DebugConfig.d("Stage5 Constructor");
         this.mGameEntry = gameEntry;
     }
 
@@ -86,7 +86,7 @@ public class Stage5 extends DrawableGameComponent {
         int random;
         Random _random = new Random();
         random = _random.nextInt(objectTable[0].length);
-        speed = _random.nextInt(GameParams.stage4RandomSpeed) + GameParams.stage4RandomSpeed;
+        speed = _random.nextInt(GameParams.stage5RandomSpeed) + GameParams.stage5RandomSpeed;
         Bitmap objImage;
         try {
             objImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, objectTable[0][random]);
@@ -133,12 +133,12 @@ public class Stage5 extends DrawableGameComponent {
     @Override
     protected void Initialize() {
         super.Initialize();
-        DebugConfig.d("Stage4 Initialize()");
+        DebugConfig.d("Stage5 Initialize()");
         mSensorManager = (SensorManager) mGameEntry.mMainActivity.getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         registerListener();
 
-        GameParams.stage4TotalScore = 0;
+        GameParams.stage5TotalScore = 0;
         mRandom = new Random();
         mColorMask = new ColorMask(Color.RED, 0);
         mColorMask.isAlive = false;
@@ -158,7 +158,7 @@ public class Stage5 extends DrawableGameComponent {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case Events.CREATESTAR:
-                        if (isGameOver || GameParams.isClearStage4)
+                        if (isGameOver || GameParams.isClearStage5)
                             return;
 
                         CreateSpecialObjects(GameParams.specialObjectTable);
@@ -185,7 +185,7 @@ public class Stage5 extends DrawableGameComponent {
     @Override
     protected void LoadContent() {
         super.LoadContent();
-        DebugConfig.d("Stage4 LoadContent()");
+        DebugConfig.d("Stage5 LoadContent()");
         int width, height;
 
         if (mBackground == null) {
@@ -218,7 +218,7 @@ public class Stage5 extends DrawableGameComponent {
             options.inSampleSize = 2;
             Bitmap numBitmap = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
             mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
-            Life1.setLife(GameParams.stage4Life);
+            Life1.setLife(GameParams.stage5Life);
             numBitmap.recycle();
         }
 
@@ -234,7 +234,7 @@ public class Stage5 extends DrawableGameComponent {
         }
 
         if (mTimerBar != null) {
-            mTimerBar.setTimer(GameParams.stage4RunningTime);
+            mTimerBar.setTimer(GameParams.stage5RunningTime);
         }
 
         if (mPopoObj == null) {
@@ -253,7 +253,7 @@ public class Stage5 extends DrawableGameComponent {
                     + ") " + (int) mGameEntry.totalFrames;
         }
         if (mScore != null)
-            mScore.setTotalScore(GameParams.stage4TotalScore);
+            mScore.setTotalScore(GameParams.stage5TotalScore);
 
         if (mLife1 != null) {
             mLife1.updateLife();

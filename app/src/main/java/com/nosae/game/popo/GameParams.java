@@ -37,6 +37,7 @@ public class GameParams {
     public static int stage1FishRandomSpeed = 4;
     public static int stage2FishRandomSpeed = 3;
     public static int stage4RandomSpeed = 4;
+    public static int stage5RandomSpeed = 4;
 
     public static int stage1FishRebirthMin = 100;
     public static int stage1FishRebirthMax = 700;
@@ -44,6 +45,8 @@ public class GameParams {
     public static int stage2FishRebirthMax = 1000;
     public static int stage4FishRebirthMin = 700;
     public static int stage4FishRebirthMax = 1000;
+    public static int stage5FishRebirthMin = 700;
+    public static int stage5FishRebirthMax = 1000;
 
     public static int goldenFishRebirthMin = 1000;
     public static int goldenFishRebirthMax = 1400;
@@ -52,14 +55,17 @@ public class GameParams {
     public static final int stage2RunningTime = 60;
     public static final int stage3RunningTime = 120;
     public static final int stage4RunningTime = 120;
+    public static final int stage5RunningTime = 150;
     public static final int stage1Life = 5;
     public static final int stage2Life = 5;
     public static final int stage3Life = 5;
     public static final int stage4Life = 5;
+    public static final int stage5Life = 5;
     public static final int stage1BreakScore = 500;
     public static final int stage2BreakScore = 100;
     public static final int stage3BreakScore = 90;
     public static final int stage4BreakScore = 100;
+    public static final int stage5BreakScore = 100;
 
     public static float[] Cosine = new float[360];
     public static float[] Sine = new float[360];
@@ -77,10 +83,12 @@ public class GameParams {
     public static int stage2TotalScore = 0;
     public static int stage3TotalScore = 0;
     public static int stage4TotalScore = 0;
+    public static int stage5TotalScore = 0;
     public static boolean isClearStage1 = false;
     public static boolean isClearStage2 = false;
     public static boolean isClearStage3 = false;
     public static boolean isClearStage4 = false;
+    public static boolean isClearStage5 = false;
     public static int[][] specialObjectTable = {
             {
                     R.drawable.sea_star,
