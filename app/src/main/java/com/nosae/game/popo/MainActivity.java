@@ -213,6 +213,7 @@ public class MainActivity extends Activity {
         }
         if (Stage4.mHandler != null) {
             Stage4.onOff = false;
+            Stage4.mHandler.removeMessages(Events.CREATEFISH);
             Stage4.mHandler.removeMessages(Events.CREATESTAR);
         }
         if (Stage5.mHandler != null) {
