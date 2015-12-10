@@ -95,13 +95,6 @@ public class Stage1 extends DrawableGameComponent {
     }
 
     @Override
-    public void Dispose() {
-        DebugConfig.d("Stage1 Dispose()");
-        //TODO stage switch animation
-        super.Dispose();
-    }
-
-    @Override
     protected void Initialize() {
         DebugConfig.d("Stage1 Initialize()");
         if (mHandlerThread == null) {
@@ -433,5 +426,16 @@ public class Stage1 extends DrawableGameComponent {
         super.Draw();
     }
 
-
+    @Override
+    public void Dispose() {
+        DebugConfig.d("Stage1 Dispose()");
+        //TODO stage switch animation
+        super.Dispose();
+        if (mHandlerThread != null) {
+            DebugConfig.d("Quit thread: " + mHandlerThread.getThreadId());
+            mHandlerThread.interrupt();
+            mHandlerThread.quit();
+            mHandlerThread = null;
+        }
+    }
 }

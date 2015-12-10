@@ -401,4 +401,15 @@ public class Stage4 extends DrawableGameComponent {
         if (mSensorManager != null)
             mSensorManager.unregisterListener(sensorEventListener);
     }
+
+    @Override
+    public void Dispose() {
+        super.Dispose();
+        if (mHandlerThread != null) {
+            DebugConfig.d("Quit thread: " + mHandlerThread.getThreadId());
+            mHandlerThread.interrupt();
+            mHandlerThread.quit();
+            mHandlerThread = null;
+        }
+    }
 }

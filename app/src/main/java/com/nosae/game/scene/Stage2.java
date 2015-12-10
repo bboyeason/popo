@@ -126,11 +126,6 @@ public class Stage2 extends DrawableGameComponent {
     }
 
     @Override
-    public void Dispose() {
-        super.Dispose();
-    }
-
-    @Override
     protected void Initialize() {
         super.Initialize();
         DebugConfig.d("Stage2 Initialize()");
@@ -455,6 +450,17 @@ public class Stage2 extends DrawableGameComponent {
         {
             mSubCanvas.drawRect(mColorMask.destRect, mColorMask.paint);
             mSubCanvas.drawText(mColorMask.text.message, mColorMask.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, mColorMask.text.paint);
+        }
+    }
+
+    @Override
+    public void Dispose() {
+        super.Dispose();
+        if (mHandlerThread != null) {
+            DebugConfig.d("Quit thread: " + mHandlerThread.getThreadId());
+            mHandlerThread.interrupt();
+            mHandlerThread.quit();
+            mHandlerThread = null;
         }
     }
 }
