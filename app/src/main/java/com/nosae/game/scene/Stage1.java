@@ -39,11 +39,9 @@ public class Stage1 extends DrawableGameComponent {
     private GameObj mSceneTitle;
     private Bitmap mSceneTitleImage;
 
-    private NormalFish mFishObj;
     private NormalFish mSubFishObj;
 
     public Popo mPopoObj;
-    private Bitmap mPopoImage;
 
     private Text mFpsText;
 
@@ -60,7 +58,7 @@ public class Stage1 extends DrawableGameComponent {
 
     public static FishCollection mFishCollections;
 
-    private int f, j;
+    private int f;
     private Random mRandom;
     private int[][] mFishTable1 = {
             {
@@ -168,14 +166,12 @@ public class Stage1 extends DrawableGameComponent {
 
     protected void createFish(int[][] fishTable) {
         int width, height;
-        int speed = 5;
+        int speed;
         int random;
-//        for (int i = 0; i < mMaximum; i++) {
         random = mRandom.nextInt(fishTable[0].length);
-//            Bitmap fishImage = GameParams.decodeSampledBitmapFromResource(fishTable[0][random], (int) (50 * fishTable[1][random] / GameParams.density), (int) (50 * fishTable[2][random] / GameParams.density));
-        Bitmap fishImage = null;
+        Bitmap fishImage;
         try {
-            fishImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, fishTable[0][random]);
+            fishImage = BitmapFactory.decodeResource(GameParams.res, fishTable[0][random]);
         } catch (OutOfMemoryError e) {
             e.printStackTrace();
             Toast.makeText(mGameEntry.mMainActivity, "OutOfMemoryError!",
@@ -188,7 +184,7 @@ public class Stage1 extends DrawableGameComponent {
         DebugConfig.d("Image ID: " + random + "=> width: " + width + ", height: " + height);
 
         speed = mRandom.nextInt(GameParams.stage1FishRandomSpeed) + GameParams.stage1FishRandomSpeed;
-        mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, (int) (speed * GameParams.density), Color.WHITE, 90);
+        NormalFish mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, (int) (speed * GameParams.density), Color.WHITE, 90);
 
         mFishObj.randomTop();
         mFishObj.setCol(fishTable[1][random]);
@@ -220,12 +216,12 @@ public class Stage1 extends DrawableGameComponent {
         FishGeneration(true);
 
         if (mSceneTitle == null) {
-            mSceneTitleImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
+            mSceneTitleImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
             mSceneTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, 0);
         }
 
         if (mPopoObj == null) {
-            mPopoImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
+            Bitmap mPopoImage = BitmapFactory.decodeResource(GameParams.res,
                     R.drawable.bobo);
             width = mPopoImage.getWidth() / 4;
             height = mPopoImage.getHeight() / 5;
@@ -249,14 +245,14 @@ public class Stage1 extends DrawableGameComponent {
         if (mLifeIcon == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
-            mLifeImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
+            mLifeImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
             mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + (int) (5 * GameParams.density), mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
         }
 
         if (mLife1 == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
-            Bitmap numBitmap = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
+            Bitmap numBitmap = BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
             mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
             Life1.setLife(GameParams.stage1Life);
             numBitmap.recycle();
@@ -266,13 +262,12 @@ public class Stage1 extends DrawableGameComponent {
 //            BitmapFactory.Options options = new BitmapFactory.Options();
 //            options.inSampleSize = 4;
 //            mTimerBarImage = GameParams.decodeSampledBitmapFromResource(R.drawable.timer_bar, (int) (GameParams.density * GameParams.halfWidth), (int) (GameParams.density * 120));
-            mTimerBarImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.timer_bar);
+            mTimerBarImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.timer_bar);
             if (mTimerBarImage != null) {
-                width = mTimerBarImage.getWidth() / 1;
+                width = mTimerBarImage.getWidth();
                 height = mTimerBarImage.getHeight() / 9;
                 mTimerBar = new TimerBar2(mScore.edge_X_right + 5, mScore.getY() + (mLife1.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
-                if (mTimerBar != null)
-                    mTimerBar.setStartFrame((int) GameEntry.totalFrames);
+                mTimerBar.setStartFrame((int) GameEntry.totalFrames);
             }
         }
         if (mTimerBar != null) {
@@ -290,13 +285,13 @@ public class Stage1 extends DrawableGameComponent {
     @Override
     protected void Update() {
 //        DebugConfig.d("Stage1 Update()");
-        if (mBackground.isAlive) {
+//        if (mBackground.isAlive) {
             //TODO maybe background rolling
-        }
+//        }
 
-        if (mPopoObj != null) {
+//        if (mPopoObj != null) {
 //            mPopoObj.Animation();
-        }
+//        }
 
 //        DebugConfig.d("size " + mFishCollections.size());
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
@@ -327,8 +322,8 @@ public class Stage1 extends DrawableGameComponent {
             }
         }
         if (DebugConfig.isFpsDebugOn) {
-            mFpsText.message = "actual FPS: " + (int) mGameEntry.actualFPS + " FPS (" + (int) mGameEntry.fps
-                    + ") " + (int) mGameEntry.totalFrames;
+            mFpsText.message = "actual FPS: " + mGameEntry.actualFPS + " FPS (" + mGameEntry.fps
+                    + ") " + (int) GameEntry.totalFrames;
         }
         if (mScore != null)
             mScore.setTotalScore(GameParams.stage1TotalScore);
@@ -347,7 +342,7 @@ public class Stage1 extends DrawableGameComponent {
         }
 
         if (isGameOver || !mPopoObj.isAlive) {
-            mColorMask.Action((int) mGameEntry.totalFrames);
+            mColorMask.Action((int) GameEntry.totalFrames);
         }
         super.Update();
     }
@@ -388,12 +383,12 @@ public class Stage1 extends DrawableGameComponent {
 
         }
 
-        if (mPopoObj != null && mPopoObj.isAlive) {
+//        if (mPopoObj != null && mPopoObj.isAlive) {
 //            mSubCanvas.drawBitmap(mPopoObj.popoImage, mPopoObj.srcRect, mPopoObj.destRect,
 //                    mPopoObj.paint);
 //            DebugConfig.d("srcRect: " + mGoldenFishObj.srcRect.left + ", " + mGoldenFishObj.srcRect.top + ", " + mGoldenFishObj.srcRect.right + ", " + mGoldenFishObj.srcRect.bottom);
 //            DebugConfig.d("destRect: " + mGoldenFishObj.destRect.left + ", " + mGoldenFishObj.destRect.top + ", " + mGoldenFishObj.destRect.right + ", " + mGoldenFishObj.destRect.bottom);
-        }
+//        }
 
         if (DebugConfig.isFpsDebugOn) {
             mSubCanvas.drawText(mFpsText.message, mFpsText.x, mFpsText.y, mFpsText.paint);
@@ -417,10 +412,7 @@ public class Stage1 extends DrawableGameComponent {
 
         if ((isGameOver || !mPopoObj.isAlive) && mColorMask.isAlive)
         {
-            // Mask
             mSubCanvas.drawRect(mColorMask.destRect, mColorMask.paint);
-
-            // Text
             mSubCanvas.drawText(mColorMask.text.message, mColorMask.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, mColorMask.text.paint);
         }
         super.Draw();

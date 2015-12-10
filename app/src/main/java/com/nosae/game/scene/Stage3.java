@@ -93,7 +93,7 @@ public class Stage3 extends DrawableGameComponent {
 
         for (int i = 0; i < objectTable[0].length; i++) {
             try {
-                objImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, objectTable[0][i]);
+                objImage = BitmapFactory.decodeResource(GameParams.res, objectTable[0][i]);
             } catch (OutOfMemoryError e) {
                 e.printStackTrace();
                 Toast.makeText(mGameEntry.mMainActivity, "OutOfMemoryError!",
@@ -115,9 +115,9 @@ public class Stage3 extends DrawableGameComponent {
         int random;
         Random _random = new Random();
         random = _random.nextInt(objectTable[0].length);
-        Bitmap objImage = null;
+        Bitmap objImage;
         try {
-            objImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, objectTable[0][random]);
+            objImage = BitmapFactory.decodeResource(GameParams.res, objectTable[0][random]);
         } catch (OutOfMemoryError e) {
             e.printStackTrace();
             Toast.makeText(mGameEntry.mMainActivity, "OutOfMemoryError!",
@@ -200,7 +200,7 @@ public class Stage3 extends DrawableGameComponent {
         }
 
         if (mSceneTitle == null) {
-            mSceneTitleImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
+            mSceneTitleImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
             mSceneTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, 0);
         }
 
@@ -214,7 +214,7 @@ public class Stage3 extends DrawableGameComponent {
         if (mLifeIcon == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
-            mLifeImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
+            mLifeImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
             mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + (int) (5 * GameParams.density), mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
         }
         // Can't assign GameParams.screenRect to mLimitRect,
@@ -225,21 +225,19 @@ public class Stage3 extends DrawableGameComponent {
         if (mLife1 == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
-            Bitmap numBitmap = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
+            Bitmap numBitmap = BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
             mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
             Life1.setLife(GameParams.stage3Life);
             numBitmap.recycle();
-            numBitmap = null;
         }
 
         if (mTimerBar == null) {
-            mTimerBarImage = (Bitmap) BitmapFactory.decodeResource(GameParams.res, R.drawable.timer_bar);
+            mTimerBarImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.timer_bar);
             if (mTimerBarImage != null) {
-                width = mTimerBarImage.getWidth() / 1;
+                width = mTimerBarImage.getWidth();
                 height = mTimerBarImage.getHeight() / 9;
                 mTimerBar = new TimerBar2(mScore.edge_X_right + 5, mScore.getY() + (mLife1.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
-                if (mTimerBar != null)
-                    mTimerBar.setStartFrame((int) GameEntry.totalFrames);
+                mTimerBar.setStartFrame((int) GameEntry.totalFrames);
             }
         }
         if (mTimerBar != null) {
@@ -254,8 +252,8 @@ public class Stage3 extends DrawableGameComponent {
     protected void Update() {
         super.Update();
         if (DebugConfig.isFpsDebugOn) {
-            mFpsText.message = "actual FPS: " + (int) mGameEntry.actualFPS + " FPS (" + (int) mGameEntry.fps
-                    + ") " + (int) mGameEntry.totalFrames;
+            mFpsText.message = "actual FPS: " + mGameEntry.actualFPS + " FPS (" + mGameEntry.fps
+                    + ") " + (int) GameEntry.totalFrames;
         }
         if (mScore != null)
             mScore.setTotalScore(GameParams.stage3TotalScore);
@@ -281,7 +279,7 @@ public class Stage3 extends DrawableGameComponent {
                 mObjCollections.remove(mSubObj);
         }
         if (isGameOver) {
-            mColorMask.Action((int) mGameEntry.totalFrames);
+            mColorMask.Action((int) GameEntry.totalFrames);
         }
     }
 

@@ -301,9 +301,7 @@ public class MainActivity extends Activity {
                 DebugConfig.d("Handle message: " + msg.what);
                 switch (msg.what){
                     case 1:
-//                        if (Stage1.isGameOver && mRestartButton.getVisibility() == View.INVISIBLE) {
-                            mRestartButton.setVisibility(View.VISIBLE);
-//                        }
+                        mRestartButton.setVisibility(View.VISIBLE);
                         break;
                 }
             }
