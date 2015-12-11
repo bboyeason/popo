@@ -47,6 +47,8 @@ public class GameParams {
     public static int stage4FishRebirthMax = 1000;
     public static int stage5FishRebirthMin = 700;
     public static int stage5FishRebirthMax = 1000;
+    public static int stage5CakeRebirthMax = 3000;
+    public static int stage5CakeRebirthMin = 30000;
 
     public static int goldenFishRebirthMin = 1000;
     public static int goldenFishRebirthMax = 1400;

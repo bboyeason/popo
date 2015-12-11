@@ -79,19 +79,34 @@ public class Stage5 extends DrawableGameComponent {
     private Rect stackRect;
     private int[][] mFishTable = {
             {
-                    R.drawable.d_fish_03,
+                    R.drawable.d_fish_03
+            },
+            {  3 }, /* 1. Animation column */
+            {  2 }, /* 2. Animation row */
+            {  5 }, /* 3. Max index */
+            {  5 }, /* 4. Death animation start */
+            {  5 }, /* 5. Death animation end */
+            {  0 }, /* 6. Touch Score */
+            { -1 }, /* 7. Arrival Score */
+            {  0 }, /* 8. Timer add */
+            { -1 }, /* 9. Life add */
+            {  0 }, /* 10. Is cake */
+    };
+
+    private int[][] mCakeTable = {
+            {
                     R.drawable.play
             },
-            {  3,  1 }, /* 1. Animation column */
-            {  2,  1 }, /* 2. Animation row */
-            {  5,  0 }, /* 3. Max index */
-            {  5,  0 }, /* 4. Death animation start */
-            {  5,  0 }, /* 5. Death animation end */
-            {  0,  0 }, /* 6. Touch Score */
-            { -1,  0 }, /* 7. Arrival Score */
-            {  0,  0 }, /* 8. Timer add */
-            { -1,  0 }, /* 9. Life add */
-            {  0,  1 }, /* 10. Is cake */
+            { 1 }, /* 1. Animation column */
+            { 1 }, /* 2. Animation row */
+            { 0 }, /* 3. Max index */
+            { 0 }, /* 4. Death animation start */
+            { 0 }, /* 5. Death animation end */
+            { 0 }, /* 6. Touch Score */
+            { 0 }, /* 7. Arrival Score */
+            { 0 }, /* 8. Timer add */
+            { 0 }, /* 9. Life add */
+            { 1 }, /* 10. Is cake */
     };
 
     public Stage5(GameEntry gameEntry) {
@@ -213,10 +228,22 @@ public class Stage5 extends DrawableGameComponent {
                             mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
                         }
                         break;
+                    case Events.CREATE_CAKE:
+                        if (isGameOver || GameParams.isClearStage5)
+                            return;
+
+                        CreateObjects(mCakeTable);
+                        if (onOff) {
+                            Message m = new Message();
+                            m.what = Events.CREATE_CAKE;
+                            mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage5CakeRebirthMax) + GameParams.stage5CakeRebirthMin);
+                        }
+                        break;
                 }
             }
         };
     }
+
     public static void ObjectGeneration(boolean produce) {
         onOff = produce;
         if (onOff) {
@@ -227,11 +254,17 @@ public class Stage5 extends DrawableGameComponent {
             msg = new Message();
             msg.what = Events.CREATE_OBJECT;
             mHandler.sendMessageDelayed(msg, 5000);
+
+            msg = new Message();
+            msg.what = Events.CREATE_CAKE;
+            mHandler.sendMessageDelayed(msg, GameParams.stage5CakeRebirthMin);
         } else {
             mHandler.removeMessages(Events.CREATE_FISH);
             mHandler.removeMessages(Events.CREATE_OBJECT);
+            mHandler.removeMessages(Events.CREATE_CAKE);
         }
     }
+
     @Override
     protected void LoadContent() {
         super.LoadContent();
