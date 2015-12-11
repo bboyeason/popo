@@ -220,6 +220,7 @@ public class MainActivity extends Activity {
             Stage5.onOff = false;
             Stage5.mHandler.removeMessages(Events.CREATE_FISH);
             Stage5.mHandler.removeMessages(Events.CREATE_OBJECT);
+            Stage5.mHandler.removeMessages(Events.CREATE_CAKE);
         }
         super.onStop();
     }
