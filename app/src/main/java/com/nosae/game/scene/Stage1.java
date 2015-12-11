@@ -305,22 +305,23 @@ public class Stage1 extends DrawableGameComponent {
                     } else if (mSubFishObj.getArrivalScore() < 0) {
                         Life1.addLife(mSubFishObj.getArrivalScore());
                     }
-                    if (GameParams.stage1TotalScore < 0 || Life1.getLife() <= 0) {
-                        GameParams.stage1TotalScore = 0;
-                        mPopoObj.isAlive = false;
-                    }
                 }
                 mFishCollections.remove(mSubFishObj);
                 mSubFishObj.recycle();
             }
-            if (!mPopoObj.isAlive)
-                isGameOver = true;
 
             if (!mSubFishObj.isAlive) {
                 mFishCollections.remove(mSubFishObj);
                 mSubFishObj.recycle();
             }
         }
+        if (GameParams.stage1TotalScore < 0 || Life1.getLife() <= 0) {
+//            GameParams.stage1TotalScore = 0;
+            mPopoObj.isAlive = false;
+        }
+        if (!mPopoObj.isAlive)
+            isGameOver = true;
+
         if (DebugConfig.isFpsDebugOn) {
             mFpsText.message = "actual FPS: " + mGameEntry.actualFPS + " FPS (" + mGameEntry.fps
                     + ") " + (int) GameEntry.totalFrames;
