@@ -327,8 +327,10 @@ public class Stage5 extends DrawableGameComponent {
 
             if (mSubObj.isStackable) {
                 if (GameParams.isCollisionFromTop(stackRect, mSubObj.destRect)) {
-                    mCakes.add(mSubObj);
-                    mObjCollections.remove(mSubObj);
+                    if (mCakes.size() < 5) {
+                        mCakes.add(mSubObj);
+                        mObjCollections.remove(mSubObj);
+                    }
                 }
             } else {
                 if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
