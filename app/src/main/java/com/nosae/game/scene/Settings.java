@@ -121,7 +121,7 @@ public class Settings extends Activity {
                 SharedPreferences settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt(GameParams.PREFS_SOUND_VOLUME_KEY, (int) (GameParams.soundVolumeRatio * 100));
-                editor.commit();
+                editor.apply();
             }
         });
     }
