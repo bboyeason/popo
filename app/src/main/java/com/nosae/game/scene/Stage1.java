@@ -88,7 +88,7 @@ public class Stage1 extends DrawableGameComponent {
     public static boolean onOff = true;
     public static boolean isGameOver = false;
 
-    private List<OnStageCompleteListener> mOnStageCompleteListeners;
+    private final List<OnStageCompleteListener> mOnStageCompleteListeners;
 
     public void registerOnStageCompleteListener(OnStageCompleteListener listener) {
         synchronized (mOnStageCompleteListeners) {
@@ -108,8 +108,7 @@ public class Stage1 extends DrawableGameComponent {
     private void NotifyStageCompleted() {
         GameParams.isClearStage1 = true;
         if (mOnStageCompleteListeners.size() > 0) {
-            for (Iterator<OnStageCompleteListener> iterator = mOnStageCompleteListeners.iterator(); iterator.hasNext();) {
-                OnStageCompleteListener l = iterator.next();
+            for (OnStageCompleteListener l : mOnStageCompleteListeners) {
                 l.OnStageComplete(this);
             }
         }
