@@ -13,6 +13,9 @@ import com.nosae.game.popo.GameParams;
 import com.nosae.game.popo.R;
 import com.nosae.game.popo.Text;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import lbs.DrawableGameComponent;
@@ -85,11 +88,39 @@ public class Stage1 extends DrawableGameComponent {
     public static boolean onOff = true;
     public static boolean isGameOver = false;
 
+    private List<OnStageCompleteListener> mOnStageCompleteListeners;
+
+    public void registerOnStageCompleteListener(OnStageCompleteListener listener) {
+        synchronized (mOnStageCompleteListeners) {
+            if (!mOnStageCompleteListeners.contains(listener))
+                mOnStageCompleteListeners.add(listener);
+        }
+    }
+
+    public void unregisterOnStageCompleteListener(OnStageCompleteListener listener) {
+        synchronized (mOnStageCompleteListeners) {
+            if (mOnStageCompleteListeners.size() > 0)
+                if (mOnStageCompleteListeners.contains(listener))
+                    mOnStageCompleteListeners.remove(listener);
+        }
+    }
+
+    private void NotifyStageCompleted() {
+        GameParams.isClearStage1 = true;
+        if (mOnStageCompleteListeners.size() > 0) {
+            for (Iterator<OnStageCompleteListener> iterator = mOnStageCompleteListeners.iterator(); iterator.hasNext();) {
+                OnStageCompleteListener l = iterator.next();
+                l.OnStageComplete(this);
+            }
+        }
+    }
+
     public Stage1(GameEntry mGameEntry) {
         DebugConfig.d("Stage1 Constructor");
         this.mGameEntry = mGameEntry;
         mFishCollections = new FishCollection();
         mRandom = new Random();
+        mOnStageCompleteListeners = new ArrayList<>();
     }
 
     @Override

@@ -1,7 +1,11 @@
 package lbs;
 
 public class DrawableGameComponent {
-	
+
+	public interface OnStageCompleteListener {
+		void OnStageComplete(DrawableGameComponent stage);
+	}
+
 	public DrawableGameComponent() {
 		
 	}
