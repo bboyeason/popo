@@ -24,6 +24,8 @@ import com.nosae.game.objects.TimerBar2;
 import com.nosae.game.role.NormalFish;
 import com.nosae.game.settings.DebugConfig;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import lbs.DrawableGameComponent;
@@ -82,9 +84,36 @@ public class Stage3 extends DrawableGameComponent {
 
     private Rect mLimitRect;
 
+    private final List<OnStageCompleteListener> mOnStageCompleteListeners;
+
+    public void registerOnStageCompleteListener(OnStageCompleteListener listener) {
+        synchronized (mOnStageCompleteListeners) {
+            if (!mOnStageCompleteListeners.contains(listener))
+                mOnStageCompleteListeners.add(listener);
+        }
+    }
+
+    public void unregisterOnStageCompleteListener(OnStageCompleteListener listener) {
+        synchronized (mOnStageCompleteListeners) {
+            if (mOnStageCompleteListeners.size() > 0)
+                if (mOnStageCompleteListeners.contains(listener))
+                    mOnStageCompleteListeners.remove(listener);
+        }
+    }
+
+    private void NotifyStageCompleted() {
+        GameParams.isClearStage3 = true;
+        if (mOnStageCompleteListeners.size() > 0) {
+            for (OnStageCompleteListener l : mOnStageCompleteListeners) {
+                l.OnStageComplete(this);
+            }
+        }
+    }
+
     public Stage3(GameEntry gameEntry) {
         DebugConfig.d("Stage3 Constructor");
         this.mGameEntry = gameEntry;
+        mOnStageCompleteListeners = new ArrayList<>();
     }
 
     public void CreateObj(int[][] objectTable) {

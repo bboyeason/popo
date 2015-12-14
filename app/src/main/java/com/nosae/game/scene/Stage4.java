@@ -29,6 +29,8 @@ import com.nosae.game.role.NormalFish;
 import com.nosae.game.role.Popo;
 import com.nosae.game.settings.DebugConfig;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import lbs.DrawableGameComponent;
@@ -91,9 +93,36 @@ public class Stage4 extends DrawableGameComponent {
             {  0,  0, -1, -2 } /* Life add */
     };
 
+    private final List<OnStageCompleteListener> mOnStageCompleteListeners;
+
+    public void registerOnStageCompleteListener(OnStageCompleteListener listener) {
+        synchronized (mOnStageCompleteListeners) {
+            if (!mOnStageCompleteListeners.contains(listener))
+                mOnStageCompleteListeners.add(listener);
+        }
+    }
+
+    public void unregisterOnStageCompleteListener(OnStageCompleteListener listener) {
+        synchronized (mOnStageCompleteListeners) {
+            if (mOnStageCompleteListeners.size() > 0)
+                if (mOnStageCompleteListeners.contains(listener))
+                    mOnStageCompleteListeners.remove(listener);
+        }
+    }
+
+    private void NotifyStageCompleted() {
+        GameParams.isClearStage4 = true;
+        if (mOnStageCompleteListeners.size() > 0) {
+            for (OnStageCompleteListener l : mOnStageCompleteListeners) {
+                l.OnStageComplete(this);
+            }
+        }
+    }
+
     public Stage4(GameEntry gameEntry) {
         DebugConfig.d("Stage4 Constructor");
         this.mGameEntry = gameEntry;
+        mOnStageCompleteListeners = new ArrayList<>();
     }
 
     private void CreateObjects(int[][] objectTable) {
