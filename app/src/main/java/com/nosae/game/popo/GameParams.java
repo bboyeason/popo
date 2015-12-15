@@ -22,6 +22,7 @@ public class GameParams {
     public static final String PREFS_SOUND = "Sound";
     public static final String PREFS_SOUND_KEY = "isSoundOn";
     public static final String PREFS_SOUND_VOLUME_KEY = "SoundVolume";
+    public static final String STAGE = "stage";
     public static Resources res = null;
 
     public static Rect screenRect;

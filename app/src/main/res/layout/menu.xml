@@ -14,15 +14,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="13dp" />
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/startButton"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/play"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -33,7 +24,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="20dp"
         android:layout_marginTop="13dp" />
-
 
     <Button
         android:layout_width="wrap_content"
@@ -52,5 +42,53 @@
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:visibility="invisible" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:id="@+id/stage3"
+        android:background="@drawable/play"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:enabled="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2"
+        android:id="@+id/stage2"
+        android:background="@drawable/play"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/stage3" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:id="@+id/stage1"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/play"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/stage2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4"
+        android:id="@+id/stage4"
+        android:background="@drawable/play"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/stage3" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5"
+        android:id="@+id/stage5"
+        android:background="@drawable/play"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/stage4" />
+
 
 </RelativeLayout>

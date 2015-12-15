@@ -36,10 +36,15 @@ public class Menu extends Activity {
     private ImageView mImageView;
     private Button mSettingsButton;
     private Button mKarnofskyScaleButton;
-    private Button mStartButton;
+    private Button mStage1Button;
+    private Button mStage2Button;
+    private Button mStage3Button;
+    private Button mStage4Button;
+    private Button mStage5Button;
     private Button mLoadButton;
     private Button mExitButton;
     private AnimatorSet mBouncer;
+    private int DELAY_ACTIVITY = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +60,16 @@ public class Menu extends Activity {
 
         mSettingsButton = (Button) findViewById(R.id.settingsButton);
         mKarnofskyScaleButton = (Button) findViewById(R.id.karnofskyButton);
-        mStartButton = (Button) findViewById(R.id.startButton);
+        mStage1Button = (Button) findViewById(R.id.stage1);
+        mStage2Button = (Button) findViewById(R.id.stage2);
+        mStage3Button = (Button) findViewById(R.id.stage3);
+        mStage4Button = (Button) findViewById(R.id.stage4);
+        mStage5Button = (Button) findViewById(R.id.stage5);
         mLoadButton = (Button) findViewById(R.id.loadButton);
         mExitButton = (Button) findViewById(R.id.exitButton);
         mSettingsButton.setSoundEffectsEnabled(false);
         mKarnofskyScaleButton.setSoundEffectsEnabled(false);
-        mStartButton.setSoundEffectsEnabled(false);
+        mStage1Button.setSoundEffectsEnabled(false);
         mLoadButton.setSoundEffectsEnabled(false);
         mExitButton.setSoundEffectsEnabled(false);
 
@@ -111,30 +120,127 @@ public class Menu extends Activity {
                 });
             }
         });
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mStartButton.getLayoutParams();
-        layoutParams.topMargin = (int) (GameParams.scaleHeight * 0.56);
-        mStartButton.setLayoutParams(layoutParams);
-        mStartButton.setOnClickListener(new View.OnClickListener() {
+
+        mStage1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Music.playSound();
-                Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStartButton.getWidth() / 2, mStartButton.getHeight() / 2);
+                Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStage1Button.getWidth() / 2, mStage1Button.getHeight() / 2);
                 amScale.setDuration(100);
-                mStartButton.startAnimation(amScale);
+                mStage1Button.startAnimation(amScale);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         Intent i = new Intent(Menu.this, MainActivity.class);
+                        i.putExtra(GameParams.STAGE, 1);
                         startActivity(i);
                         this.finish();
                     }
 
                     private void finish() {
-                        // TODO Auto-generated method stub
                         if (mMusic != null)
                             mMusic.Pause();
                     }
-                }, 100);
+                }, DELAY_ACTIVITY);
+            }
+        });
+
+        mStage2Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Music.playSound();
+                Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStage2Button.getWidth() / 2, mStage2Button.getHeight() / 2);
+                amScale.setDuration(100);
+                mStage2Button.startAnimation(amScale);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i = new Intent(Menu.this, MainActivity.class);
+                        i.putExtra(GameParams.STAGE, 2);
+                        startActivity(i);
+                        this.finish();
+                    }
+
+                    private void finish() {
+                        if (mMusic != null)
+                            mMusic.Pause();
+                    }
+                }, DELAY_ACTIVITY);
+            }
+        });
+
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mStage3Button.getLayoutParams();
+        layoutParams.topMargin = (int) (GameParams.scaleHeight * 0.56);
+        mStage3Button.setLayoutParams(layoutParams);
+        mStage3Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Music.playSound();
+                Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStage3Button.getWidth() / 2, mStage3Button.getHeight() / 2);
+                amScale.setDuration(100);
+                mStage3Button.startAnimation(amScale);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i = new Intent(Menu.this, MainActivity.class);
+                        i.putExtra(GameParams.STAGE, 3);
+                        startActivity(i);
+                        this.finish();
+                    }
+
+                    private void finish() {
+                        if (mMusic != null)
+                            mMusic.Pause();
+                    }
+                }, DELAY_ACTIVITY);
+            }
+        });
+
+        mStage4Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Music.playSound();
+                Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStage4Button.getWidth() / 2, mStage4Button.getHeight() / 2);
+                amScale.setDuration(100);
+                mStage4Button.startAnimation(amScale);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i = new Intent(Menu.this, MainActivity.class);
+                        i.putExtra(GameParams.STAGE, 4);
+                        startActivity(i);
+                        this.finish();
+                    }
+
+                    private void finish() {
+                        if (mMusic != null)
+                            mMusic.Pause();
+                    }
+                }, DELAY_ACTIVITY);
+            }
+        });
+
+        mStage5Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Music.playSound();
+                Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStage5Button.getWidth() / 2, mStage5Button.getHeight() / 2);
+                amScale.setDuration(100);
+                mStage5Button.startAnimation(amScale);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i = new Intent(Menu.this, MainActivity.class);
+                        i.putExtra(GameParams.STAGE, 5);
+                        startActivity(i);
+                        this.finish();
+                    }
+
+                    private void finish() {
+                        if (mMusic != null)
+                            mMusic.Pause();
+                    }
+                }, DELAY_ACTIVITY);
             }
         });
 

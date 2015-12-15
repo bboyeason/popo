@@ -9,6 +9,7 @@ import com.nosae.game.scene.Stage5;
 import com.nosae.game.settings.DebugConfig;
 import android.app.Activity;
 import android.app.Service;
+import android.content.Intent;
 import android.os.*;
 import android.view.SurfaceView;
 import android.view.View;
@@ -274,9 +275,31 @@ public class MainActivity extends Activity {
 
         GameParams.res = getResources();
 
+        Intent intent = getIntent();
+        int stage = intent.getIntExtra(GameParams.STAGE, 0);
+        DebugConfig.d("MainActivity start stage: " + stage);
+
         mGameEntry = new GameEntry(this);
         GameStateClass.oldState = GameStateClass.GameState.None;
-        if (GameParams.isClearStage1) {
+        switch (stage) {
+            case 1:
+                GameStateClass.currentState = GameStateClass.GameState.Stage1;
+                break;
+            case 2:
+                GameStateClass.currentState = GameStateClass.GameState.Stage2;
+                break;
+            case 3:
+                GameStateClass.currentState = GameStateClass.GameState.Stage3;
+                break;
+            case 4:
+                GameStateClass.currentState = GameStateClass.GameState.Stage4;
+                break;
+            case 5:
+                GameStateClass.currentState = GameStateClass.GameState.Stage5;
+                break;
+        }
+
+/*        if (GameParams.isClearStage1) {
             if (GameParams.isClearStage2) {
                 if (GameParams.isClearStage3) {
                     if (GameParams.isClearStage4)
@@ -291,7 +314,7 @@ public class MainActivity extends Activity {
                 }
         } else {
             GameStateClass.currentState = GameStateClass.GameState.Stage1;
-        }
+        }*/
 
 
 //        Looper looper = mHandlerThread.getLooper();
