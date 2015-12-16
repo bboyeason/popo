@@ -39,7 +39,7 @@ public class GameObj {
     public int speed;
     public int alpha;
     public boolean isAlive;
-    protected State state = State.step1;
+    public State state = State.step1;
 
     protected int index = 0;
 

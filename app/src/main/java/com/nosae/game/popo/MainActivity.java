@@ -19,8 +19,10 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
+import lbs.DrawableGameComponent;
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends Activity implements DrawableGameComponent.OnStageCompleteListener{
 //    private static Handler mHandler;
     protected static Handler mMsgHandler;
 //    private static HandlerThread mHandlerThread;
@@ -32,6 +34,7 @@ public class MainActivity extends Activity {
     public Button mRestartButton;
 
     public GameEntry mGameEntry;
+    protected int stage;
 
 /*    static class MsgHandler extends Handler {
         private WeakReference<Activity> mActivity;
@@ -64,7 +67,6 @@ public class MainActivity extends Activity {
         Initialize();
         mSurfaceView = (SurfaceView) findViewById(R.id.surfaceViewTest);
 
-
         mRestartButton = (Button) findViewById(R.id.restartButton);
         mRestartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +76,7 @@ public class MainActivity extends Activity {
 //                mGameEntry.Exit();
 //                mGameEntry.Run();
                 if (GameStateClass.currentState == GameStateClass.GameState.Stage1) {
-                    Stage1.isGameOver = false;
+                    GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage1, mGameEntry);
                     // FIXME don't use sleep
                     try {
@@ -84,7 +86,7 @@ public class MainActivity extends Activity {
                     }
                     GameStateClass.changeState(GameStateClass.GameState.Stage1, null, mGameEntry);
                 } else if (GameStateClass.currentState == GameStateClass.GameState.Stage2) {
-                    Stage2.isGameOver = false;
+                    GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage2, mGameEntry);
                     // FIXME don't use sleep
                     try {
@@ -94,7 +96,7 @@ public class MainActivity extends Activity {
                     }
                     GameStateClass.changeState(GameStateClass.GameState.Stage2, null, mGameEntry);
                 } else if (GameStateClass.currentState == GameStateClass.GameState.Stage3) {
-                    Stage3.isGameOver = false;
+                    GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage3, mGameEntry);
                     // FIXME don't use sleep
                     try {
@@ -104,7 +106,7 @@ public class MainActivity extends Activity {
                     }
                     GameStateClass.changeState(GameStateClass.GameState.Stage3, null, mGameEntry);
                 } else if (GameStateClass.currentState == GameStateClass.GameState.Stage4) {
-                    Stage4.isGameOver = false;
+                    GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage4, mGameEntry);
                     // FIXME don't use sleep
                     try {
@@ -114,7 +116,7 @@ public class MainActivity extends Activity {
                     }
                     GameStateClass.changeState(GameStateClass.GameState.Stage4, null, mGameEntry);
                 } else if (GameStateClass.currentState == GameStateClass.GameState.Stage5) {
-                    Stage5.isGameOver = false;
+                    GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage5, mGameEntry);
                     // FIXME don't use sleep
                     try {
@@ -178,6 +180,16 @@ public class MainActivity extends Activity {
         DebugConfig.d("MainActivity onResume()");
         super.onResume();
 //        mToggleButton.setChecked(false);
+        if (mGameEntry.mStage1 != null)
+            mGameEntry.mStage1.registerOnStageCompleteListener(this);
+        if (mGameEntry.mStage2 != null)
+            mGameEntry.mStage2.registerOnStageCompleteListener(this);
+        if (mGameEntry.mStage3 != null)
+            mGameEntry.mStage3.registerOnStageCompleteListener(this);
+        if (mGameEntry.mStage4 != null)
+            mGameEntry.mStage4.registerOnStageCompleteListener(this);
+        if (mGameEntry.mStage5 != null)
+            mGameEntry.mStage5.registerOnStageCompleteListener(this);
     }
 
     @Override
@@ -185,7 +197,16 @@ public class MainActivity extends Activity {
         DebugConfig.d("MainActivity onPause()");
         GameParams.vibrator.cancel();
         mToggleButton.setChecked(true);
-
+        if (mGameEntry.mStage1 != null)
+            mGameEntry.mStage1.unregisterOnStageCompleteListener(this);
+        if (mGameEntry.mStage2 != null)
+            mGameEntry.mStage2.unregisterOnStageCompleteListener(this);
+        if (mGameEntry.mStage3 != null)
+            mGameEntry.mStage3.unregisterOnStageCompleteListener(this);
+        if (mGameEntry.mStage4 != null)
+            mGameEntry.mStage4.unregisterOnStageCompleteListener(this);
+        if (mGameEntry.mStage5 != null)
+            mGameEntry.mStage5.unregisterOnStageCompleteListener(this);
 //        if (mGameEntry != null)
 //        {
 //            mGameEntry.Exit();
@@ -276,7 +297,7 @@ public class MainActivity extends Activity {
         GameParams.res = getResources();
 
         Intent intent = getIntent();
-        int stage = intent.getIntExtra(GameParams.STAGE, 0);
+        stage = intent.getIntExtra(GameParams.STAGE, 0);
         DebugConfig.d("MainActivity start stage: " + stage);
 
         mGameEntry = new GameEntry(this);
@@ -299,24 +320,6 @@ public class MainActivity extends Activity {
                 break;
         }
 
-/*        if (GameParams.isClearStage1) {
-            if (GameParams.isClearStage2) {
-                if (GameParams.isClearStage3) {
-                    if (GameParams.isClearStage4)
-                        GameStateClass.currentState = GameStateClass.GameState.Stage5;
-                    else
-                        GameStateClass.currentState = GameStateClass.GameState.Stage4;
-                } else {
-                    GameStateClass.currentState = GameStateClass.GameState.Stage3;
-                }
-            } else{
-                GameStateClass.currentState = GameStateClass.GameState.Stage2;
-                }
-        } else {
-            GameStateClass.currentState = GameStateClass.GameState.Stage1;
-        }*/
-
-
 //        Looper looper = mHandlerThread.getLooper();
         mMsgHandler = new Handler(getMainLooper()) {
             @Override
@@ -330,5 +333,11 @@ public class MainActivity extends Activity {
                 }
             }
         };
+    }
+
+    @Override
+    public void OnStageComplete(DrawableGameComponent stage) {
+        DebugConfig.d(stage.toString() + " is completed.");
+        finish();
     }
 }

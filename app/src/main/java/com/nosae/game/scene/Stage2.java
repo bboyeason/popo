@@ -17,7 +17,6 @@ import com.nosae.game.popo.Text;
 
 import lbs.DrawableGameComponent;
 
-import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.FishCollection;
 
 import com.nosae.game.objects.GameObj;
@@ -70,11 +69,8 @@ public class Stage2 extends DrawableGameComponent {
     public static boolean isQuizHit = true;
 
     private Text mFpsText;
-    private ColorMask mColorMask;
 
     int f, j;
-
-    public static boolean isGameOver = false;
 
     private int[][] mFishTable_1 = {
             {
@@ -159,13 +155,12 @@ public class Stage2 extends DrawableGameComponent {
         if (DebugConfig.isFpsDebugOn) {
             mFpsText = new Text(GameParams.halfWidth - 50, 20, 12, "FPS", Color.BLUE);
         }
-        mColorMask = new ColorMask(Color.RED, 0);
-        mColorMask.isAlive = false;
 
         mFishCollections = new FishCollection();
         mRandom = new Random();
 
         GameParams.stage2TotalScore = 0;
+        GameParams.isClearStage2 = false;
 
         if (mHandlerThread == null) {
             mHandlerThread = new HandlerThread(THREADNAME,
@@ -180,7 +175,7 @@ public class Stage2 extends DrawableGameComponent {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case Events.CREATE_FISH:
-                        if (isGameOver || GameParams.isClearStage2)
+                        if (GameParams.isGameOver || GameParams.isClearStage2)
                             return;
                         stage2CreateFish(mFishTable_1, mFishTableColor, mFishTableSyllable);
 
@@ -194,7 +189,7 @@ public class Stage2 extends DrawableGameComponent {
                         }
                         break;
                     case Events.CREATE_OBJECT:
-                        if (isGameOver || GameParams.isClearStage2)
+                        if (GameParams.isGameOver || GameParams.isClearStage2)
                             return;
 
                         CreateSpecialObjects(GameParams.specialObjectTable);
@@ -302,9 +297,9 @@ public class Stage2 extends DrawableGameComponent {
             options.inSampleSize = 2;
             Bitmap numBitmap = BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
             mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
-            Life1.setLife(GameParams.stage2Life);
             numBitmap.recycle();
         }
+        Life1.setLife(GameParams.stage2Life);
 
         if (mTimerBar == null) {
             mTimerBarImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.timer_bar);
@@ -370,13 +365,13 @@ public class Stage2 extends DrawableGameComponent {
             mLife1.updateLife();
             mLife1.action();
             if (Life1.getLife() <= 0)
-                isGameOver = true;
+                GameParams.isGameOver = true;
         }
 
         if (mTimerBar != null) {
             mTimerBar.action((int) GameEntry.totalFrames);
             if (mTimerBar.isTimeout)
-                isGameOver = true;
+                GameParams.isGameOver = true;
         }
 
         if (mQuiz != null && isQuizHit) {
@@ -387,8 +382,10 @@ public class Stage2 extends DrawableGameComponent {
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (Stage2_fish) mFishCollections.get(f);
             mSubFishObj.Animation();
-            if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mPopoObj.srcHeight)) {
-                mFishCollections.remove(mSubFishObj);
+            if (GameParams.stage2TotalScore < GameParams.stage2BreakScore) {
+                if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mPopoObj.srcHeight)) {
+                    mFishCollections.remove(mSubFishObj);
+                }
             }
 //            if (!mPopoObj.isAlive)
 //                isGameOver = true;
@@ -396,8 +393,13 @@ public class Stage2 extends DrawableGameComponent {
             if (!mSubFishObj.isAlive)
                 mFishCollections.remove(mSubFishObj);
         }
-        if (isGameOver || !mPopoObj.isAlive) {
-            mColorMask.Action((int) GameEntry.totalFrames);
+        if (GameParams.isGameOver || !mPopoObj.isAlive) {
+            GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
+        } else if (!GameParams.isGameOver && GameParams.stage2TotalScore >= GameParams.stage2BreakScore) {
+            if (GameParams.colorMaskBreakStage.state == GameObj.State.step1)
+                FishGeneration(false);
+            if (GameParams.colorMaskBreakStage.Action((int) GameEntry.totalFrames))
+                NotifyStageCompleted();
         }
     }
 
@@ -470,10 +472,12 @@ public class Stage2 extends DrawableGameComponent {
 
         }
 
-        if ((isGameOver || !mPopoObj.isAlive) && mColorMask.isAlive)
+        if ((GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.colorMaskGameOver.isAlive)
         {
-            mSubCanvas.drawRect(mColorMask.destRect, mColorMask.paint);
-            mSubCanvas.drawText(mColorMask.text.message, mColorMask.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, mColorMask.text.paint);
+            mSubCanvas.drawRect(GameParams.colorMaskGameOver.destRect, GameParams.colorMaskGameOver.paint);
+            mSubCanvas.drawText(GameParams.colorMaskGameOver.text.message, GameParams.colorMaskGameOver.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, GameParams.colorMaskGameOver.text.paint);
+        } else if (!(GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.colorMaskBreakStage.isAlive) {
+            mSubCanvas.drawRect(GameParams.colorMaskBreakStage.destRect, GameParams.colorMaskBreakStage.paint);
         }
     }
 

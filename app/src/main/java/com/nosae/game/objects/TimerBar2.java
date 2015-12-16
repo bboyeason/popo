@@ -1,7 +1,6 @@
 package com.nosae.game.objects;
 
-import com.nosae.game.scene.Stage1;
-import com.nosae.game.scene.Stage2;
+import com.nosae.game.popo.GameParams;
 import com.nosae.game.settings.DebugConfig;
 
 import lbs.Game;
@@ -37,7 +36,7 @@ public class TimerBar2 extends GameObj {
     }
 
     public void action(int totalFrame) {
-        if (Stage1.isGameOver || Stage2.isGameOver)
+        if (GameParams.isGameOver)
             return;
         int gap;
         int frameGap = totalFrame - mStartFrame;

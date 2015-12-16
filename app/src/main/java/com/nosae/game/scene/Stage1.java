@@ -14,7 +14,6 @@ import com.nosae.game.popo.R;
 import com.nosae.game.popo.Text;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -23,7 +22,6 @@ import com.nosae.game.objects.FishCollection;
 
 import com.nosae.game.objects.Life1;
 import com.nosae.game.role.Popo;
-import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.GameObj;
 import com.nosae.game.role.NormalFish;
 import com.nosae.game.objects.Score;
@@ -49,8 +47,6 @@ public class Stage1 extends DrawableGameComponent {
     private Text mFpsText;
 
     private Score mScore;
-
-    private ColorMask mColorMask;
 
     public TimerBar2 mTimerBar;
     public Bitmap mTimerBarImage;
@@ -86,7 +82,6 @@ public class Stage1 extends DrawableGameComponent {
     public static HandlerThread mHandlerThread;
 
     public static boolean onOff = true;
-    public static boolean isGameOver = false;
 
     private final List<OnStageCompleteListener> mOnStageCompleteListeners;
 
@@ -132,10 +127,8 @@ public class Stage1 extends DrawableGameComponent {
             DebugConfig.d("Create thread");
         }
 
-        mColorMask = new ColorMask(Color.RED, 0);
-        mColorMask.isAlive = false;
-
         GameParams.stage1TotalScore = 0;
+        GameParams.isClearStage1 = false;
 
         mHandler = new Handler(mHandlerThread.getLooper()){
             @Override
@@ -143,7 +136,7 @@ public class Stage1 extends DrawableGameComponent {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case Events.CREATE_FISH:
-                        if (isGameOver || GameParams.isClearStage1)
+                        if (GameParams.isGameOver || GameParams.isClearStage1)
                             return;
                         createFish(mFishTable1);
 
@@ -157,7 +150,7 @@ public class Stage1 extends DrawableGameComponent {
                         }
                         break;
                     case Events.CREATE_OBJECT:
-                        if (isGameOver || GameParams.isClearStage1)
+                        if (GameParams.isGameOver || GameParams.isClearStage1)
                             return;
 
                         createFish(GameParams.specialObjectTable);
@@ -284,9 +277,9 @@ public class Stage1 extends DrawableGameComponent {
             options.inSampleSize = 2;
             Bitmap numBitmap = BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
             mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
-            Life1.setLife(GameParams.stage1Life);
             numBitmap.recycle();
         }
+        Life1.setLife(GameParams.stage1Life);
 
         if (mTimerBar == null) {
 //            BitmapFactory.Options options = new BitmapFactory.Options();
@@ -327,19 +320,20 @@ public class Stage1 extends DrawableGameComponent {
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (NormalFish) mFishCollections.get(f);
             mSubFishObj.Animation();
-            if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mPopoObj.srcHeight)) {
+            if (GameParams.stage1TotalScore < GameParams.stage1BreakScore) {
+                if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mPopoObj.srcHeight)) {
 //                DebugConfig.d("Arrive screen bottom, remove it.");
-                if (!isGameOver) {
-                    if (mSubFishObj.getArrivalScore() > 0) {
-                        GameParams.stage1TotalScore += mSubFishObj.getArrivalScore();
-                    } else if (mSubFishObj.getArrivalScore() < 0) {
-                        Life1.addLife(mSubFishObj.getArrivalScore());
+                    if (!GameParams.isGameOver) {
+                        if (mSubFishObj.getArrivalScore() > 0) {
+                            GameParams.stage1TotalScore += mSubFishObj.getArrivalScore();
+                        } else if (mSubFishObj.getArrivalScore() < 0) {
+                            Life1.addLife(mSubFishObj.getArrivalScore());
+                        }
                     }
+                    mFishCollections.remove(mSubFishObj);
+                    mSubFishObj.recycle();
                 }
-                mFishCollections.remove(mSubFishObj);
-                mSubFishObj.recycle();
             }
-
             if (!mSubFishObj.isAlive) {
                 mFishCollections.remove(mSubFishObj);
                 mSubFishObj.recycle();
@@ -350,7 +344,7 @@ public class Stage1 extends DrawableGameComponent {
             mPopoObj.isAlive = false;
         }
         if (!mPopoObj.isAlive)
-            isGameOver = true;
+            GameParams.isGameOver = true;
 
         if (DebugConfig.isFpsDebugOn) {
             mFpsText.message = "actual FPS: " + mGameEntry.actualFPS + " FPS (" + mGameEntry.fps
@@ -363,17 +357,22 @@ public class Stage1 extends DrawableGameComponent {
             mLife1.updateLife();
             mLife1.action();
             if (Life1.getLife() <= 0)
-                isGameOver = true;
+                GameParams.isGameOver = true;
         }
 
         if (mTimerBar != null) {
             mTimerBar.action((int) GameEntry.totalFrames);
             if (mTimerBar.isTimeout)
-                isGameOver = true;
+                GameParams.isGameOver = true;
         }
 
-        if (isGameOver || !mPopoObj.isAlive) {
-            mColorMask.Action((int) GameEntry.totalFrames);
+        if (GameParams.isGameOver || !mPopoObj.isAlive) {
+            GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
+        } else if (!(GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.stage1TotalScore >= GameParams.stage1BreakScore) {
+            if(GameParams.colorMaskBreakStage.state == GameObj.State.step1)
+                FishGeneration(false);
+            if (GameParams.colorMaskBreakStage.Action((int) GameEntry.totalFrames))
+                NotifyStageCompleted();
         }
         super.Update();
     }
@@ -441,10 +440,12 @@ public class Stage1 extends DrawableGameComponent {
             mSubCanvas.drawBitmap(mTimerBarImage, mTimerBar.srcRect, mTimerBar.destRect, null);
         }
 
-        if ((isGameOver || !mPopoObj.isAlive) && mColorMask.isAlive)
+        if ((GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.colorMaskGameOver.isAlive)
         {
-            mSubCanvas.drawRect(mColorMask.destRect, mColorMask.paint);
-            mSubCanvas.drawText(mColorMask.text.message, mColorMask.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, mColorMask.text.paint);
+            mSubCanvas.drawRect(GameParams.colorMaskGameOver.destRect, GameParams.colorMaskGameOver.paint);
+            mSubCanvas.drawText(GameParams.colorMaskGameOver.text.message, GameParams.colorMaskGameOver.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, GameParams.colorMaskGameOver.text.paint);
+        } else if (!(GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.colorMaskBreakStage.isAlive) {
+            mSubCanvas.drawRect(GameParams.colorMaskBreakStage.destRect, GameParams.colorMaskBreakStage.paint);
         }
         super.Draw();
     }

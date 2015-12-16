@@ -3,15 +3,11 @@ package com.nosae.game.objects;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
 
 import com.nosae.game.popo.GameEntry;
 import com.nosae.game.popo.GameParams;
 import com.nosae.game.popo.R;
-
-import com.nosae.game.scene.Stage1;
-import com.nosae.game.scene.Stage2;
 
 import lbs.Game;
 
@@ -63,7 +59,7 @@ public class TimerBar extends GameObj {
     }
 
     public void action(int totalFrame) {
-        if (Stage1.isGameOver || Stage2.isGameOver)
+        if (GameParams.isGameOver)
             return;
         int gap;
         int frameGap = totalFrame - mStartFrame;

@@ -5,6 +5,8 @@ import android.os.Message;
 import android.view.View;
 
 import lbs.Game;
+
+import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.Music;
 import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;
@@ -29,6 +31,23 @@ public class GameEntry extends Game {
         DebugConfig.d("GameEntry Constructor");
         this.mMainActivity = mMainActivity;
         totalFrames = 0;
+        switch (mMainActivity.stage) {
+            case 1:
+                mStage1 = new Stage1(this);
+                break;
+            case 2:
+                mStage2 = new Stage2(this);
+                break;
+            case 3:
+                mStage3 = new Stage3(this);
+                break;
+            case 4:
+                mStage4 = new Stage4(this);
+                break;
+            case 5:
+                mStage5 = new Stage5(this);
+                break;
+        }
     }
 
     @Override
@@ -57,7 +76,12 @@ public class GameEntry extends Game {
             GameParams.Cosine[f] = (float) Math.cos(f * Math.PI / 180);
             GameParams.Sine[f] = (float) Math.sin(f * Math.PI / 180);
         }
+        GameParams.isGameOver = false;
 
+        GameParams.colorMaskGameOver = new ColorMask(Color.RED, 0);
+        GameParams.colorMaskGameOver.isAlive = false;
+        GameParams.colorMaskBreakStage = new ColorMask(Color.WHITE, 0, true);
+        GameParams.colorMaskBreakStage.isAlive = false;
         super.Initialize();
     }
 
@@ -76,47 +100,13 @@ public class GameEntry extends Game {
     @Override
     protected void Update() {
 //        DebugConfig.d("GameEntry Update()");
-        if ((Stage1.isGameOver
-                || Stage2.isGameOver
-                || Stage3.isGameOver
-                || Stage4.isGameOver
-                || Stage5.isGameOver)
+        if (GameParams.isGameOver
                 && (mMainActivity.mRestartButton.getVisibility() == View.INVISIBLE)) {
             Message m = new Message();
             m.what = 1;
             MainActivity.mMsgHandler.sendMessage(m);
             //TODO send one shot
         }
-
-        if (mStage1 != null && !GameParams.isClearStage1
-                && GameParams.stage1TotalScore >= GameParams.stage1BreakScore
-                && GameStateClass.currentState != GameStateClass.GameState.Stage2) {
-            GameParams.isClearStage1 = true;
-            GameStateClass.changeState(GameStateClass.GameState.Stage2, mStage1, this);
-        } else if (mStage2 != null && !GameParams.isClearStage2
-                && GameParams.stage2TotalScore >= GameParams.stage2BreakScore
-                && GameStateClass.currentState != GameStateClass.GameState.Stage3) {
-            GameParams.isClearStage2 = true;
-            GameStateClass.changeState(GameStateClass.GameState.Stage3, mStage2, this);
-        } else if (mStage3 != null && !GameParams.isClearStage3
-                && GameParams.stage3TotalScore >= GameParams.stage3BreakScore
-                && GameStateClass.currentState != GameStateClass.GameState.Stage4) {
-            GameParams.isClearStage3 = true;
-            GameStateClass.changeState(GameStateClass.GameState.Stage4, mStage3, this);
-        } else if (mStage4 != null && !GameParams.isClearStage4
-                && GameParams.stage4TotalScore >= GameParams.stage4BreakScore
-                && GameStateClass.currentState != GameStateClass.GameState.Stage5) {
-            GameParams.isClearStage4 = true;
-            GameStateClass.changeState(GameStateClass.GameState.Stage5, mStage4, this);
-        } else if (mStage5 != null && !GameParams.isClearStage5
-                && GameParams.stage5TotalScore >= GameParams.stage5BreakScore
-                && GameStateClass.currentState != GameStateClass.GameState.Stage5) {
-            // TODO break all stage...
-//            GameParams.isClearStage5 = true;
-        }
-//        if (isForceRestart)
-//            GameStateClass.changeState(GameStateClass.GameState.Stage1, mStage1, this);
-
 
         if (GameStateClass.currentState != GameStateClass.oldState || isForceRestart) {
             switch (GameStateClass.currentState) {
@@ -130,7 +120,8 @@ public class GameEntry extends Game {
                     break;
                 case Stage1:
                     DebugConfig.d("Start stage 1.");
-                    mStage1 = new Stage1(this);
+                    if (mStage1 == null)
+                        mStage1 = new Stage1(this);
                     Components.add(mStage1);
 
                     // TODO move this to somewhere before GameEntry Run()
@@ -144,27 +135,29 @@ public class GameEntry extends Game {
 
                 case Stage2:
                     DebugConfig.d("Start stage 2.");
-                    // TODO quit fish thread
-                    // TODO animation for stage switch
-                    mStage2 = new Stage2(this);
+                    if (mStage2 == null)
+                        mStage2 = new Stage2(this);
                     Components.add(mStage2);
                     break;
 
                 case Stage3:
                     DebugConfig.d("Start stage 3.");
-                    mStage3 = new Stage3(this);
+                    if (mStage3 == null)
+                        mStage3 = new Stage3(this);
                     Components.add(mStage3);
                     break;
 
                 case Stage4:
                     DebugConfig.d("Start stage 4.");
-                    mStage4 = new Stage4(this);
+                    if (mStage4 == null)
+                        mStage4 = new Stage4(this);
                     Components.add(mStage4);
                     break;
 
                 case Stage5:
                     DebugConfig.d("Start stage 5.");
-                    mStage5 = new Stage5(this);
+                    if (mStage5 == null)
+                        mStage5 = new Stage5(this);
                     Components.add(mStage5);
                     break;
             }
@@ -179,7 +172,8 @@ public class GameEntry extends Game {
     @Override
     protected void Draw() {
         canvas = MainActivity.mSurfaceView.getHolder().lockCanvas(null);
-        canvas.drawColor(Color.BLACK);
+        if (canvas != null)
+            canvas.drawColor(Color.BLACK);
         super.Draw();
     }
 }

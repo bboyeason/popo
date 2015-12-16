@@ -8,6 +8,7 @@ import android.media.SoundPool;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 
+import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.Music;
 import com.nosae.game.settings.DebugConfig;
 
@@ -68,7 +69,7 @@ public class GameParams {
     public static final int stage2BreakScore = 100;
     public static final int stage3BreakScore = 90;
     public static final int stage4BreakScore = 100;
-    public static final int stage5BreakScore = 100;
+    public static final int stage5BreakScore = 5;
 
     public static float[] Cosine = new float[360];
     public static float[] Sine = new float[360];
@@ -107,6 +108,9 @@ public class GameParams {
             { 10,  0 }, /* Timer add (seconds) */
             {  0,  1 } /* Life add */
     };
+    public static ColorMask colorMaskBreakStage;
+    public static ColorMask colorMaskGameOver;
+    public static boolean isGameOver = false;
 
     public static void setMusicVolume(float volume) {
         musicVolumeRatio = volume / 100.0f;
