@@ -79,11 +79,11 @@ public class Stage5 extends DrawableGameComponent {
             {
                     R.drawable.d_fish_03
             },
-            {  3 }, /* 1. Animation column */
-            {  2 }, /* 2. Animation row */
-            {  5 }, /* 3. Max index */
-            {  5 }, /* 4. Death animation start */
-            {  5 }, /* 5. Death animation end */
+            {  1 }, /* 1. Animation column */
+            {  1 }, /* 2. Animation row */
+            {  0 }, /* 3. Max index */
+            {  0 }, /* 4. Death animation start */
+            {  0 }, /* 5. Death animation end */
             {  0 }, /* 6. Touch Score */
             { -1 }, /* 7. Arrival Score */
             {  0 }, /* 8. Timer add */
@@ -93,7 +93,7 @@ public class Stage5 extends DrawableGameComponent {
 
     private int[][] mCakeTable = {
             {
-                    R.drawable.play
+                    R.drawable.shit
             },
             { 1 }, /* 1. Animation column */
             { 1 }, /* 2. Animation row */
