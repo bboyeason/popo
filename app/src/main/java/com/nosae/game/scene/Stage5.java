@@ -395,6 +395,8 @@ public class Stage5 extends DrawableGameComponent {
                         Life1.addLife(mSubObj.getLifeAdd());
                         mTimerBar.addTimer(mSubObj.getTimerAdd());
                         mSubObj.readyToDeath = true;
+                        if (mSubObj.getLifeAdd() < 0)
+                            GameParams.vibrator.vibrate(50);
                     }
                 }
             }

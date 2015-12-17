@@ -130,6 +130,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                             }
                         }
                         Life1.addLife(-1);
+                        GameParams.vibrator.vibrate(50);
                         DebugConfig.d("no Hit!!!");
                         break;
                 }
