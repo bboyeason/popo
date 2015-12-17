@@ -1,5 +1,6 @@
 package com.nosae.game.scene;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -301,6 +302,12 @@ public class Stage3 extends DrawableGameComponent {
         if (GameParams.isGameOver) {
             GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
         } else if (!GameParams.isGameOver && GameParams.stage3TotalScore >= GameParams.stage3BreakScore) {
+            if (GameParams.colorMaskBreakStage.state == GameObj.State.step1) {
+                SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(GameParams.STAGE3_COMPLETED, true);
+                editor.apply();
+            }
             if (GameParams.colorMaskBreakStage.Action((int) GameEntry.totalFrames))
                 NotifyStageCompleted();
         }

@@ -1,5 +1,6 @@
 package com.nosae.game.scene;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -364,8 +365,13 @@ public class Stage1 extends DrawableGameComponent {
         if (GameParams.isGameOver || !mPopoObj.isAlive) {
             GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
         } else if (!(GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.stage1TotalScore >= GameParams.stage1BreakScore) {
-            if(GameParams.colorMaskBreakStage.state == GameObj.State.step1)
+            if (GameParams.colorMaskBreakStage.state == GameObj.State.step1) {
                 FishGeneration(false);
+                SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(GameParams.STAGE1_COMPLETED, true);
+                editor.apply();
+            }
             if (GameParams.colorMaskBreakStage.Action((int) GameEntry.totalFrames))
                 NotifyStageCompleted();
         }

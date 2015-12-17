@@ -72,7 +72,14 @@ public class Menu extends Activity {
         mStage1Button.setSoundEffectsEnabled(false);
         mLoadButton.setSoundEffectsEnabled(false);
         mExitButton.setSoundEffectsEnabled(false);
-
+        mStage2Button.getBackground().setAlpha(128);
+        mStage3Button.getBackground().setAlpha(128);
+        mStage4Button.getBackground().setAlpha(128);
+        mStage5Button.getBackground().setAlpha(128);
+        mStage2Button.setEnabled(false);
+        mStage3Button.setEnabled(false);
+        mStage4Button.setEnabled(false);
+        mStage5Button.setEnabled(false);
         if (mMusic == null) {
 //            mMusic.player.release();
             mMusic = new Music(this, R.raw.menu, GameParams.musicVolumeRatio);
@@ -373,6 +380,23 @@ public class Menu extends Activity {
         if (mBouncer != null && !mBouncer.isRunning())
             mBouncer.start();
         // if API 19 or later, we can use mBouncer.resume()
+        SharedPreferences settings = getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
+        if (settings.getBoolean(GameParams.STAGE1_COMPLETED, false)) {
+            mStage2Button.getBackground().setAlpha(255);
+            mStage2Button.setEnabled(true);
+        }
+        if (settings.getBoolean(GameParams.STAGE2_COMPLETED, false)) {
+            mStage3Button.getBackground().setAlpha(255);
+            mStage3Button.setEnabled(true);
+        }
+        if (settings.getBoolean(GameParams.STAGE3_COMPLETED, false)) {
+            mStage3Button.getBackground().setAlpha(255);
+            mStage4Button.setEnabled(true);
+        }
+        if (settings.getBoolean(GameParams.STAGE4_COMPLETED, false)) {
+            mStage5Button.getBackground().setAlpha(255);
+            mStage5Button.setEnabled(true);
+        }
     }
 
     @Override

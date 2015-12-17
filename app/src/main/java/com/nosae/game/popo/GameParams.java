@@ -25,6 +25,13 @@ public class GameParams {
     public static final String PREFS_SOUND = "Sound";
     public static final String PREFS_SOUND_KEY = "isSoundOn";
     public static final String PREFS_SOUND_VOLUME_KEY = "SoundVolume";
+    public static final String STAGES_COMPLETED = "StageCompleted";
+    public static final String STAGE1_COMPLETED = "Stage1Completed";
+    public static final String STAGE2_COMPLETED = "Stage2Completed";
+    public static final String STAGE3_COMPLETED = "Stage3Completed";
+    public static final String STAGE4_COMPLETED = "Stage4Completed";
+    public static final String STAGE5_COMPLETED = "Stage5Completed";
+
     public static final String STAGE = "stage";
     public static final String THREADNAME1 = "Stage1_fish_generator";
     public static final String THREADNAME2 = "Stage2_fish_generator";
