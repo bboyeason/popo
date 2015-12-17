@@ -221,8 +221,8 @@ public class Stage3 extends DrawableGameComponent {
         if (mBackground == null) {
             mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.a_background, GameParams.scaleWidth, GameParams.scaleHeight);
             mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
-            mBackground.isAlive = true;
         }
+        mBackground.isAlive = true;
 
         if (mSceneTitle == null) {
             mSceneTitleImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
@@ -262,11 +262,11 @@ public class Stage3 extends DrawableGameComponent {
                 width = mTimerBarImage.getWidth();
                 height = mTimerBarImage.getHeight() / 9;
                 mTimerBar = new TimerBar2(mScore.edge_X_right + 5, mScore.getY() + (mLife1.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
-                mTimerBar.setStartFrame((int) GameEntry.totalFrames);
             }
         }
         if (mTimerBar != null) {
             mTimerBar.setTimer(GameParams.stage3RunningTime);
+            mTimerBar.setStartFrame((int) GameEntry.totalFrames);
         }
 
         CreateObj(mObjTable_1);
@@ -364,6 +364,8 @@ public class Stage3 extends DrawableGameComponent {
     @Override
     public void Dispose() {
         super.Dispose();
+        if (mObjCollections != null)
+            mObjCollections.clear();
         if (mHandlerThread != null) {
             DebugConfig.d("Quit thread: " + mHandlerThread.getThreadId());
             mHandlerThread.interrupt();

@@ -112,8 +112,6 @@ public class Stage1 extends DrawableGameComponent {
     public Stage1(GameEntry mGameEntry) {
         DebugConfig.d("Stage1 Constructor");
         this.mGameEntry = mGameEntry;
-        mFishCollections = new FishCollection();
-        mRandom = new Random();
         mOnStageCompleteListeners = new ArrayList<>();
     }
 
@@ -126,6 +124,8 @@ public class Stage1 extends DrawableGameComponent {
             mHandlerThread.start();
             DebugConfig.d("Create thread");
         }
+        mFishCollections = new FishCollection();
+        mRandom = new Random();
 
         GameParams.stage1TotalScore = 0;
         GameParams.isClearStage1 = false;
@@ -233,8 +233,8 @@ public class Stage1 extends DrawableGameComponent {
             // Load background image
             mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.a_background, GameParams.scaleWidth, GameParams.scaleHeight);
             mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
-            mBackground.isAlive = true;
         }
+        mBackground.isAlive = true;
         // Random fish generator
         FishGeneration(true);
 
@@ -253,10 +253,10 @@ public class Stage1 extends DrawableGameComponent {
             Popo.halfWidth = width >> 1;
             Popo.halfHeight = height >> 1;
             mPopoObj = new Popo(mPopoImage, GameParams.halfWidth - width/2, GameParams.scaleHeight - height, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
-            mPopoObj.setCol(4);
-            mPopoObj.setMaxIndex(20);
-            mPopoObj.isAlive = true;
         }
+        mPopoObj.setCol(4);
+        mPopoObj.setMaxIndex(20);
+        mPopoObj.isAlive = true;
 
         if (DebugConfig.isFpsDebugOn) {
             mFpsText = new Text(GameParams.halfWidth - 50, 100, 12, "FPS", Color.BLUE);
@@ -290,11 +290,11 @@ public class Stage1 extends DrawableGameComponent {
                 width = mTimerBarImage.getWidth();
                 height = mTimerBarImage.getHeight() / 9;
                 mTimerBar = new TimerBar2(mScore.edge_X_right + 5, mScore.getY() + (mLife1.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
-                mTimerBar.setStartFrame((int) GameEntry.totalFrames);
             }
         }
         if (mTimerBar != null) {
             mTimerBar.setTimer(GameParams.stage1RunningTime);
+            mTimerBar.setStartFrame((int) GameEntry.totalFrames);
         }
     }
 
@@ -455,6 +455,8 @@ public class Stage1 extends DrawableGameComponent {
         DebugConfig.d("Stage1 Dispose()");
         //TODO stage switch animation
         super.Dispose();
+        if (mFishCollections != null)
+            mFishCollections.clear();
         if (mHandlerThread != null) {
             DebugConfig.d("Quit thread: " + mHandlerThread.getThreadId());
             mHandlerThread.interrupt();
