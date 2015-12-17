@@ -42,8 +42,6 @@ public class Game {
 		{
 			gameLoop.interrupt();
 		}
-		for (f = Components.size() -1 ; f >= 0; f--)
-			Components.get(f).Dispose();
 	}
 	
 	class GameLoop implements Runnable
