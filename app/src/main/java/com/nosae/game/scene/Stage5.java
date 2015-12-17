@@ -492,6 +492,8 @@ public class Stage5 extends DrawableGameComponent {
         super.Dispose();
         if (mObjCollections != null)
             mObjCollections.clear();
+        if (mCakes != null)
+            mCakes.clear();
         if (mHandlerThread != null) {
             DebugConfig.d("Quit thread: " + mHandlerThread.getThreadId());
             mHandlerThread.interrupt();
