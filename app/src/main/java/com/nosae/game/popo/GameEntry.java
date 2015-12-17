@@ -120,8 +120,7 @@ public class GameEntry extends Game {
                     break;
                 case Stage1:
                     DebugConfig.d("Start stage 1.");
-                    if (mStage1 == null)
-                        mStage1 = new Stage1(this);
+                    mStage1 = new Stage1(this);
                     Components.add(mStage1);
 
                     // TODO move this to somewhere before GameEntry Run()
@@ -135,29 +134,25 @@ public class GameEntry extends Game {
 
                 case Stage2:
                     DebugConfig.d("Start stage 2.");
-                    if (mStage2 == null)
-                        mStage2 = new Stage2(this);
+                    mStage2 = new Stage2(this);
                     Components.add(mStage2);
                     break;
 
                 case Stage3:
                     DebugConfig.d("Start stage 3.");
-                    if (mStage3 == null)
-                        mStage3 = new Stage3(this);
+                    mStage3 = new Stage3(this);
                     Components.add(mStage3);
                     break;
 
                 case Stage4:
                     DebugConfig.d("Start stage 4.");
-                    if (mStage4 == null)
-                        mStage4 = new Stage4(this);
+                    mStage4 = new Stage4(this);
                     Components.add(mStage4);
                     break;
 
                 case Stage5:
                     DebugConfig.d("Start stage 5.");
-                    if (mStage5 == null)
-                        mStage5 = new Stage5(this);
+                    mStage5 = new Stage5(this);
                     Components.add(mStage5);
                     break;
             }
