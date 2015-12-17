@@ -31,7 +31,7 @@ public class FishCollection implements Collection<FishObj> {
 
     @Override
     public void clear() {
-
+        componse.clear();
     }
 
     @Override
