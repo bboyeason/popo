@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.media.SoundPool;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 
@@ -24,6 +26,11 @@ public class GameParams {
     public static final String PREFS_SOUND_KEY = "isSoundOn";
     public static final String PREFS_SOUND_VOLUME_KEY = "SoundVolume";
     public static final String STAGE = "stage";
+    public static final String THREADNAME1 = "Stage1_fish_generator";
+    public static final String THREADNAME2 = "Stage2_fish_generator";
+    public static final String THREADNAME3 = "Stage3_object_generator";
+    public static final String THREADNAME4 = "Stage4_object_generator";
+    public static final String THREADNAME5 = "Stage5_object_generator";
     public static Resources res = null;
 
     public static Rect screenRect;
@@ -111,6 +118,9 @@ public class GameParams {
     public static ColorMask colorMaskBreakStage;
     public static ColorMask colorMaskGameOver;
     public static boolean isGameOver = false;
+    public static Handler mHandler;
+    public static HandlerThread mHandlerThread;
+    public static boolean onOff = true;
 
     public static void setMusicVolume(float volume) {
         musicVolumeRatio = volume / 100.0f;

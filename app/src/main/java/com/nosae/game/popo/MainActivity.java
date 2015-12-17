@@ -29,7 +29,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
 
     public static SurfaceView mSurfaceView;
 
-
     ToggleButton mToggleButton;
     public Button mRestartButton;
 
@@ -219,30 +218,11 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
     protected void onStop() {
         DebugConfig.d("MainActivity onStop()");
 //            mToggleButton.setChecked(true);
-        if (Stage1.mHandler != null) {
-            Stage1.onOff = false;
-            Stage1.mHandler.removeMessages(Events.CREATE_FISH);
-            Stage1.mHandler.removeMessages(Events.CREATE_OBJECT);
-        }
-        if (Stage2.mHandler != null) {
-            Stage2.onOff = false;
-            Stage2.mHandler.removeMessages(Events.CREATE_FISH);
-            Stage2.mHandler.removeMessages(Events.CREATE_OBJECT);
-        }
-        if (Stage3.mHandler != null) {
-            Stage3.onOff = false;
-            Stage3.mHandler.removeMessages(Events.CREATE_OBJECT);
-        }
-        if (Stage4.mHandler != null) {
-            Stage4.onOff = false;
-            Stage4.mHandler.removeMessages(Events.CREATE_FISH);
-            Stage4.mHandler.removeMessages(Events.CREATE_OBJECT);
-        }
-        if (Stage5.mHandler != null) {
-            Stage5.onOff = false;
-            Stage5.mHandler.removeMessages(Events.CREATE_FISH);
-            Stage5.mHandler.removeMessages(Events.CREATE_OBJECT);
-            Stage5.mHandler.removeMessages(Events.CREATE_CAKE);
+        if (GameParams.mHandler != null) {
+            GameParams.onOff = false;
+            GameParams.mHandler.removeMessages(Events.CREATE_FISH);
+            GameParams.mHandler.removeMessages(Events.CREATE_OBJECT);
+            GameParams.mHandler.removeMessages(Events.CREATE_CAKE);
         }
         super.onStop();
     }
@@ -256,35 +236,11 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
 //            mHandlerThread.quit();
 //            mHandlerThread = null;
 //        }
-        if (Stage1.mHandlerThread != null) {
-            DebugConfig.d("mHandlerThread " + Stage1.mHandlerThread.getThreadId());
-            Stage1.mHandlerThread.interrupt();
-            Stage1.mHandlerThread.quit();
-            Stage1.mHandlerThread = null;
-        }
-        if (Stage2.mHandlerThread != null) {
-            DebugConfig.d("mHandlerThread " + Stage2.mHandlerThread.getThreadId());
-            Stage2.mHandlerThread.interrupt();
-            Stage2.mHandlerThread.quit();
-            Stage2.mHandlerThread = null;
-        }
-        if (Stage3.mHandlerThread != null) {
-            DebugConfig.d("mHandlerThread " + Stage3.mHandlerThread.getThreadId());
-            Stage3.mHandlerThread.interrupt();
-            Stage3.mHandlerThread.quit();
-            Stage3.mHandlerThread = null;
-        }
-        if (Stage4.mHandlerThread != null) {
-            DebugConfig.d("mHandlerThread " + Stage4.mHandlerThread.getThreadId());
-            Stage4.mHandlerThread.interrupt();
-            Stage4.mHandlerThread.quit();
-            Stage4.mHandlerThread = null;
-        }
-        if (Stage5.mHandlerThread != null) {
-            DebugConfig.d("mHandlerThread " + Stage5.mHandlerThread.getThreadId());
-            Stage5.mHandlerThread.interrupt();
-            Stage5.mHandlerThread.quit();
-            Stage5.mHandlerThread = null;
+        if (GameParams.mHandlerThread != null) {
+            DebugConfig.d("mHandlerThread " + GameParams.mHandlerThread.getThreadId());
+            GameParams.mHandlerThread.interrupt();
+            GameParams.mHandlerThread.quit();
+            GameParams.mHandlerThread = null;
         }
     }
 

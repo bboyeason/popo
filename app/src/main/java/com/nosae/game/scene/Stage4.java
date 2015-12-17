@@ -38,9 +38,6 @@ import lbs.DrawableGameComponent;
  * Created by eason on 2015/11/9.
  */
 public class Stage4 extends DrawableGameComponent {
-    public static Handler mHandler;
-    public static HandlerThread mHandlerThread;
-    public static final String THREADNAME = "Stage4_object_generator";
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
@@ -66,7 +63,6 @@ public class Stage4 extends DrawableGameComponent {
 
     private Popo mPopoObj;
 
-    public static boolean onOff;
     private Random mRandom;
 
     private NormalFish mSubObj;
@@ -188,14 +184,14 @@ public class Stage4 extends DrawableGameComponent {
 
         mObjCollections = new FishCollection();
 
-        if (mHandlerThread == null) {
-            mHandlerThread = new HandlerThread(THREADNAME,
+        if (GameParams.mHandlerThread == null) {
+            GameParams.mHandlerThread = new HandlerThread(GameParams.THREADNAME4,
                     android.os.Process.THREAD_PRIORITY_BACKGROUND);
-            mHandlerThread.start();
-            DebugConfig.d("Create thread: " + THREADNAME);
+            GameParams.mHandlerThread.start();
+            DebugConfig.d("Create thread: " + GameParams.THREADNAME4);
         }
 
-        mHandler = new Handler(mHandlerThread.getLooper()) {
+        GameParams.mHandler = new Handler(GameParams.mHandlerThread.getLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -205,10 +201,10 @@ public class Stage4 extends DrawableGameComponent {
                             return;
 
                         CreateObjects(mFishTable);
-                        if (onOff) {
+                        if (GameParams.onOff) {
                             Message m = new Message();
                             m.what = Events.CREATE_FISH;
-                            mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage4FishRebirthMax) + GameParams.stage4FishRebirthMin);
+                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage4FishRebirthMax) + GameParams.stage4FishRebirthMin);
                         }
                         break;
                     case Events.CREATE_OBJECT:
@@ -216,10 +212,10 @@ public class Stage4 extends DrawableGameComponent {
                             return;
 
                         CreateObjects(GameParams.specialObjectTable);
-                        if (onOff) {
+                        if (GameParams.onOff) {
                             Message m = new Message();
                             m.what = Events.CREATE_OBJECT;
-                            mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
+                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
                         }
                         break;
                 }
@@ -228,18 +224,18 @@ public class Stage4 extends DrawableGameComponent {
     }
 
     public static void ObjectGeneration(boolean produce) {
-        onOff = produce;
-        if (onOff) {
+        GameParams.onOff = produce;
+        if (GameParams.onOff) {
             Message msg = new Message();
             msg.what = Events.CREATE_FISH;
-            mHandler.sendMessageDelayed(msg, 150);
+            GameParams.mHandler.sendMessageDelayed(msg, 150);
 
             msg = new Message();
             msg.what = Events.CREATE_OBJECT;
-            mHandler.sendMessageDelayed(msg, 5000);
+            GameParams.mHandler.sendMessageDelayed(msg, 5000);
         } else {
-            mHandler.removeMessages(Events.CREATE_FISH);
-            mHandler.removeMessages(Events.CREATE_OBJECT);
+            GameParams.mHandler.removeMessages(Events.CREATE_FISH);
+            GameParams.mHandler.removeMessages(Events.CREATE_OBJECT);
         }
     }
 
@@ -434,11 +430,11 @@ public class Stage4 extends DrawableGameComponent {
         super.Dispose();
         if (mObjCollections != null)
             mObjCollections.clear();
-        if (mHandlerThread != null) {
-            DebugConfig.d("Quit thread: " + mHandlerThread.getThreadId());
-            mHandlerThread.interrupt();
-            mHandlerThread.quit();
-            mHandlerThread = null;
+        if (GameParams.mHandlerThread != null) {
+            DebugConfig.d("Quit thread: " + GameParams.mHandlerThread.getThreadId());
+            GameParams.mHandlerThread.interrupt();
+            GameParams.mHandlerThread.quit();
+            GameParams.mHandlerThread = null;
         }
     }
 }

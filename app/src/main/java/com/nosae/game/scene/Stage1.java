@@ -78,11 +78,6 @@ public class Stage1 extends DrawableGameComponent {
             {  0,  0,  0,  0,  0 } /* Life add */
     };
 
-    public static Handler mHandler;
-    public static HandlerThread mHandlerThread;
-
-    public static boolean onOff = true;
-
     private final List<OnStageCompleteListener> mOnStageCompleteListeners;
 
     public void registerOnStageCompleteListener(OnStageCompleteListener listener) {
@@ -118,11 +113,11 @@ public class Stage1 extends DrawableGameComponent {
     @Override
     protected void Initialize() {
         DebugConfig.d("Stage1 Initialize()");
-        if (mHandlerThread == null) {
-            mHandlerThread = new HandlerThread("Stage1_fish_generator",
+        if (GameParams.mHandlerThread == null) {
+            GameParams.mHandlerThread = new HandlerThread(GameParams.THREADNAME1,
                     android.os.Process.THREAD_PRIORITY_BACKGROUND);
-            mHandlerThread.start();
-            DebugConfig.d("Create thread");
+            GameParams.mHandlerThread.start();
+            DebugConfig.d("Create thread: " + GameParams.THREADNAME1);
         }
         mFishCollections = new FishCollection();
         mRandom = new Random();
@@ -130,7 +125,7 @@ public class Stage1 extends DrawableGameComponent {
         GameParams.stage1TotalScore = 0;
         GameParams.isClearStage1 = false;
 
-        mHandler = new Handler(mHandlerThread.getLooper()){
+        GameParams.mHandler = new Handler(GameParams.mHandlerThread.getLooper()){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -140,12 +135,12 @@ public class Stage1 extends DrawableGameComponent {
                             return;
                         createFish(mFishTable1);
 
-                        if (onOff) {
+                        if (GameParams.onOff) {
                             Message m = new Message();
                             m.what = Events.CREATE_FISH;
                             // TODO msg.obj = something;
                             //if (msg.obj != null) {
-                            mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage1FishRebirthMax) + GameParams.stage1FishRebirthMin);
+                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage1FishRebirthMax) + GameParams.stage1FishRebirthMin);
                             //}
                         }
                         break;
@@ -154,10 +149,10 @@ public class Stage1 extends DrawableGameComponent {
                             return;
 
                         createFish(GameParams.specialObjectTable);
-                        if (onOff) {
+                        if (GameParams.onOff) {
                             Message m = new Message();
                             m.what = Events.CREATE_OBJECT;
-                            mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
+                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
                         }
                         break;
                     case Events.CREATE_CAKE:
@@ -172,18 +167,18 @@ public class Stage1 extends DrawableGameComponent {
     }
 
     public static void FishGeneration(boolean produce) {
-        onOff = produce;
-        if (onOff) {
+        GameParams.onOff = produce;
+        if (GameParams.onOff) {
             Message msg = new Message();
             msg.what = Events.CREATE_FISH;
-            mHandler.sendMessageDelayed(msg, 150);
+            GameParams.mHandler.sendMessageDelayed(msg, 150);
 
             msg = new Message();
             msg.what = Events.CREATE_OBJECT;
-            mHandler.sendMessageDelayed(msg, 5000);
+            GameParams.mHandler.sendMessageDelayed(msg, 5000);
         } else {
-            mHandler.removeMessages(Events.CREATE_FISH);
-            mHandler.removeMessages(Events.CREATE_OBJECT);
+            GameParams.mHandler.removeMessages(Events.CREATE_FISH);
+            GameParams.mHandler.removeMessages(Events.CREATE_OBJECT);
         }
     }
 
@@ -457,11 +452,11 @@ public class Stage1 extends DrawableGameComponent {
         super.Dispose();
         if (mFishCollections != null)
             mFishCollections.clear();
-        if (mHandlerThread != null) {
-            DebugConfig.d("Quit thread: " + mHandlerThread.getThreadId());
-            mHandlerThread.interrupt();
-            mHandlerThread.quit();
-            mHandlerThread = null;
+        if (GameParams.mHandlerThread != null) {
+            DebugConfig.d("Quit thread: " + GameParams.mHandlerThread.getThreadId());
+            GameParams.mHandlerThread.interrupt();
+            GameParams.mHandlerThread.quit();
+            GameParams.mHandlerThread = null;
         }
     }
 }

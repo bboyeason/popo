@@ -39,9 +39,6 @@ import lbs.DrawableGameComponent;
  * Created by eason on 2015/11/9.
  */
 public class Stage5 extends DrawableGameComponent {
-    public static Handler mHandler;
-    public static HandlerThread mHandlerThread;
-    public static final String THREADNAME = "Stage5_object_generator";
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
@@ -67,7 +64,6 @@ public class Stage5 extends DrawableGameComponent {
 
     private Popo mPopoObj;
 
-    public static boolean onOff;
     private Random mRandom;
 
     private NormalFish mSubObj;
@@ -218,14 +214,14 @@ public class Stage5 extends DrawableGameComponent {
 
         mObjCollections = new FishCollection();
 
-        if (mHandlerThread == null) {
-            mHandlerThread = new HandlerThread(THREADNAME,
+        if (GameParams.mHandlerThread == null) {
+            GameParams.mHandlerThread = new HandlerThread(GameParams.THREADNAME5,
                     android.os.Process.THREAD_PRIORITY_BACKGROUND);
-            mHandlerThread.start();
-            DebugConfig.d("Create thread: " + THREADNAME);
+            GameParams.mHandlerThread.start();
+            DebugConfig.d("Create thread: " + GameParams.THREADNAME5);
         }
 
-        mHandler = new Handler(mHandlerThread.getLooper()) {
+        GameParams.mHandler = new Handler(GameParams.mHandlerThread.getLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -235,10 +231,10 @@ public class Stage5 extends DrawableGameComponent {
                             return;
 
                         CreateObjects(mFishTable);
-                        if (onOff) {
+                        if (GameParams.onOff) {
                             Message m = new Message();
                             m.what = Events.CREATE_FISH;
-                            mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage5FishRebirthMax) + GameParams.stage5FishRebirthMin);
+                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage5FishRebirthMax) + GameParams.stage5FishRebirthMin);
                         }
                         break;
                     case Events.CREATE_OBJECT:
@@ -246,10 +242,10 @@ public class Stage5 extends DrawableGameComponent {
                             return;
 
                         CreateObjects(GameParams.specialObjectTable);
-                        if (onOff) {
+                        if (GameParams.onOff) {
                             Message m = new Message();
                             m.what = Events.CREATE_OBJECT;
-                            mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
+                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
                         }
                         break;
                     case Events.CREATE_CAKE:
@@ -257,10 +253,10 @@ public class Stage5 extends DrawableGameComponent {
                             return;
 
                         CreateObjects(mCakeTable);
-                        if (onOff) {
+                        if (GameParams.onOff) {
                             Message m = new Message();
                             m.what = Events.CREATE_CAKE;
-                            mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage5CakeRebirthMax) + GameParams.stage5CakeRebirthMin);
+                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage5CakeRebirthMax) + GameParams.stage5CakeRebirthMin);
                         }
                         break;
                 }
@@ -269,23 +265,23 @@ public class Stage5 extends DrawableGameComponent {
     }
 
     public static void ObjectGeneration(boolean produce) {
-        onOff = produce;
-        if (onOff) {
+        GameParams.onOff = produce;
+        if (GameParams.onOff) {
             Message msg = new Message();
             msg.what = Events.CREATE_FISH;
-            mHandler.sendMessageDelayed(msg, 150);
+            GameParams.mHandler.sendMessageDelayed(msg, 150);
 
             msg = new Message();
             msg.what = Events.CREATE_OBJECT;
-            mHandler.sendMessageDelayed(msg, 5000);
+            GameParams.mHandler.sendMessageDelayed(msg, 5000);
 
             msg = new Message();
             msg.what = Events.CREATE_CAKE;
-            mHandler.sendMessageDelayed(msg, GameParams.stage5CakeRebirthMin);
+            GameParams.mHandler.sendMessageDelayed(msg, GameParams.stage5CakeRebirthMin);
         } else {
-            mHandler.removeMessages(Events.CREATE_FISH);
-            mHandler.removeMessages(Events.CREATE_OBJECT);
-            mHandler.removeMessages(Events.CREATE_CAKE);
+            GameParams.mHandler.removeMessages(Events.CREATE_FISH);
+            GameParams.mHandler.removeMessages(Events.CREATE_OBJECT);
+            GameParams.mHandler.removeMessages(Events.CREATE_CAKE);
         }
     }
 
@@ -496,11 +492,11 @@ public class Stage5 extends DrawableGameComponent {
             mObjCollections.clear();
         if (mCakes != null)
             mCakes.clear();
-        if (mHandlerThread != null) {
-            DebugConfig.d("Quit thread: " + mHandlerThread.getThreadId());
-            mHandlerThread.interrupt();
-            mHandlerThread.quit();
-            mHandlerThread = null;
+        if (GameParams.mHandlerThread != null) {
+            DebugConfig.d("Quit thread: " + GameParams.mHandlerThread.getThreadId());
+            GameParams.mHandlerThread.interrupt();
+            GameParams.mHandlerThread.quit();
+            GameParams.mHandlerThread = null;
         }
     }
 }

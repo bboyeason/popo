@@ -34,10 +34,6 @@ import lbs.DrawableGameComponent;
  */
 public class Stage3 extends DrawableGameComponent {
 
-    public static Handler mHandler;
-    public static HandlerThread mHandlerThread;
-    public static final String THREADNAME = "Stage3_object_generator";
-
     private final GameEntry mGameEntry;
 
     private GameObj mBackground;
@@ -57,7 +53,6 @@ public class Stage3 extends DrawableGameComponent {
     private Bitmap mLifeImage;
     private Life1 mLife1;
 
-    public static boolean onOff;
     private Random mRandom;
 
     private NormalFish mObj;
@@ -175,14 +170,14 @@ public class Stage3 extends DrawableGameComponent {
         mObjCollections = new FishCollection();
         GameParams.isClearStage3 = false;
 
-        if (mHandlerThread == null) {
-            mHandlerThread = new HandlerThread(THREADNAME,
+        if (GameParams.mHandlerThread == null) {
+            GameParams.mHandlerThread = new HandlerThread(GameParams.THREADNAME3,
                     android.os.Process.THREAD_PRIORITY_BACKGROUND);
-            mHandlerThread.start();
-            DebugConfig.d("Create thread: " + THREADNAME);
+            GameParams.mHandlerThread.start();
+            DebugConfig.d("Create thread: " + GameParams.THREADNAME3);
         }
 
-        mHandler = new Handler(mHandlerThread.getLooper()) {
+        GameParams.mHandler = new Handler(GameParams.mHandlerThread.getLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -192,10 +187,10 @@ public class Stage3 extends DrawableGameComponent {
                             return;
 
                         CreateSpecialObjects(GameParams.specialObjectTable);
-                        if (onOff) {
+                        if (GameParams.onOff) {
                             Message m = new Message();
                             m.what = Events.CREATE_OBJECT;
-                            mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
+                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
                         }
                         break;
                 }
@@ -203,13 +198,13 @@ public class Stage3 extends DrawableGameComponent {
         };
     }
     public static void ObjectGeneration(boolean produce) {
-        onOff = produce;
-        if (onOff) {
+        GameParams.onOff = produce;
+        if (GameParams.onOff) {
             Message msg = new Message();
             msg.what = Events.CREATE_OBJECT;
-            mHandler.sendMessageDelayed(msg, 5000);
+            GameParams.mHandler.sendMessageDelayed(msg, 5000);
         } else {
-            mHandler.removeMessages(Events.CREATE_OBJECT);
+            GameParams.mHandler.removeMessages(Events.CREATE_OBJECT);
         }
     }
     @Override
@@ -366,11 +361,11 @@ public class Stage3 extends DrawableGameComponent {
         super.Dispose();
         if (mObjCollections != null)
             mObjCollections.clear();
-        if (mHandlerThread != null) {
-            DebugConfig.d("Quit thread: " + mHandlerThread.getThreadId());
-            mHandlerThread.interrupt();
-            mHandlerThread.quit();
-            mHandlerThread = null;
+        if (GameParams.mHandlerThread != null) {
+            DebugConfig.d("Quit thread: " + GameParams.mHandlerThread.getThreadId());
+            GameParams.mHandlerThread.interrupt();
+            GameParams.mHandlerThread.quit();
+            GameParams.mHandlerThread = null;
         }
     }
 }
