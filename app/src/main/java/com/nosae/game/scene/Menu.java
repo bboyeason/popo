@@ -131,6 +131,11 @@ public class Menu extends Activity {
         mStage1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mStage1Button.setEnabled(false);
+                mStage2Button.setEnabled(false);
+                mStage3Button.setEnabled(false);
+                mStage4Button.setEnabled(false);
+                mStage5Button.setEnabled(false);
                 Music.playSound();
                 Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStage1Button.getWidth() / 2, mStage1Button.getHeight() / 2);
                 amScale.setDuration(100);
@@ -155,6 +160,11 @@ public class Menu extends Activity {
         mStage2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mStage1Button.setEnabled(false);
+                mStage2Button.setEnabled(false);
+                mStage3Button.setEnabled(false);
+                mStage4Button.setEnabled(false);
+                mStage5Button.setEnabled(false);
                 Music.playSound();
                 Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStage2Button.getWidth() / 2, mStage2Button.getHeight() / 2);
                 amScale.setDuration(100);
@@ -182,6 +192,11 @@ public class Menu extends Activity {
         mStage3Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mStage1Button.setEnabled(false);
+                mStage2Button.setEnabled(false);
+                mStage3Button.setEnabled(false);
+                mStage4Button.setEnabled(false);
+                mStage5Button.setEnabled(false);
                 Music.playSound();
                 Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStage3Button.getWidth() / 2, mStage3Button.getHeight() / 2);
                 amScale.setDuration(100);
@@ -206,6 +221,11 @@ public class Menu extends Activity {
         mStage4Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mStage1Button.setEnabled(false);
+                mStage2Button.setEnabled(false);
+                mStage3Button.setEnabled(false);
+                mStage4Button.setEnabled(false);
+                mStage5Button.setEnabled(false);
                 Music.playSound();
                 Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStage4Button.getWidth() / 2, mStage4Button.getHeight() / 2);
                 amScale.setDuration(100);
@@ -230,6 +250,11 @@ public class Menu extends Activity {
         mStage5Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mStage1Button.setEnabled(false);
+                mStage2Button.setEnabled(false);
+                mStage3Button.setEnabled(false);
+                mStage4Button.setEnabled(false);
+                mStage5Button.setEnabled(false);
                 Music.playSound();
                 Animation amScale = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, mStage5Button.getWidth() / 2, mStage5Button.getHeight() / 2);
                 amScale.setDuration(100);
@@ -380,6 +405,7 @@ public class Menu extends Activity {
         if (mBouncer != null && !mBouncer.isRunning())
             mBouncer.start();
         // if API 19 or later, we can use mBouncer.resume()
+        mStage1Button.setEnabled(true);
         SharedPreferences settings = getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
         if (settings.getBoolean(GameParams.STAGE1_COMPLETED, false)) {
             mStage2Button.getBackground().setAlpha(255);
