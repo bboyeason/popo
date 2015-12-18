@@ -21,50 +21,54 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
+import java.lang.ref.WeakReference;
+
 import lbs.DrawableGameComponent;
 
 
 public class MainActivity extends Activity implements DrawableGameComponent.OnStageCompleteListener{
-//    private static Handler mHandler;
-    protected static Handler mMsgHandler;
-//    private static HandlerThread mHandlerThread;
 
+    protected static Handler mMsgHandler;
     public static SurfaceView mSurfaceView;
 
-    ToggleButton mToggleButton;
+    public ToggleButton mToggleButton;
     public Button mRestartButton;
 
     public GameEntry mGameEntry;
     protected int stage;
 
-/*    static class MsgHandler extends Handler {
+    static class MsgHandler extends Handler {
         private WeakReference<Activity> mActivity;
         MsgHandler(Activity activity) {
-            mActivity = new WeakReference<Activity>(activity);
+            mActivity = new WeakReference<>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
             Activity activity = mActivity.get();
             if (activity != null) {
-                activity.handleMessage(msg);
+                ((MainActivity)activity).handleMessage(msg);
             }
         }
+    }
 
-    }*/
+    private void handleMessage(Message msg) {
+        DebugConfig.d("Handle message: " + msg.what);
+        switch (msg.what) {
+            case 1:
+                mRestartButton.setVisibility(View.VISIBLE);
+                mToggleButton.setVisibility(View.INVISIBLE);
+                break;
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        mHandler = new Handler();
-//        if (mHandlerThread == null) {
-//            mHandlerThread = new HandlerThread("sdfasdfasd",
-//                    android.os.Process.THREAD_PRIORITY_BACKGROUND);
-//            mHandlerThread.start();
-//            DebugConfig.d("Create message handler thread.");
-//        }
+        mMsgHandler = new MsgHandler(this);
         Initialize();
         mSurfaceView = (SurfaceView) findViewById(R.id.surfaceViewTest);
 
@@ -73,9 +77,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
             @Override
             public void onClick(View v) {
                 Music.playSound();
-//                mGameEntry.isForceRestart = true;
-//                mGameEntry.Exit();
-//                mGameEntry.Run();
                 if (GameStateClass.currentState == GameStateClass.GameState.Stage1) {
                     GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage1, mGameEntry);
@@ -180,7 +181,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
             }
         });
 //        mSurfaceView = new GameSurfaceView(this);
-
     }
 
     @Override
@@ -220,18 +220,12 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
             mGameEntry.mStage4.unregisterOnStageCompleteListener(this);
         if (mGameEntry.mStage5 != null)
             mGameEntry.mStage5.unregisterOnStageCompleteListener(this);
-//        if (mGameEntry != null)
-//        {
-//            mGameEntry.Exit();
-//        }
-
         super.onPause();
     }
 
     @Override
     protected void onStop() {
         DebugConfig.d("MainActivity onStop()");
-//            mToggleButton.setChecked(true);
         if (GameParams.mHandler != null) {
             GameParams.onOff = false;
             GameParams.mHandler.removeMessages(Events.CREATE_FISH);
@@ -245,11 +239,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
     protected void onDestroy() {
         DebugConfig.d("MainActivity onDestroy()");
         super.onDestroy();
-//        if (mHandlerThread != null) {
-//            mHandlerThread.interrupt();
-//            mHandlerThread.quit();
-//            mHandlerThread = null;
-//        }
         if (GameParams.mHandlerThread != null) {
             DebugConfig.d("mHandlerThread " + GameParams.mHandlerThread.getThreadId());
             GameParams.mHandlerThread.interrupt();
@@ -289,21 +278,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
                 GameStateClass.currentState = GameStateClass.GameState.Stage5;
                 break;
         }
-
-//        Looper looper = mHandlerThread.getLooper();
-        mMsgHandler = new Handler(getMainLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                DebugConfig.d("Handle message: " + msg.what);
-                switch (msg.what){
-                    case 1:
-                        mRestartButton.setVisibility(View.VISIBLE);
-                        mToggleButton.setVisibility(View.INVISIBLE);
-                        break;
-                }
-            }
-        };
     }
 
     @Override
