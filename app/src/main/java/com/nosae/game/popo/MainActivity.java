@@ -128,6 +128,7 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
                     GameStateClass.changeState(GameStateClass.GameState.Stage5, null, mGameEntry);
                 }
                 mRestartButton.setVisibility(View.INVISIBLE);
+                mToggleButton.setVisibility(View.VISIBLE);
             }
 
         });
@@ -192,7 +193,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
     protected void onResume() {
         DebugConfig.d("MainActivity onResume()");
         super.onResume();
-//        mToggleButton.setChecked(false);
         if (mGameEntry.mStage1 != null)
             mGameEntry.mStage1.registerOnStageCompleteListener(this);
         if (mGameEntry.mStage2 != null)
@@ -299,6 +299,7 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
                 switch (msg.what){
                     case 1:
                         mRestartButton.setVisibility(View.VISIBLE);
+                        mToggleButton.setVisibility(View.INVISIBLE);
                         break;
                 }
             }
