@@ -14,6 +14,8 @@ import android.os.*;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
@@ -137,6 +139,11 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mToggleButton.setPivotX(mToggleButton.getWidth() >> 1);
+                mToggleButton.setPivotY(mToggleButton.getHeight() >> 1);
+                Animation amScale = new ScaleAnimation(1.0f, 0.7f, 1.0f, 0.7f, mToggleButton.getWidth() / 2, mToggleButton.getHeight() / 2);
+                amScale.setDuration(100);
+                mToggleButton.startAnimation(amScale);
                 mToggleButton.setEnabled(false);
                 new Handler().postDelayed(new Runnable() {
                     @Override
