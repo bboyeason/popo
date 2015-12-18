@@ -303,7 +303,7 @@ public class Stage1 extends DrawableGameComponent {
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (NormalFish) mFishCollections.get(f);
             mSubFishObj.Animation();
-            if (GameParams.stage1TotalScore < GameParams.stage1BreakScore) {
+            if (!GameParams.colorMaskBreakStage.isAlive) {
                 if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mPopoObj.srcHeight)) {
 //                DebugConfig.d("Arrive screen bottom, remove it.");
                     if (!GameParams.isGameOver) {

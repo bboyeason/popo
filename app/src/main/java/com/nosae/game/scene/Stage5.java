@@ -364,9 +364,11 @@ public class Stage5 extends DrawableGameComponent {
         for (f = mObjCollections.size() -1 ; f >= 0; f--) {
             mSubObj = (NormalFish) mObjCollections.get(f);
             mSubObj.Animation();
-            if (mSubObj.smartMoveDown(GameParams.screenRect.height())) {
-                mObjCollections.remove(mSubObj);
-                mSubObj.recycle();
+            if (!GameParams.colorMaskBreakStage.isAlive) {
+                if (mSubObj.smartMoveDown(GameParams.screenRect.height())) {
+                    mObjCollections.remove(mSubObj);
+                    mSubObj.recycle();
+                }
             }
 
             if (mSubObj.isStackable) {

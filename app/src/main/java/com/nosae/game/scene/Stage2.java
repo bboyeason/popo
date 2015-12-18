@@ -366,7 +366,7 @@ public class Stage2 extends DrawableGameComponent {
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (Stage2_fish) mFishCollections.get(f);
             mSubFishObj.Animation();
-            if (GameParams.stage2TotalScore < GameParams.stage2BreakScore) {
+            if (!GameParams.colorMaskBreakStage.isAlive) {
                 if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mPopoObj.srcHeight)) {
                     mFishCollections.remove(mSubFishObj);
                 }
