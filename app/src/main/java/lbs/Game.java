@@ -97,14 +97,16 @@ public class Game {
 	}
 	
 	protected void Update() {
-		for (f = Components.size() -1 ; f >= 0; f--)
-			Components.get(f).Update();
+		synchronized (Components) {
+			for (f = Components.size() - 1; f >= 0; f--)
+				Components.get(f).Update();
+		}
 	}
-	
 	protected void Draw() {
-		for (f = Components.size() -1 ; f >= 0; f--)
-			Components.get(f).Draw();
-		
+		synchronized (Components) {
+			for (f = Components.size() - 1; f >= 0; f--)
+				Components.get(f).Draw();
+		}
 		MainActivity.mSurfaceView.getHolder().unlockCanvasAndPost(canvas);
 //		GV.surface.mHolder.unlockCanvasAndPost(canvas);
 		

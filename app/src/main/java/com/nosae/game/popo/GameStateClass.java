@@ -29,8 +29,9 @@ public class GameStateClass {
                 GameParams.music.Stop();
                 GameParams.music = null;
             }
-            game.Components.remove(nowGameClass);
-
+            synchronized (game.Components) {
+                game.Components.remove(nowGameClass);
+            }
             nowGameClass.Dispose();
         }
         currentState = newState;
