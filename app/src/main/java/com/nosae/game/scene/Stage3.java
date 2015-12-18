@@ -293,6 +293,7 @@ public class Stage3 extends DrawableGameComponent {
             GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
         } else if (!GameParams.isGameOver && GameParams.stage3TotalScore >= GameParams.stage3BreakScore) {
             if (GameParams.colorMaskBreakStage.state == GameObj.State.step1) {
+                ObjectGeneration(false);
                 SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean(GameParams.STAGE3_COMPLETED, true);
