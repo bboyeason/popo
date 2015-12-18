@@ -134,6 +134,7 @@ public class Stage5 extends DrawableGameComponent {
         DebugConfig.d("Stage5 Constructor");
         this.mGameEntry = gameEntry;
         mOnStageCompleteListeners = new ArrayList<>();
+        GameParams.msgHandler = new MsgHandler(this);
     }
 
     private void CreateObjects(int[][] objectTable) {
@@ -202,6 +203,46 @@ public class Stage5 extends DrawableGameComponent {
     };
 
     @Override
+    public void handleMessage(Message msg) {
+        super.handleMessage(msg);
+        switch (msg.what) {
+            case Events.CREATE_FISH:
+                if (GameParams.isGameOver || GameParams.isClearStage5)
+                    return;
+
+                CreateObjects(mFishTable);
+                if (GameParams.onOff) {
+                    Message m = new Message();
+                    m.what = Events.CREATE_FISH;
+                    GameParams.msgHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage5FishRebirthMax) + GameParams.stage5FishRebirthMin);
+                }
+                break;
+            case Events.CREATE_OBJECT:
+                if (GameParams.isGameOver || GameParams.isClearStage5)
+                    return;
+
+                CreateObjects(GameParams.specialObjectTable);
+                if (GameParams.onOff) {
+                    Message m = new Message();
+                    m.what = Events.CREATE_OBJECT;
+                    GameParams.msgHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
+                }
+                break;
+            case Events.CREATE_CAKE:
+                if (GameParams.isGameOver || GameParams.isClearStage5)
+                    return;
+
+                CreateObjects(mCakeTable);
+                if (GameParams.onOff) {
+                    Message m = new Message();
+                    m.what = Events.CREATE_CAKE;
+                    GameParams.msgHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage5CakeRebirthMax) + GameParams.stage5CakeRebirthMin);
+                }
+                break;
+        }
+    }
+
+    @Override
     protected void Initialize() {
         super.Initialize();
         DebugConfig.d("Stage5 Initialize()");
@@ -214,55 +255,6 @@ public class Stage5 extends DrawableGameComponent {
         mRandom = new Random();
 
         mObjCollections = new FishCollection();
-
-        if (GameParams.mHandlerThread == null) {
-            GameParams.mHandlerThread = new HandlerThread(GameParams.THREADNAME5,
-                    android.os.Process.THREAD_PRIORITY_BACKGROUND);
-            GameParams.mHandlerThread.start();
-            DebugConfig.d("Create thread: " + GameParams.THREADNAME5);
-        }
-
-        GameParams.mHandler = new Handler(GameParams.mHandlerThread.getLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what) {
-                    case Events.CREATE_FISH:
-                        if (GameParams.isGameOver || GameParams.isClearStage5)
-                            return;
-
-                        CreateObjects(mFishTable);
-                        if (GameParams.onOff) {
-                            Message m = new Message();
-                            m.what = Events.CREATE_FISH;
-                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage5FishRebirthMax) + GameParams.stage5FishRebirthMin);
-                        }
-                        break;
-                    case Events.CREATE_OBJECT:
-                        if (GameParams.isGameOver || GameParams.isClearStage5)
-                            return;
-
-                        CreateObjects(GameParams.specialObjectTable);
-                        if (GameParams.onOff) {
-                            Message m = new Message();
-                            m.what = Events.CREATE_OBJECT;
-                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
-                        }
-                        break;
-                    case Events.CREATE_CAKE:
-                        if (GameParams.isGameOver || GameParams.isClearStage5)
-                            return;
-
-                        CreateObjects(mCakeTable);
-                        if (GameParams.onOff) {
-                            Message m = new Message();
-                            m.what = Events.CREATE_CAKE;
-                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage5CakeRebirthMax) + GameParams.stage5CakeRebirthMin);
-                        }
-                        break;
-                }
-            }
-        };
     }
 
     public static void ObjectGeneration(boolean produce) {
@@ -270,19 +262,19 @@ public class Stage5 extends DrawableGameComponent {
         if (GameParams.onOff) {
             Message msg = new Message();
             msg.what = Events.CREATE_FISH;
-            GameParams.mHandler.sendMessageDelayed(msg, 150);
+            GameParams.msgHandler.sendMessageDelayed(msg, 150);
 
             msg = new Message();
             msg.what = Events.CREATE_OBJECT;
-            GameParams.mHandler.sendMessageDelayed(msg, 5000);
+            GameParams.msgHandler.sendMessageDelayed(msg, 5000);
 
             msg = new Message();
             msg.what = Events.CREATE_CAKE;
-            GameParams.mHandler.sendMessageDelayed(msg, GameParams.stage5CakeRebirthMin);
+            GameParams.msgHandler.sendMessageDelayed(msg, GameParams.stage5CakeRebirthMin);
         } else {
-            GameParams.mHandler.removeMessages(Events.CREATE_FISH);
-            GameParams.mHandler.removeMessages(Events.CREATE_OBJECT);
-            GameParams.mHandler.removeMessages(Events.CREATE_CAKE);
+            GameParams.msgHandler.removeMessages(Events.CREATE_FISH);
+            GameParams.msgHandler.removeMessages(Events.CREATE_OBJECT);
+            GameParams.msgHandler.removeMessages(Events.CREATE_CAKE);
         }
     }
 
@@ -498,11 +490,5 @@ public class Stage5 extends DrawableGameComponent {
             mObjCollections.clear();
         if (mCakes != null)
             mCakes.clear();
-        if (GameParams.mHandlerThread != null) {
-            DebugConfig.d("Quit thread: " + GameParams.mHandlerThread.getThreadId());
-            GameParams.mHandlerThread.interrupt();
-            GameParams.mHandlerThread.quit();
-            GameParams.mHandlerThread = null;
-        }
     }
 }

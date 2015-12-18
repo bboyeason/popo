@@ -226,11 +226,11 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
     @Override
     protected void onStop() {
         DebugConfig.d("MainActivity onStop()");
-        if (GameParams.mHandler != null) {
+        if (GameParams.msgHandler != null) {
             GameParams.onOff = false;
-            GameParams.mHandler.removeMessages(Events.CREATE_FISH);
-            GameParams.mHandler.removeMessages(Events.CREATE_OBJECT);
-            GameParams.mHandler.removeMessages(Events.CREATE_CAKE);
+            GameParams.msgHandler.removeMessages(Events.CREATE_FISH);
+            GameParams.msgHandler.removeMessages(Events.CREATE_OBJECT);
+            GameParams.msgHandler.removeMessages(Events.CREATE_CAKE);
         }
         super.onStop();
     }
@@ -239,12 +239,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
     protected void onDestroy() {
         DebugConfig.d("MainActivity onDestroy()");
         super.onDestroy();
-        if (GameParams.mHandlerThread != null) {
-            DebugConfig.d("mHandlerThread " + GameParams.mHandlerThread.getThreadId());
-            GameParams.mHandlerThread.interrupt();
-            GameParams.mHandlerThread.quit();
-            GameParams.mHandlerThread = null;
-        }
     }
 
     private void Initialize() {

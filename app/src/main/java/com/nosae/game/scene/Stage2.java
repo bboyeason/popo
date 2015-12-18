@@ -143,6 +143,36 @@ public class Stage2 extends DrawableGameComponent {
         DebugConfig.d("Stage2 Constructor");
         this.mGameEntry = gameEntry;
         mOnStageCompleteListeners = new ArrayList<>();
+        GameParams.msgHandler = new MsgHandler(this);
+    }
+
+    @Override
+    public void handleMessage(Message msg) {
+        super.handleMessage(msg);
+        switch (msg.what) {
+            case Events.CREATE_FISH:
+                if (GameParams.isGameOver || GameParams.isClearStage2)
+                    return;
+                stage2CreateFish(mFishTable_1, mFishTableColor, mFishTableSyllable);
+
+                if (GameParams.onOff) {
+                    Message m = new Message();
+                    m.what = Events.CREATE_FISH;
+                    GameParams.msgHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage2FishRebirthMax) + GameParams.stage2FishRebirthMin);
+                }
+                break;
+            case Events.CREATE_OBJECT:
+                if (GameParams.isGameOver || GameParams.isClearStage2)
+                    return;
+
+                CreateSpecialObjects(GameParams.specialObjectTable);
+                if (GameParams.onOff) {
+                    Message m = new Message();
+                    m.what = Events.CREATE_OBJECT;
+                    GameParams.msgHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
+                }
+                break;
+        }
     }
 
     @Override
@@ -158,47 +188,6 @@ public class Stage2 extends DrawableGameComponent {
 
         GameParams.stage2TotalScore = 0;
         GameParams.isClearStage2 = false;
-
-        if (GameParams.mHandlerThread == null) {
-            GameParams.mHandlerThread = new HandlerThread(GameParams.THREADNAME2,
-                    android.os.Process.THREAD_PRIORITY_BACKGROUND);
-            GameParams.mHandlerThread.start();
-//            mHandlerThread.setDaemon(true);
-            DebugConfig.d("Create thread: " + GameParams.THREADNAME2);
-        }
-        GameParams.mHandler = new Handler(GameParams.mHandlerThread.getLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what) {
-                    case Events.CREATE_FISH:
-                        if (GameParams.isGameOver || GameParams.isClearStage2)
-                            return;
-                        stage2CreateFish(mFishTable_1, mFishTableColor, mFishTableSyllable);
-
-                        if (GameParams.onOff) {
-                            Message m = new Message();
-                            m.what = Events.CREATE_FISH;
-                            // TODO msg.obj = something;
-                            //if (msg.obj != null) {
-                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(GameParams.stage2FishRebirthMax) + GameParams.stage2FishRebirthMin);
-                            //}
-                        }
-                        break;
-                    case Events.CREATE_OBJECT:
-                        if (GameParams.isGameOver || GameParams.isClearStage2)
-                            return;
-
-                        CreateSpecialObjects(GameParams.specialObjectTable);
-                        if (GameParams.onOff) {
-                            Message m = new Message();
-                            m.what = Events.CREATE_OBJECT;
-                            GameParams.mHandler.sendMessageDelayed(m, mRandom.nextInt(5000) + 5000);
-                        }
-                        break;
-                }
-            }
-        };
     }
 
     private  void CreateSpecialObjects(int[][] objectTable) {
@@ -249,14 +238,14 @@ public class Stage2 extends DrawableGameComponent {
         if (GameParams.onOff) {
             Message msg = new Message();
             msg.what = Events.CREATE_FISH;
-            GameParams.mHandler.sendMessageDelayed(msg, 150);
+            GameParams.msgHandler.sendMessageDelayed(msg, 150);
 
             msg = new Message();
             msg.what = Events.CREATE_OBJECT;
-            GameParams.mHandler.sendMessageDelayed(msg, 5000);
+            GameParams.msgHandler.sendMessageDelayed(msg, 5000);
         } else {
-            GameParams.mHandler.removeMessages(Events.CREATE_FISH);
-            GameParams.mHandler.removeMessages(Events.CREATE_OBJECT);
+            GameParams.msgHandler.removeMessages(Events.CREATE_FISH);
+            GameParams.msgHandler.removeMessages(Events.CREATE_OBJECT);
         }
     }
 
@@ -488,11 +477,5 @@ public class Stage2 extends DrawableGameComponent {
         super.Dispose();
         if (mFishCollections != null)
             mFishCollections.clear();
-        if (GameParams.mHandlerThread != null) {
-            DebugConfig.d("Quit thread: " + GameParams.mHandlerThread.getThreadId());
-            GameParams.mHandlerThread.interrupt();
-            GameParams.mHandlerThread.quit();
-            GameParams.mHandlerThread = null;
-        }
     }
 }
