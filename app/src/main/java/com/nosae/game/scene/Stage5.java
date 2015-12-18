@@ -403,7 +403,7 @@ public class Stage5 extends DrawableGameComponent {
                 ObjectGeneration(false);
                 SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean(GameParams.STAGE4_COMPLETED, true);
+                editor.putBoolean(GameParams.STAGE5_COMPLETED, true);
                 editor.apply();
             }
             if (GameParams.colorMaskBreakStage.Action((int) GameEntry.totalFrames))
