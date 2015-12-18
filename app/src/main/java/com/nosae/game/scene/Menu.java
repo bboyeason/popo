@@ -416,7 +416,7 @@ public class Menu extends Activity {
             mStage3Button.setEnabled(true);
         }
         if (settings.getBoolean(GameParams.STAGE3_COMPLETED, false)) {
-            mStage3Button.getBackground().setAlpha(255);
+            mStage4Button.getBackground().setAlpha(255);
             mStage4Button.setEnabled(true);
         }
         if (settings.getBoolean(GameParams.STAGE4_COMPLETED, false)) {
