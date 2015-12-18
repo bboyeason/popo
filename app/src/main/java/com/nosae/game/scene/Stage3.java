@@ -6,8 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Message;
 import android.widget.Toast;
 
@@ -360,5 +358,6 @@ public class Stage3 extends DrawableGameComponent {
         super.Dispose();
         if (mObjCollections != null)
             mObjCollections.clear();
+        ObjectGeneration(false);
     }
 }

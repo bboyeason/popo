@@ -10,8 +10,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Message;
 import android.widget.Toast;
 
@@ -428,5 +426,6 @@ public class Stage4 extends DrawableGameComponent {
         super.Dispose();
         if (mObjCollections != null)
             mObjCollections.clear();
+        ObjectGeneration(false);
     }
 }

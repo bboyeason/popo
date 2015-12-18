@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Message;
 import android.widget.Toast;
 
@@ -477,5 +475,6 @@ public class Stage2 extends DrawableGameComponent {
         super.Dispose();
         if (mFishCollections != null)
             mFishCollections.clear();
+        FishGeneration(false);
     }
 }

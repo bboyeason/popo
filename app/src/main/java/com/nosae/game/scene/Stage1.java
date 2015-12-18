@@ -445,5 +445,6 @@ public class Stage1 extends DrawableGameComponent {
         super.Dispose();
         if (mFishCollections != null)
             mFishCollections.clear();
+        FishGeneration(false);
     }
 }
