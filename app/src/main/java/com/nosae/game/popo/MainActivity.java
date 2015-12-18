@@ -137,6 +137,13 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
         mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mToggleButton.setEnabled(false);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mToggleButton.setEnabled(true);
+                    }
+                }, 500);
                 Music.playSound();
                 if (mGameEntry != null) {
                     if (isChecked) {
