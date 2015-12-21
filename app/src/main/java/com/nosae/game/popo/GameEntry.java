@@ -105,7 +105,14 @@ public class GameEntry extends Game {
             Message m = new Message();
             m.what = Events.RESTART_STAGE;
             MainActivity.mMsgHandler.sendMessage(m);
-            //TODO send one shot
+            DebugConfig.d("Game Over!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
+        if (GameParams.colorMaskBreakStage.isAlive
+                && mMainActivity.mToggleButton.getVisibility() == View.VISIBLE) {
+            Message m = new Message();
+            m.what = Events.BREAK_STAGE;
+            MainActivity.mMsgHandler.sendMessage(m);
+            DebugConfig.d("Stage Break!!!!!!!!!!!!!!!!!!!!!!!!");
         }
 
         if (GameStateClass.currentState != GameStateClass.oldState || isForceRestart) {

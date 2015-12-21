@@ -60,6 +60,7 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
                 mToggleButton.setVisibility(View.INVISIBLE);
                 break;
             case Events.BREAK_STAGE:
+                mToggleButton.setVisibility(View.INVISIBLE);
                 break;
         }
 
