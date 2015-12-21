@@ -103,7 +103,7 @@ public class GameEntry extends Game {
         if (GameParams.isGameOver
                 && (mMainActivity.mRestartButton.getVisibility() == View.INVISIBLE)) {
             Message m = new Message();
-            m.what = 1;
+            m.what = Events.RESTART_STAGE;
             MainActivity.mMsgHandler.sendMessage(m);
             //TODO send one shot
         }
