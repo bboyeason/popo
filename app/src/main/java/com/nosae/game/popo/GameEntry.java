@@ -57,6 +57,8 @@ public class GameEntry extends Game {
             GameParams.music.Play();
         if (mStage4 != null)
             mStage4.registerListener();
+        if (mStage5 != null)
+            mStage5.registerListener();
         super.Run();
     }
 
@@ -67,6 +69,8 @@ public class GameEntry extends Game {
             GameParams.music.Pause();
         if (mStage4 != null)
             mStage4.unregisterListener();
+        if (mStage5 != null)
+            mStage5.unregisterListener();
         super.Exit();
     }
 
