@@ -106,7 +106,6 @@ public class Stage2 extends DrawableGameComponent {
             Quiz.quizSyllable.Do, Quiz.quizSyllable.Re, Quiz.quizSyllable.Mi, Quiz.quizSyllable.Fa, Quiz.quizSyllable.So
     };
 
-    private Stage2_fish mFishObj;
     private Stage2_fish mSubFishObj;
     public static FishCollection mFishCollections;
     private Random mRandom;
@@ -210,9 +209,9 @@ public class Stage2 extends DrawableGameComponent {
 
         width = fishImage.getWidth() / objectTable[1][random];
         height = fishImage.getHeight() / objectTable[2][random];
-        DebugConfig.d("width: " + width + ", height: " + height);
+//        DebugConfig.d("width: " + width + ", height: " + height);
         speed = mRandom.nextInt(GameParams.stage2FishRandomSpeed) + GameParams.stage2FishRandomSpeed;
-        mFishObj = new Stage2_fish(fishImage, 0, 0, width, height, 0, 0, width, height, (int) (speed * GameParams.density), Color.WHITE, 90);
+        Stage2_fish mFishObj = new Stage2_fish(fishImage, 0, 0, width, height, 0, 0, width, height, (int) (speed * GameParams.density), Color.WHITE, 90);
 
         mFishObj.randomTop();
         mFishObj.setCol(objectTable[1][random]);
@@ -228,7 +227,7 @@ public class Stage2 extends DrawableGameComponent {
         }
         mFishObj.isAlive = true;
         mFishCollections.add(mFishObj);
-        DebugConfig.d("create fish: " + mFishCollections.size());
+        DebugConfig.d("create fish(" + mFishCollections.size() + "): " + mFishObj.getColor() + ", " + mFishObj.getSyllable());
     }
 
     public static void FishGeneration(boolean produce) {
@@ -439,18 +438,13 @@ public class Stage2 extends DrawableGameComponent {
 
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (Stage2_fish) mFishCollections.get(f);
-            if (mFishObj != null && mFishObj.isAlive) {
-//                mSubCanvas.save();
-
+            if (mSubFishObj != null && mSubFishObj.isAlive) {
 //                mSubCanvas.rotate(mSubFishObj.theta - 90, mSubFishObj.getX()
 //                        + Aircraft.halfWidth, mSubFishObj.getY()
 //                        + Aircraft.halfHeight);
                 mSubCanvas.drawBitmap(mSubFishObj.image, mSubFishObj.srcRect,
                         mSubFishObj.destRect, mSubFishObj.paint);
-
-//                mSubCanvas.restore();
             }
-
         }
 
         if ((GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.colorMaskGameOver.isAlive)
