@@ -24,6 +24,7 @@ public class TimerBar2 extends GameObj {
 
     public void setStartFrame(int startFrame) {
         this.mStartFrame = startFrame;
+        isTimeout = false;
         DebugConfig.d("Start Frame: " + mStartFrame);
     }
 
