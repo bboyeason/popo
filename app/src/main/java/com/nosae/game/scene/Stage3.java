@@ -110,7 +110,6 @@ public class Stage3 extends DrawableGameComponent {
 
     @Override
     public void handleMessage(Message msg) {
-        super.handleMessage(msg);
         switch (msg.what) {
             case Events.CREATE_OBJECT:
                 if (GameParams.isGameOver || GameParams.isClearStage3)

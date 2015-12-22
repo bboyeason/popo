@@ -120,7 +120,6 @@ public class Stage4 extends DrawableGameComponent {
 
     @Override
     public void handleMessage(Message msg) {
-        super.handleMessage(msg);
         switch (msg.what) {
             case Events.CREATE_FISH:
                 if (GameParams.isGameOver || GameParams.isClearStage4)

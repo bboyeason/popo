@@ -7,7 +7,7 @@ import com.nosae.game.settings.DebugConfig;
 
 import java.lang.ref.WeakReference;
 
-public class DrawableGameComponent {
+public abstract class DrawableGameComponent {
 
     public static class MsgHandler extends Handler {
         private WeakReference<DrawableGameComponent> mDrawableGameComponent;
@@ -25,8 +25,7 @@ public class DrawableGameComponent {
         }
     }
 
-    public void handleMessage(Message msg) {
-    }
+    public abstract void handleMessage(Message msg);
 
 	public interface OnStageCompleteListener {
 		void OnStageComplete(DrawableGameComponent stage);
