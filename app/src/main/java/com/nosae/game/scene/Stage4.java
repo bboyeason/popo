@@ -325,14 +325,16 @@ public class Stage4 extends DrawableGameComponent {
                 }
             }
 
-            if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
-                if (!mSubObj.readyToDeath) {
-                    GameParams.stage4TotalScore += mSubObj.getTouchScore();
-                    Life1.addLife(mSubObj.getLifeAdd());
-                    mTimerBar.addTimer(mSubObj.getTimerAdd());
-                    mSubObj.readyToDeath = true;
-                    if (mSubObj.getLifeAdd() < 0)
-                        GameParams.vibrator.vibrate(50);
+            if (!GameParams.colorMaskGameOver.isAlive) {
+                if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
+                    if (!mSubObj.readyToDeath) {
+                        GameParams.stage4TotalScore += mSubObj.getTouchScore();
+                        Life1.addLife(mSubObj.getLifeAdd());
+                        mTimerBar.addTimer(mSubObj.getTimerAdd());
+                        mSubObj.readyToDeath = true;
+                        if (mSubObj.getLifeAdd() < 0)
+                            GameParams.vibrator.vibrate(50);
+                    }
                 }
             }
 

@@ -371,21 +371,23 @@ public class Stage5 extends DrawableGameComponent {
                 }
             }
 
-            if (mSubObj.isStackable) {
-                if (GameParams.isCollisionFromTop(stackRect, mSubObj.destRect)) {
-                    if (mCakes.size() < GameParams.stage5BreakScore) {
-                        mCakes.add(mSubObj);
-                        mObjCollections.remove(mSubObj);
+            if (!GameParams.colorMaskGameOver.isAlive) {
+                if (mSubObj.isStackable) {
+                    if (GameParams.isCollisionFromTop(stackRect, mSubObj.destRect)) {
+                        if (mCakes.size() < GameParams.stage5BreakScore) {
+                            mCakes.add(mSubObj);
+                            mObjCollections.remove(mSubObj);
+                        }
                     }
-                }
-            } else {
-                if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
-                    if (!mSubObj.readyToDeath) {
-                        Life1.addLife(mSubObj.getLifeAdd());
-                        mTimerBar.addTimer(mSubObj.getTimerAdd());
-                        mSubObj.readyToDeath = true;
-                        if (mSubObj.getLifeAdd() < 0)
-                            GameParams.vibrator.vibrate(50);
+                } else {
+                    if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
+                        if (!mSubObj.readyToDeath) {
+                            Life1.addLife(mSubObj.getLifeAdd());
+                            mTimerBar.addTimer(mSubObj.getTimerAdd());
+                            mSubObj.readyToDeath = true;
+                            if (mSubObj.getLifeAdd() < 0)
+                                GameParams.vibrator.vibrate(50);
+                        }
                     }
                 }
             }
