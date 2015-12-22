@@ -255,9 +255,8 @@ public class Stage2 extends DrawableGameComponent {
 
         if (mBackground == null) {
             // Load background image
-            mBackGroundImage = BitmapFactory.decodeResource(GameParams.res,
-                    R.drawable.b_backimage);
-            mBackground = new GameObj(0, 0, GameParams.scaleWidth / mBackGroundImage.getWidth(), GameParams.scaleHeight / mBackGroundImage.getHeight(), 0, 0, 0, 0, 0, 0, 0);
+            mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.a_background, GameParams.scaleWidth, GameParams.scaleHeight);
+            mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
         }
         mBackground.isAlive = true;
 
@@ -400,14 +399,7 @@ public class Stage2 extends DrawableGameComponent {
         mSubCanvas = mGameEntry.canvas;
         // Draw background image
         if (mBackground.isAlive) {
-            for (f = 0; f <= mBackground.destWidth; f++) {
-                for (j = -1; j <= mBackground.destHeight; j++) {
-                    mSubCanvas.drawBitmap(mBackGroundImage,
-                            f * mBackGroundImage.getWidth() + mBackground.destRect.left,
-                            j * mBackGroundImage.getHeight() + mBackground.destRect.top,
-                            null);
-                }
-            }
+            mSubCanvas.drawBitmap(mBackGroundImage, mBackground.srcRect, mBackground.destRect, null);
         }
 
         if (DebugConfig.isFpsDebugOn) {
