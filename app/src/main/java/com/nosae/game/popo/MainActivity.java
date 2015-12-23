@@ -81,7 +81,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
             public void onClick(View v) {
                 Music.playSound();
                 if (GameStateClass.currentState == GameStateClass.GameState.Stage1) {
-                    GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage1, mGameEntry);
                     // FIXME don't use sleep
                     try {
@@ -91,7 +90,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
                     }
                     GameStateClass.changeState(GameStateClass.GameState.Stage1, null, mGameEntry);
                 } else if (GameStateClass.currentState == GameStateClass.GameState.Stage2) {
-                    GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage2, mGameEntry);
                     // FIXME don't use sleep
                     try {
@@ -101,7 +99,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
                     }
                     GameStateClass.changeState(GameStateClass.GameState.Stage2, null, mGameEntry);
                 } else if (GameStateClass.currentState == GameStateClass.GameState.Stage3) {
-                    GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage3, mGameEntry);
                     // FIXME don't use sleep
                     try {
@@ -111,7 +108,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
                     }
                     GameStateClass.changeState(GameStateClass.GameState.Stage3, null, mGameEntry);
                 } else if (GameStateClass.currentState == GameStateClass.GameState.Stage4) {
-                    GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage4, mGameEntry);
                     // FIXME don't use sleep
                     try {
@@ -121,7 +117,6 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
                     }
                     GameStateClass.changeState(GameStateClass.GameState.Stage4, null, mGameEntry);
                 } else if (GameStateClass.currentState == GameStateClass.GameState.Stage5) {
-                    GameParams.isGameOver = false;
                     GameStateClass.changeState(GameStateClass.GameState.None, mGameEntry.mStage5, mGameEntry);
                     // FIXME don't use sleep
                     try {
