@@ -115,6 +115,7 @@ public class GameEntry extends Game {
                 && mMainActivity.mToggleButton.getVisibility() == View.VISIBLE) {
             Message m = new Message();
             m.what = Events.BREAK_STAGE;
+            m.obj = View.INVISIBLE;
             MainActivity.mMsgHandler.sendMessage(m);
             DebugConfig.d("Stage Break!!!!!!!!!!!!!!!!!!!!!!!!");
         }
