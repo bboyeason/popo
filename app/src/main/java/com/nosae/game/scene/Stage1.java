@@ -305,7 +305,7 @@ public class Stage1 extends DrawableGameComponent {
             if (!GameParams.colorMaskBreakStage.isAlive) {
                 if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mPopoObj.srcHeight)) {
 //                DebugConfig.d("Arrive screen bottom, remove it.");
-                    if (!GameParams.isGameOver) {
+                    if (!GameParams.isGameOver && !mSubFishObj.readyToDeath) {
                         if (mSubFishObj.getArrivalScore() > 0) {
                             GameParams.stage1TotalScore += mSubFishObj.getArrivalScore();
                         } else if (mSubFishObj.getArrivalScore() < 0) {
