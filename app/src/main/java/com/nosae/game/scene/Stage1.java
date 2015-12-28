@@ -63,7 +63,7 @@ public class Stage1 extends DrawableGameComponent {
     private int[][] mFishTable1 = {
             {
                     R.drawable.a_fish_01,
-                    R.drawable.a_fish_01,
+                    R.drawable.a_fish_02,
                     R.drawable.a_fish_hamburger,
                     R.drawable.a_fish_hotdog,
                     R.drawable.a_fish_donut
