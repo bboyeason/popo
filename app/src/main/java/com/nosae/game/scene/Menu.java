@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Button;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.nosae.game.popo.GameParams;
@@ -26,6 +24,7 @@ import com.nosae.game.settings.DebugConfig;
 public class Menu extends Activity {
     private Music mMusic;
     private ImageView imageView;
+    private ImageView imageViewMainRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +39,7 @@ public class Menu extends Activity {
         loadSharePreferences();
 
         imageView = (ImageView) findViewById(R.id.imageView);
+        imageViewMainRole = (ImageView) findViewById(R.id.imageView1);
 
         if (mMusic == null) {
 //            mMusic.player.release();
@@ -47,7 +47,7 @@ public class Menu extends Activity {
             mMusic.setLooping(true);
         }
 
-        imageView.setOnClickListener(new OnClickListener() {
+        imageViewMainRole.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Menu.this, StageSwipe.class);
@@ -68,7 +68,16 @@ public class Menu extends Activity {
 
     private void logoInit() {
         DebugConfig.d("Menu logo init");
-
+        float fromX, toX, fromY, toY;
+        fromX = 0;
+        toX = 0;
+        fromY = GameParams.halfHeight;
+        toY = 0;
+        // imageViewMainRole.getBackground().getIntrinsicHeight()
+        // Move effect
+        Animation amTranslate = new TranslateAnimation(fromX, toX, fromY, toY);
+        amTranslate.setDuration(3000);
+        imageViewMainRole.startAnimation(amTranslate);
         Music.soundPoolInit();
         GameParams.soundID = GameParams.soundPool.load(this, R.raw.sound_01, 1);
     }

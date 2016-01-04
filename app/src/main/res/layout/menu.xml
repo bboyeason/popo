@@ -2,13 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/menu_background"
+    android:background="@drawable/menu_background_01"
     android:id="@+id/menu_root">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/imageView1"
+        android:background="@drawable/menu_background_02"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/imageView"
+        android:background="@drawable/menu_background_03"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
