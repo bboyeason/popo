@@ -286,7 +286,7 @@ public class Stage2 extends DrawableGameComponent {
             mTimerBarImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.timer_bar);
             if (mTimerBarImage != null) {
                 width = mTimerBarImage.getWidth();
-                height = mTimerBarImage.getHeight() / 9;
+                height = mTimerBarImage.getHeight() / GameParams.timerBarRowCount;
                 mTimerBar = new TimerBar2(mScore.edge_X_right + 5, mScore.getY() + (mLife1.destRect.bottom - mScore.getY()) / 2 - (height >> 1), width, height, 0, 0, width, height, 0, 0, 0);
             }
         }

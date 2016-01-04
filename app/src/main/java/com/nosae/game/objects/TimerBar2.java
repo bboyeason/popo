@@ -44,7 +44,7 @@ public class TimerBar2 extends GameObj {
         if (frameGap < 0)
             mStartFrame = totalFrame;
         if (frameGap <= mRunningFrame) {
-            int row = 9;
+            int row = GameParams.timerBarRowCount;
             gap = row * (totalFrame - mStartFrame) / mRunningFrame;
             if (gap == 0)
                 gap = 1;
