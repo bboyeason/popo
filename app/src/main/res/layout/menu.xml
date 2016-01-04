@@ -43,47 +43,12 @@
         android:layout_centerHorizontal="true"
         android:visibility="invisible" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/stage3"
-        android:background="@drawable/orange_number_3_64"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:enabled="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/stage2"
-        android:background="@drawable/orange_number_2_64"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/stage3" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/stage1"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/orange_number_1_64"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/stage2" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/stage4"
-        android:background="@drawable/orange_number_4_64"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/stage3" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/stage5"
-        android:background="@drawable/orange_number_5_64"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/stage4" />
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

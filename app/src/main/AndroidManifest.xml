@@ -66,6 +66,13 @@
             android:noHistory="true" >
         </activity>
 
+        <!-- StageSwipe FragmentActivity -->
+        <activity
+            android:name="com.nosae.game.scene.StageSwipe"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/GameTheme" >
+        </activity>
     </application>
 
     <!-- Vibrator -->
