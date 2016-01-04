@@ -72,8 +72,8 @@ public class Stage1 extends DrawableGameComponent {
             {  3,  3,  2,  2,  2 }, /* Animation row */
             {  5,  5,  0,  0,  0 }, /* Max index */
             {  6,  6,  1,  1,  1 }, /* Death animation start */
-            { 24, 24, 18, 18, 18 }, /* Death animation end */
-            { -1, -1, 10, 20, 30 }, /* Touch Score */
+            { 29, 29, 18, 18, 18 }, /* Death animation end */
+            {-10,-20, 10, 20, 30 }, /* Touch Score */
             { 10, 20, -1, -2, -2 }, /* Arrival Score */
             {  0,  0,  0,  0,  0 }, /* Timer add (seconds) */
             {  0,  0,  0,  0,  0 } /* Life add */

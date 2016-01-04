@@ -56,19 +56,18 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                             if (_object.destRect.contains((int) x, (int) y)) {
                                 DebugConfig.d("Hit!!");
                                 if (!_object.readyToDeath) {
-                                    if (_object.getTouchScore() >= 0) {
-                                        GameParams.stage1TotalScore += _object.getTouchScore();
-                                        Music.playSound();
-                                    } else if (_object.getTouchScore() == -1) {
-                                        GameParams.vibrator.vibrate(50);
+                                    Music.playSound();
+                                    GameParams.stage1TotalScore += _object.getTouchScore();
+                                    if (GameParams.stage1TotalScore < 0) {
+                                        GameParams.stage1TotalScore = 0;
+                                        mMainActivity.mGameEntry.mStage1.mPopoObj.isAlive = false;
                                     }
+                                    if (_object.getTouchScore() <= 0)
+                                        GameParams.vibrator.vibrate(50);
+
                                     mMainActivity.mGameEntry.mStage1.mTimerBar.addTimer(_object.getTimerAdd());
                                     Life1.addLife(_object.getLifeAdd());
                                 }
-                                /*if (Stage1.stage1TotalScore < 0) {
-                                    Stage1.stage1TotalScore = 0;
-                                    mMainActivity.mGameEntry.mStage1.mPopoObj.isAlive = false;
-                                }*/
                                 _object.readyToDeath = true;
                                 break;
                             }
