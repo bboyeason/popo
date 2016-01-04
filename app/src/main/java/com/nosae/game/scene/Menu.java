@@ -33,7 +33,6 @@ import com.nosae.game.settings.DebugConfig;
  */
 public class Menu extends Activity {
     private Music mMusic;
-    private ImageView mImageView;
     private Button mSettingsButton;
     private Button mKarnofskyScaleButton;
     private Button mStage1Button;
@@ -43,7 +42,6 @@ public class Menu extends Activity {
     private Button mStage5Button;
     private Button mLoadButton;
     private Button mExitButton;
-    private AnimatorSet mBouncer;
     private int DELAY_ACTIVITY = 100;
 
     @Override
@@ -324,69 +322,12 @@ public class Menu extends Activity {
         Music.soundPoolInit();
         GameParams.soundID = GameParams.soundPool.load(this, R.raw.sound_01, 1);
 
-        mImageView = new ImageView(this);
-//        mImageView.setBackgroundResource(R.drawable.logo_1);
-        mImageView.setBackgroundResource(R.drawable.logo_animation_list);
-
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.menu_root);
-        layout.addView(mImageView, 0);
-
-        float fromX, toX, fromY, toY;
-        fromX = GameParams.scaleWidth;
-        toX = -GameParams.scaleWidth;
-        fromY = GameParams.scaleHeight - mImageView.getBackground().getIntrinsicHeight();
-        toY = fromY;
-        // Move effect
-        Animation amTranslate = new TranslateAnimation(fromX, toX, fromY, toY);
-        amTranslate.setDuration(6000);
-        amTranslate.setRepeatCount(-1);
-
         // Transparent effect
         Animation amAlpha = new AlphaAnimation(0.3f, 1.0f);
         amAlpha.setDuration(6000);
-//        amAlpha.setRepeatCount(-1);
-
-        // Animation effect combine
-        AnimationSet amSet = new AnimationSet(false);
-        amSet.addAnimation(amTranslate);
-        amSet.addAnimation(amAlpha);
-
-//        mImageView.startAnimation(amSet);
 
         mSettingsButton.startAnimation(amAlpha);
         mExitButton.startAnimation(amAlpha);
-
-        ObjectAnimator objAnimator1 = ObjectAnimator.ofFloat(mImageView, "alpha", 0.3f, 1.0f);
-        objAnimator1.setRepeatCount(ObjectAnimator.INFINITE);
-//        objAnimator1.setRepeatMode(ObjectAnimator.REVERSE);
-
-        ObjectAnimator objAnimator2 = ObjectAnimator.ofFloat(mImageView, "translationX", fromX, toX);
-//        objAnimator2.setInterpolator(new AccelerateDecelerateInterpolator());
-        objAnimator2.setRepeatCount(ObjectAnimator.INFINITE);
-//        objAnimator2.setRepeatMode(ObjectAnimator.REVERSE);
-
-        ObjectAnimator objAnimator3 = ObjectAnimator.ofFloat(mImageView, "translationY", fromY, toY);
-        objAnimator3.setRepeatCount(ObjectAnimator.INFINITE);
-//        objAnimator1.setRepeatMode(ObjectAnimator.REVERSE);
-
-        objAnimator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float value = (float) animation.getAnimatedValue();
-//                DebugConfig.d("the animation value is " + value);
-            }
-        });
-
-        AnimationDrawable animDrawable = (AnimationDrawable) mImageView.getBackground();
-        animDrawable.start();
-        mBouncer = new AnimatorSet();
-//        mBouncer.play(objAnimator1).with(objAnimator2).with(objAnimator3);
-        mBouncer.play(objAnimator2).with(objAnimator3);
-        mBouncer.setDuration(6000);
-        mBouncer.start();
-
-//        AnimatorSet as = new AnimatorSet();
-//        as.playSequentially(mBouncer);
     }
 
     @Override
@@ -402,8 +343,6 @@ public class Menu extends Activity {
             mMusic.setMusicVolume(GameParams.musicVolumeRatio);
             mMusic.Play();
         }
-        if (mBouncer != null && !mBouncer.isRunning())
-            mBouncer.start();
         // if API 19 or later, we can use mBouncer.resume()
         mStage1Button.setEnabled(true);
         SharedPreferences settings = getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
@@ -431,8 +370,6 @@ public class Menu extends Activity {
         DebugConfig.d("Menu onPause()");
         if (mMusic != null)
             mMusic.Pause();
-        if (mBouncer != null && mBouncer.isRunning())
-            mBouncer.cancel();
         // if API 19 or later, we can use mBouncer.pause()
     }
 
@@ -445,7 +382,5 @@ public class Menu extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         DebugConfig.d("Menu onDestroy()");
-        if (mBouncer != null)
-            mBouncer.cancel();
     }
 }
