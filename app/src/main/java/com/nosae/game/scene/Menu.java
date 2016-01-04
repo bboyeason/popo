@@ -26,8 +26,6 @@ import com.nosae.game.settings.DebugConfig;
 public class Menu extends Activity {
     private Music mMusic;
     private Button mSettingsButton;
-    private Button mKarnofskyScaleButton;
-    private Button mLoadButton;
     private Button mExitButton;
     private ImageView imageView;
 
@@ -45,12 +43,8 @@ public class Menu extends Activity {
 
         imageView = (ImageView) findViewById(R.id.imageView);
         mSettingsButton = (Button) findViewById(R.id.settingsButton);
-        mKarnofskyScaleButton = (Button) findViewById(R.id.karnofskyButton);
-        mLoadButton = (Button) findViewById(R.id.loadButton);
         mExitButton = (Button) findViewById(R.id.exitButton);
         mSettingsButton.setSoundEffectsEnabled(false);
-        mKarnofskyScaleButton.setSoundEffectsEnabled(false);
-        mLoadButton.setSoundEffectsEnabled(false);
         mExitButton.setSoundEffectsEnabled(false);
         if (mMusic == null) {
 //            mMusic.player.release();
@@ -66,48 +60,6 @@ public class Menu extends Activity {
                     @Override
                     public void run() {
                         Intent i = new Intent(Menu.this, Settings.class);
-                        startActivity(i);
-                        this.finish();
-                    }
-
-                    private void finish() {
-                        // TODO Auto-generated method stub
-                        if (mMusic != null)
-                            mMusic.Pause();
-                    }
-                });
-            }
-        });
-
-        mKarnofskyScaleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Music.playSound();
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent i = new Intent(Menu.this, KarnofskyScale.class);
-                        startActivity(i);
-                        this.finish();
-                    }
-
-                    private void finish() {
-                        // TODO Auto-generated method stub
-                        if (mMusic != null)
-                            mMusic.Pause();
-                    }
-                });
-            }
-        });
-
-        mLoadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Music.playSound();
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent i = new Intent(Menu.this, Load.class);
                         startActivity(i);
                         this.finish();
                     }
