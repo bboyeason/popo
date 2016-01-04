@@ -25,8 +25,6 @@ import com.nosae.game.settings.DebugConfig;
  */
 public class Menu extends Activity {
     private Music mMusic;
-    private Button mSettingsButton;
-    private Button mExitButton;
     private ImageView imageView;
 
     @Override
@@ -42,45 +40,12 @@ public class Menu extends Activity {
         loadSharePreferences();
 
         imageView = (ImageView) findViewById(R.id.imageView);
-        mSettingsButton = (Button) findViewById(R.id.settingsButton);
-        mExitButton = (Button) findViewById(R.id.exitButton);
-        mSettingsButton.setSoundEffectsEnabled(false);
-        mExitButton.setSoundEffectsEnabled(false);
+
         if (mMusic == null) {
 //            mMusic.player.release();
             mMusic = new Music(this, R.raw.menu, GameParams.musicVolumeRatio);
             mMusic.setLooping(true);
         }
-
-        mSettingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Music.playSound();
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent i = new Intent(Menu.this, Settings.class);
-                        startActivity(i);
-                        this.finish();
-                    }
-
-                    private void finish() {
-                        // TODO Auto-generated method stub
-                        if (mMusic != null)
-                            mMusic.Pause();
-                    }
-                });
-            }
-        });
-
-        mExitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Music.playSound();
-                Menu.this.finish();
-//                android.os.Process.killProcess(android.os.Process.myPid());
-            }
-        });
 
         imageView.setOnClickListener(new OnClickListener() {
             @Override
@@ -106,13 +71,6 @@ public class Menu extends Activity {
 
         Music.soundPoolInit();
         GameParams.soundID = GameParams.soundPool.load(this, R.raw.sound_01, 1);
-
-        // Transparent effect
-        Animation amAlpha = new AlphaAnimation(0.3f, 1.0f);
-        amAlpha.setDuration(6000);
-
-        mSettingsButton.startAnimation(amAlpha);
-        mExitButton.startAnimation(amAlpha);
     }
 
     @Override

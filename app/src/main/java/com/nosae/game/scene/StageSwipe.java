@@ -12,8 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.ImageView;
 
+import com.nosae.game.objects.Music;
 import com.nosae.game.popo.GameParams;
 import com.nosae.game.popo.MainActivity;
 import com.nosae.game.popo.R;
@@ -25,6 +29,8 @@ import com.nosae.game.settings.DebugConfig;
 public class StageSwipe extends FragmentActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private Button mSettingsButton;
+    private Button mExitButton;
     private static int DELAY_ACTIVITY = 100;
     private static StageSwipe sInstance;
 
@@ -34,11 +40,51 @@ public class StageSwipe extends FragmentActivity {
         setContentView(R.layout.stage_swipe);
         sInstance = this;
 
+        mSettingsButton = (Button) findViewById(R.id.settingsButton);
+        mExitButton = (Button) findViewById(R.id.exitButton);
+        mSettingsButton.setSoundEffectsEnabled(false);
+        mExitButton.setSoundEffectsEnabled(false);
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+
+        // Transparent effect
+        Animation amAlpha = new AlphaAnimation(0.3f, 1.0f);
+        amAlpha.setDuration(6000);
+
+        mSettingsButton.startAnimation(amAlpha);
+        mExitButton.startAnimation(amAlpha);
+        mSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Music.playSound();
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i = new Intent(sInstance, Settings.class);
+                        startActivity(i);
+                        this.finish();
+                    }
+
+                    private void finish() {
+                        // TODO music off
+                    }
+                });
+            }
+        });
+
+        mExitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Music.playSound();
+                StageSwipe.this.finish();
+//                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        });
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
