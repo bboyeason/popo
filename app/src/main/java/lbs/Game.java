@@ -7,7 +7,7 @@ import com.nosae.game.popo.MainActivity;
 import com.nosae.game.settings.DebugConfig;
 
 public class Game {
-	
+
 	private boolean isRun;
 	public GameComponentCollection Components = new GameComponentCollection();
 	public Canvas canvas = null;
@@ -16,26 +16,26 @@ public class Game {
 	public int actualFPS;
 	public static int setFPS = 30;
 	private int fpsInterval = 1000 / setFPS;
-	
+
 	private Thread gameLoop;
 	private int f;
-	
+
 	public void Run()
 	{
 		if (!isRun)
 		{
 			Initialize();
 			LoadContent();
-			
+
 			isRun = true;
 		}
-		
+
 		gameLoop = new Thread(new GameLoop());
 		gameLoop.setDaemon(true);
 		gameLoop.start();
 		DebugConfig.d("gameLoop.start()");
 	}
-	
+
 	public void Exit()
 	{
 		if (gameLoop != null)
@@ -43,25 +43,25 @@ public class Game {
 			gameLoop.interrupt();
 		}
 	}
-	
+
 	class GameLoop implements Runnable
 	{
-		
+
 		public void run() {
 			long startTime;
 			int delayTime;
 			int sleepTime;
-			
+
 			while(!Thread.interrupted())
-			{			
-				startTime = System.currentTimeMillis(); 
-				
+			{
+				startTime = System.currentTimeMillis();
+
 				Update();
-					
+
 				Draw();
-				
+
 				delayTime = (int)(System.currentTimeMillis() - startTime);
-				
+
 				if (delayTime == 0) delayTime = 1;
 				fps = 1000 / delayTime;
 //				DebugConfig.d("fps: " + fps);
@@ -83,19 +83,19 @@ public class Game {
 			}
 		}
 	}
-	
+
 	protected void Initialize() {
-		
+
 	}
-	
+
 	protected void LoadContent(){
-		
+
 	}
-	
+
 	protected void UnloadContent() {
 		Exit();
 	}
-	
+
 	protected void Update() {
 		synchronized (Components) {
 			for (f = Components.size() - 1; f >= 0; f--)
@@ -109,7 +109,7 @@ public class Game {
 		}
 		MainActivity.mSurfaceView.getHolder().unlockCanvasAndPost(canvas);
 //		GV.surface.mHolder.unlockCanvasAndPost(canvas);
-		
+
 		totalFrames++;
-	}	
+	}
 }

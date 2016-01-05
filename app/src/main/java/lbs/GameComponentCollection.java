@@ -6,26 +6,26 @@ import java.util.Iterator;
 import java.util.List;
 
 public class GameComponentCollection implements Collection<DrawableGameComponent>{
-	
+
 	protected List<DrawableGameComponent> componse = new ArrayList<DrawableGameComponent>();
-	
-	
+
+
 	public boolean add(DrawableGameComponent arg0) {
 		arg0.Initialize();
 		arg0.LoadContent();
-		
+
 		return componse.add(arg0);
 	}
-	
+
 	public DrawableGameComponent get(int arg0) {
 		return componse.get(arg0);
 	}
-	
+
 	public void add(int arg0,DrawableGameComponent arg1)
 	{
 		componse.add(arg0, arg1);
 	}
-	
+
 	public boolean addAll(Collection<? extends DrawableGameComponent> arg0) {
 		// TODO Auto-generated method stub
 		return componse.addAll(arg0);
