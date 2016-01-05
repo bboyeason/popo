@@ -48,6 +48,7 @@ public abstract class DrawableGameComponent {
 	
 	protected void UnloadContent() {
 		GameParams.isGameOver = false;
+		GameParams.colorMaskGameOver.isAlive = false;
 	}
 	
 	protected void Update() {
