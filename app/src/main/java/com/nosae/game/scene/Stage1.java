@@ -186,7 +186,7 @@ public class Stage1 extends DrawableGameComponent {
 
         width = fishImage.getWidth() / fishTable[1][random];
         height = fishImage.getHeight() / fishTable[2][random];
-        DebugConfig.d("Image ID: " + random + "=> width: " + width + ", height: " + height);
+//        DebugConfig.d("Image ID: " + random + "=> width: " + width + ", height: " + height);
 
         speed = mRandom.nextInt(GameParams.stage1FishRandomSpeed) + GameParams.stage1FishRandomSpeed;
         NormalFish mFishObj = new NormalFish(fishImage, 0, 0, width, height, 0, 0, width, height, (int) (speed * GameParams.density), Color.WHITE, 90);
@@ -226,15 +226,14 @@ public class Stage1 extends DrawableGameComponent {
         }
 
         if (mPopoObj == null) {
-            Bitmap mPopoImage = BitmapFactory.decodeResource(GameParams.res,
-                    R.drawable.bobo);
-            width = mPopoImage.getWidth() / 4;
-            height = mPopoImage.getHeight() / 5;
-            Popo.width = width;
-            Popo.height = height;
-            Popo.halfWidth = width >> 1;
-            Popo.halfHeight = height >> 1;
-            mPopoObj = new Popo(mPopoImage, GameParams.halfWidth - width/2, GameParams.scaleHeight - height, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
+            Bitmap popoImage = BitmapFactory.decodeResource(GameParams.res,
+                    R.drawable.popo);
+            Popo.width = popoImage.getWidth();
+            Popo.height = popoImage.getHeight();
+            Popo.halfWidth = Popo.width >> 1;
+            Popo.halfHeight = Popo.height >> 1;
+            mPopoObj = new Popo(popoImage, GameParams.halfWidth - Popo.width/2, GameParams.scaleHeight - Popo.height, Popo.width, Popo.height, 0, 0, Popo.width, Popo.height, 0, Color.WHITE, 90);
+            popoImage.recycle();
         }
         mPopoObj.setCol(4);
         mPopoObj.setMaxIndex(20);
