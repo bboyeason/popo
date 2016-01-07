@@ -86,11 +86,11 @@ public class Stage2 extends DrawableGameComponent {
                     R.drawable.b_fish_blue_fa,
                     R.drawable.b_fish_blue_so
             },
-            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, /* Animation column */
-            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, /* Animation row */
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Max index */
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Death animation start */
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Death animation end */
+            { 1, 1, 1, 1, 1, 1, 10, 1, 1, 1, 1, 1, 1, 1, 1 }, /* Animation column */
+            { 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1 }, /* Animation row */
+            { 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Max index */
+            { 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Death animation start */
+            { 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0 }, /* Death animation end */
     };
 
     /* Color, red:0, yellow:1, blue:2 */
