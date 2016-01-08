@@ -6,6 +6,7 @@ import android.view.View;
 
 import lbs.Game;
 
+import com.nosae.game.objects.AnimationMask;
 import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.Music;
 import com.nosae.game.scene.Stage1;
@@ -84,7 +85,7 @@ public class GameEntry extends Game {
 
         GameParams.colorMaskGameOver = new ColorMask(Color.RED, 0);
         GameParams.colorMaskGameOver.isAlive = false;
-        GameParams.breakStageMask = new ColorMask(Color.WHITE, 0, true);
+        GameParams.breakStageMask = new AnimationMask(R.drawable.break_stage_animation, 7, 1, 7, 3, 2, 60 , 6, 92, 152);
         GameParams.breakStageMask.isAlive = false;
         super.Initialize();
     }

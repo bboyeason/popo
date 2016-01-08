@@ -8,6 +8,7 @@ import android.media.SoundPool;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 
+import com.nosae.game.objects.AnimationMask;
 import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.Music;
 import com.nosae.game.settings.DebugConfig;
@@ -118,7 +119,7 @@ public class GameParams {
             { 10,  0 }, /* Timer add (seconds) */
             {  0,  1 } /* Life add */
     };
-    public static ColorMask breakStageMask;
+    public static AnimationMask breakStageMask;
     public static ColorMask colorMaskGameOver;
     public static boolean isGameOver = false;
     public static boolean onOff = true;

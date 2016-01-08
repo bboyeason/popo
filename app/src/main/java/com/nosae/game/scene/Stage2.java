@@ -451,7 +451,8 @@ public class Stage2 extends DrawableGameComponent {
             mSubCanvas.drawRect(GameParams.colorMaskGameOver.destRect, GameParams.colorMaskGameOver.paint);
             mSubCanvas.drawText(GameParams.colorMaskGameOver.text.message, GameParams.colorMaskGameOver.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, GameParams.colorMaskGameOver.text.paint);
         } else if (!(GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.breakStageMask.isAlive) {
-            mSubCanvas.drawRect(GameParams.breakStageMask.destRect, GameParams.breakStageMask.paint);
+            mSubCanvas.drawRect(GameParams.breakStageMask.MaskDestRect, GameParams.breakStageMask.paint);
+            GameParams.breakStageMask.draw(mSubCanvas);
         }
     }
 
