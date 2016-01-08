@@ -43,6 +43,14 @@ public class GameObj {
 
     protected int index = 0;
 
+    // Animation Mask
+    public GameObj(int alpha, int r, int g, int b, int speed)
+    {
+        paint = new Paint();
+        paint.setARGB(alpha, r, g, b);
+        this.alpha = alpha;
+        this.speed = speed;
+    }
     // Color Mask Constructor
     public GameObj(int x,int y,int width,int height,int color,int alpha)
     {
@@ -189,7 +197,6 @@ public class GameObj {
         srcRect.bottom = srcRect.top + srcHeight;
 //        DebugConfig.d("index: " + index);
 //        DebugConfig.d("setAnimationIndex: " + srcRect.left + ", " + srcRect.top + ", " + srcRect.right + ", " + srcRect.bottom);
-
     }
     /*
     *//**
