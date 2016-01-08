@@ -84,8 +84,8 @@ public class GameEntry extends Game {
 
         GameParams.colorMaskGameOver = new ColorMask(Color.RED, 0);
         GameParams.colorMaskGameOver.isAlive = false;
-        GameParams.colorMaskBreakStage = new ColorMask(Color.WHITE, 0, true);
-        GameParams.colorMaskBreakStage.isAlive = false;
+        GameParams.breakStageMask = new ColorMask(Color.WHITE, 0, true);
+        GameParams.breakStageMask.isAlive = false;
         super.Initialize();
     }
 
@@ -111,7 +111,7 @@ public class GameEntry extends Game {
             MainActivity.mMsgHandler.sendMessage(m);
             DebugConfig.d("Game Over!!!!!!!!!!!!!!!!!!!!!!!!");
         }
-        if (GameParams.colorMaskBreakStage.isAlive
+        if (GameParams.breakStageMask.isAlive
                 && mMainActivity.mToggleButton.getVisibility() == View.VISIBLE) {
             Message m = new Message();
             m.what = Events.BREAK_STAGE;

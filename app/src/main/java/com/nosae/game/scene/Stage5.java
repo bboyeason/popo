@@ -363,7 +363,7 @@ public class Stage5 extends DrawableGameComponent {
         for (f = mObjCollections.size() -1 ; f >= 0; f--) {
             mSubObj = (NormalFish) mObjCollections.get(f);
             mSubObj.Animation();
-            if (!GameParams.colorMaskBreakStage.isAlive) {
+            if (!GameParams.breakStageMask.isAlive) {
                 if (mSubObj.smartMoveDown(GameParams.screenRect.height())) {
                     mObjCollections.remove(mSubObj);
                     mSubObj.recycle();
@@ -400,14 +400,14 @@ public class Stage5 extends DrawableGameComponent {
         if (GameParams.isGameOver) {
             GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
         } else if (!GameParams.isGameOver && mCakes.size() >= GameParams.stage5BreakScore) {
-            if (GameParams.colorMaskBreakStage.state == GameObj.State.step1) {
+            if (GameParams.breakStageMask.state == GameObj.State.step1) {
                 ObjectGeneration(false);
                 SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean(GameParams.STAGE5_COMPLETED, true);
                 editor.apply();
             }
-            if (GameParams.colorMaskBreakStage.Action((int) GameEntry.totalFrames))
+            if (GameParams.breakStageMask.Action((int) GameEntry.totalFrames))
                 NotifyStageCompleted();
         }
     }
@@ -469,8 +469,8 @@ public class Stage5 extends DrawableGameComponent {
         {
             mSubCanvas.drawRect(GameParams.colorMaskGameOver.destRect, GameParams.colorMaskGameOver.paint);
             mSubCanvas.drawText(GameParams.colorMaskGameOver.text.message, GameParams.colorMaskGameOver.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, GameParams.colorMaskGameOver.text.paint);
-        } else if (!GameParams.isGameOver && GameParams.colorMaskBreakStage.isAlive) {
-            mSubCanvas.drawRect(GameParams.colorMaskBreakStage.destRect, GameParams.colorMaskBreakStage.paint);
+        } else if (!GameParams.isGameOver && GameParams.breakStageMask.isAlive) {
+            mSubCanvas.drawRect(GameParams.breakStageMask.destRect, GameParams.breakStageMask.paint);
         }
     }
 

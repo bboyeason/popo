@@ -118,7 +118,7 @@ public class GameParams {
             { 10,  0 }, /* Timer add (seconds) */
             {  0,  1 } /* Life add */
     };
-    public static ColorMask colorMaskBreakStage;
+    public static ColorMask breakStageMask;
     public static ColorMask colorMaskGameOver;
     public static boolean isGameOver = false;
     public static boolean onOff = true;
