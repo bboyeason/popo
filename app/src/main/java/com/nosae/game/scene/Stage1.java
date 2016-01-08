@@ -6,11 +6,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.*;
+import android.view.View;
 import android.widget.Toast;
 
 import com.nosae.game.popo.Events;
 import com.nosae.game.popo.GameEntry;
 import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.MainActivity;
 import com.nosae.game.popo.R;
 import com.nosae.game.popo.Text;
 
@@ -170,6 +172,8 @@ public class Stage1 extends DrawableGameComponent {
     }
 
     protected void createFish(int[][] fishTable) {
+        if (GameParams.loadingMask.isAlive || mGameEntry.mMainActivity.mToggleButton.isChecked())
+            return;
         int width, height;
         int speed;
         int random;
@@ -277,6 +281,12 @@ public class Stage1 extends DrawableGameComponent {
             mTimerBar.setTimer(GameParams.stage1RunningTime);
             mTimerBar.setStartFrame((int) GameEntry.totalFrames);
         }
+
+        if (GameParams.loadingMask != null)
+            if (!GameParams.loadingMask.isAlive) {
+                GameParams.loadingMask.isAlive = true;
+                GameParams.loadingMask.state = GameObj.State.step1;
+            }
     }
 
     @Override
@@ -301,7 +311,7 @@ public class Stage1 extends DrawableGameComponent {
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (NormalFish) mFishCollections.get(f);
             mSubFishObj.Animation();
-            if (!GameParams.breakStageMask.isAlive) {
+            if (!GameParams.loadingMask.isAlive && !GameParams.breakStageMask.isAlive) {
                 if (mSubFishObj.smartMoveDown(GameParams.screenRect.height() - mPopoObj.srcHeight)) {
 //                DebugConfig.d("Arrive screen bottom, remove it.");
                     if (!GameParams.isGameOver && !mSubFishObj.readyToDeath) {
@@ -331,34 +341,45 @@ public class Stage1 extends DrawableGameComponent {
             mFpsText.message = "actual FPS: " + mGameEntry.actualFPS + " FPS (" + mGameEntry.fps
                     + ") " + (int) GameEntry.totalFrames;
         }
-        if (mScore != null)
-            mScore.setTotalScore(GameParams.stage1TotalScore);
 
-        if (mLife1 != null) {
-            mLife1.updateLife();
-            mLife1.action();
-            if (Life1.getLife() <= 0)
-                GameParams.isGameOver = true;
-        }
+        if (!GameParams.loadingMask.isAlive) {
+            if (mScore != null)
+                mScore.setTotalScore(GameParams.stage1TotalScore);
 
-        if (mTimerBar != null) {
-            mTimerBar.action((int) GameEntry.totalFrames);
-            if (mTimerBar.isTimeout)
-                GameParams.isGameOver = true;
-        }
-
-        if (GameParams.isGameOver || !mPopoObj.isAlive) {
-            GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
-        } else if (!(GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.stage1TotalScore >= GameParams.stage1BreakScore) {
-            if (GameParams.breakStageMask.state == GameObj.State.step1) {
-                FishGeneration(false);
-                SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean(GameParams.STAGE1_COMPLETED, true);
-                editor.apply();
+            if (mLife1 != null) {
+                mLife1.updateLife();
+                mLife1.action();
+                if (Life1.getLife() <= 0)
+                    GameParams.isGameOver = true;
             }
-            if (GameParams.breakStageMask.Action((int) GameEntry.totalFrames))
-                NotifyStageCompleted();
+
+            if (mTimerBar != null) {
+                mTimerBar.action((int) GameEntry.totalFrames);
+                if (mTimerBar.isTimeout)
+                    GameParams.isGameOver = true;
+            }
+
+            if (GameParams.isGameOver || !mPopoObj.isAlive) {
+                GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
+            } else if (!(GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.stage1TotalScore >= GameParams.stage1BreakScore) {
+                if (GameParams.breakStageMask.state == GameObj.State.step1) {
+                    FishGeneration(false);
+                    SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putBoolean(GameParams.STAGE1_COMPLETED, true);
+                    editor.apply();
+                }
+                if (GameParams.breakStageMask.Action((int) GameEntry.totalFrames))
+                    NotifyStageCompleted();
+            }
+        } else {
+            if (GameParams.loadingMask.Action((int) GameEntry.totalFrames)) {
+                mTimerBar.addRunningFrame(GameParams.loadingMask.getDelayFrame());
+                Message m = new Message();
+                m.what = Events.BREAK_STAGE;
+                m.obj = View.VISIBLE;
+                MainActivity.mMsgHandler.sendMessage(m);
+            }
         }
         super.Update();
     }
@@ -366,8 +387,7 @@ public class Stage1 extends DrawableGameComponent {
     @Override
     protected void Draw() {
         Canvas mSubCanvas = mGameEntry.canvas;
-        if (mBackground.isAlive)
-        {
+        if (mBackground.isAlive) {
             mSubCanvas.drawBitmap(mBackGroundImage,
                     mBackground.srcRect,
                     mBackground.destRect,
@@ -390,7 +410,7 @@ public class Stage1 extends DrawableGameComponent {
             mSubCanvas.drawBitmap(mSceneTitleImage, mSceneTitle.srcRect, mSceneTitle.destRect, mSceneTitle.paint);
         }
 
-        for (f = mFishCollections.size() -1 ; f >= 0; f--) {
+        for (f = mFishCollections.size() - 1; f >= 0; f--) {
             mSubFishObj = (NormalFish) mFishCollections.get(f);
             if (mSubFishObj.isAlive) {
                 mSubCanvas.drawBitmap(mSubFishObj.image, mSubFishObj.srcRect,
@@ -426,13 +446,17 @@ public class Stage1 extends DrawableGameComponent {
             mSubCanvas.drawBitmap(mTimerBarImage, mTimerBar.srcRect, mTimerBar.destRect, null);
         }
 
-        if ((GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.colorMaskGameOver.isAlive)
-        {
+        if ((GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.colorMaskGameOver.isAlive) {
             mSubCanvas.drawRect(GameParams.colorMaskGameOver.destRect, GameParams.colorMaskGameOver.paint);
             mSubCanvas.drawText(GameParams.colorMaskGameOver.text.message, GameParams.colorMaskGameOver.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, GameParams.colorMaskGameOver.text.paint);
         } else if (!(GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.breakStageMask.isAlive) {
             mSubCanvas.drawRect(GameParams.breakStageMask.MaskDestRect, GameParams.breakStageMask.paint);
             GameParams.breakStageMask.draw(mSubCanvas);
+        }
+
+        if (GameParams.loadingMask != null && GameParams.loadingMask.isAlive) {
+            mSubCanvas.drawRect(GameParams.loadingMask.MaskDestRect, GameParams.loadingMask.paint);
+            GameParams.loadingMask.draw(mSubCanvas);
         }
         super.Draw();
     }

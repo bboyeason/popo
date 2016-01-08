@@ -33,6 +33,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     public boolean onTouchEvent(MotionEvent event) {
         if (mMainActivity.mToggleButton.isChecked()
                 || GameParams.breakStageMask.isAlive
+                || GameParams.loadingMask.isAlive
                 || GameParams.isGameOver)
             return false;
         final float x = event.getX();

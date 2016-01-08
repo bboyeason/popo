@@ -1,11 +1,7 @@
 package com.nosae.game.popo;
 
+import com.nosae.game.objects.GameObj;
 import com.nosae.game.objects.Music;
-import com.nosae.game.scene.Stage1;
-import com.nosae.game.scene.Stage2;
-import com.nosae.game.scene.Stage3;
-import com.nosae.game.scene.Stage4;
-import com.nosae.game.scene.Stage5;
 import com.nosae.game.settings.DebugConfig;
 import android.app.Activity;
 import android.app.Service;
@@ -28,7 +24,7 @@ import lbs.DrawableGameComponent;
 
 public class MainActivity extends Activity implements DrawableGameComponent.OnStageCompleteListener{
 
-    protected static Handler mMsgHandler;
+    public static Handler mMsgHandler;
     public static SurfaceView mSurfaceView;
 
     public ToggleButton mToggleButton;
@@ -157,24 +153,9 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
                     if (isChecked) {
                         mGameEntry.Exit();
                     } else {
+                        GameParams.loadingMask.isAlive = true;
+                        GameParams.loadingMask.state = GameObj.State.step1;
                         mGameEntry.Run();
-                    }
-                    switch (GameStateClass.currentState) {
-                        case Stage1:
-                            Stage1.FishGeneration(!isChecked);
-                            break;
-                        case Stage2:
-                            Stage2.FishGeneration(!isChecked);
-                            break;
-                        case Stage3:
-                            Stage3.ObjectGeneration(!isChecked);
-                            break;
-                        case Stage4:
-                            Stage4.ObjectGeneration(!isChecked);
-                            break;
-                        case Stage5:
-                            Stage5.ObjectGeneration(!isChecked);
-                            break;
                     }
                 }
             }

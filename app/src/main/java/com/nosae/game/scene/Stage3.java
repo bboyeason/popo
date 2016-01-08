@@ -7,11 +7,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Message;
+import android.view.View;
 import android.widget.Toast;
 
 import com.nosae.game.popo.Events;
 import com.nosae.game.popo.GameEntry;
 import com.nosae.game.popo.GameParams;
+import com.nosae.game.popo.MainActivity;
 import com.nosae.game.popo.R;
 import com.nosae.game.popo.Text;
 import com.nosae.game.objects.FishCollection;
@@ -149,6 +151,8 @@ public class Stage3 extends DrawableGameComponent {
     }
 
     private void CreateSpecialObjects(int[][] objectTable) {
+        if (GameParams.loadingMask.isAlive || mGameEntry.mMainActivity.mToggleButton.isChecked())
+            return;
         int width, height;
         int random;
         Random _random = new Random();
@@ -256,6 +260,11 @@ public class Stage3 extends DrawableGameComponent {
 
         CreateObj(mObjTable_1);
         ObjectGeneration(true);
+        if (GameParams.loadingMask != null)
+            if (!GameParams.loadingMask.isAlive) {
+                GameParams.loadingMask.isAlive = true;
+                GameParams.loadingMask.state = GameObj.State.step1;
+            }
     }
 
     @Override
@@ -265,21 +274,6 @@ public class Stage3 extends DrawableGameComponent {
             mFpsText.message = "actual FPS: " + mGameEntry.actualFPS + " FPS (" + mGameEntry.fps
                     + ") " + (int) GameEntry.totalFrames;
         }
-        if (mScore != null)
-            mScore.setTotalScore(GameParams.stage3TotalScore);
-
-        if (mLife1 != null) {
-            mLife1.updateLife();
-            mLife1.action();
-            if (Life1.getLife() <= 0)
-                GameParams.isGameOver = true;
-        }
-
-        if (mTimerBar != null) {
-            mTimerBar.action((int) GameEntry.totalFrames);
-            if (mTimerBar.isTimeout)
-                GameParams.isGameOver = true;
-        }
 
         for (int f = mObjCollections.size() -1 ; f >= 0; f--) {
             mSubObj = (NormalFish) mObjCollections.get(f);
@@ -288,18 +282,45 @@ public class Stage3 extends DrawableGameComponent {
             if (!mSubObj.isAlive)
                 mObjCollections.remove(mSubObj);
         }
-        if (GameParams.isGameOver) {
-            GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
-        } else if (!GameParams.isGameOver && GameParams.stage3TotalScore >= GameParams.stage3BreakScore) {
-            if (GameParams.breakStageMask.state == GameObj.State.step1) {
-                ObjectGeneration(false);
-                SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean(GameParams.STAGE3_COMPLETED, true);
-                editor.apply();
+
+        if (!GameParams.loadingMask.isAlive) {
+            if (mScore != null)
+                mScore.setTotalScore(GameParams.stage3TotalScore);
+
+            if (mLife1 != null) {
+                mLife1.updateLife();
+                mLife1.action();
+                if (Life1.getLife() <= 0)
+                    GameParams.isGameOver = true;
             }
-            if (GameParams.breakStageMask.Action((int) GameEntry.totalFrames))
-                NotifyStageCompleted();
+
+            if (mTimerBar != null) {
+                mTimerBar.action((int) GameEntry.totalFrames);
+                if (mTimerBar.isTimeout)
+                    GameParams.isGameOver = true;
+            }
+
+            if (GameParams.isGameOver) {
+                GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
+            } else if (!GameParams.isGameOver && GameParams.stage3TotalScore >= GameParams.stage3BreakScore) {
+                if (GameParams.breakStageMask.state == GameObj.State.step1) {
+                    ObjectGeneration(false);
+                    SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putBoolean(GameParams.STAGE3_COMPLETED, true);
+                    editor.apply();
+                }
+                if (GameParams.breakStageMask.Action((int) GameEntry.totalFrames))
+                    NotifyStageCompleted();
+            }
+        } else {
+            if (GameParams.loadingMask.Action((int) GameEntry.totalFrames)) {
+                mTimerBar.addRunningFrame(GameParams.loadingMask.getDelayFrame());
+                Message m = new Message();
+                m.what = Events.BREAK_STAGE;
+                m.obj = View.VISIBLE;
+                MainActivity.mMsgHandler.sendMessage(m);
+            }
         }
     }
 
@@ -336,12 +357,13 @@ public class Stage3 extends DrawableGameComponent {
             mSubCanvas.drawBitmap(mTimerBarImage, mTimerBar.srcRect, mTimerBar.destRect, null);
         }
 
-        for (int f = mObjCollections.size() -1 ; f >= 0; f--) {
-            mSubObj = (NormalFish) mObjCollections.get(f);
-            if (mSubObj.isAlive) {
-                mSubCanvas.drawBitmap(mSubObj.image, mSubObj.srcRect, mSubObj.destRect, mSubObj.paint);
+        if (!GameParams.loadingMask.isAlive) {
+            for (int f = mObjCollections.size() -1 ; f >= 0; f--) {
+                mSubObj = (NormalFish) mObjCollections.get(f);
+                if (mSubObj.isAlive) {
+                    mSubCanvas.drawBitmap(mSubObj.image, mSubObj.srcRect, mSubObj.destRect, mSubObj.paint);
+                }
             }
-
         }
 
         if ((GameParams.isGameOver) && GameParams.colorMaskGameOver.isAlive)
@@ -351,6 +373,11 @@ public class Stage3 extends DrawableGameComponent {
         } else if (!GameParams.isGameOver && GameParams.breakStageMask.isAlive) {
             mSubCanvas.drawRect(GameParams.breakStageMask.MaskDestRect, GameParams.breakStageMask.paint);
             GameParams.breakStageMask.draw(mSubCanvas);
+        }
+
+        if (GameParams.loadingMask != null && GameParams.loadingMask.isAlive) {
+            mSubCanvas.drawRect(GameParams.loadingMask.MaskDestRect, GameParams.loadingMask.paint);
+            GameParams.loadingMask.draw(mSubCanvas);
         }
     }
 

@@ -36,6 +36,10 @@ public class TimerBar2 extends GameObj {
         mRunningFrame += Game.setFPS * seconds;
     }
 
+    public void addRunningFrame(int frames) {
+        mRunningFrame += frames;
+    }
+
     public void action(int totalFrame) {
         if (GameParams.isGameOver)
             return;
