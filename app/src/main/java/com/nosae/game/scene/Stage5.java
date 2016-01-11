@@ -48,6 +48,8 @@ public class Stage5 extends DrawableGameComponent {
 
     private GameObj mBackground;
     private Bitmap mBackGroundImage;
+    private GameObj mForeground;
+    private Bitmap mForeGroundImage;
 
     private GameObj mSceneTitle;
     private Bitmap mSceneTitleImage;
@@ -287,10 +289,16 @@ public class Stage5 extends DrawableGameComponent {
         int width, height;
 
         if (mBackground == null) {
-            mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.background_04, GameParams.scaleWidth, GameParams.scaleHeight);
+            mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.background_05_1, GameParams.scaleWidth, GameParams.scaleHeight);
             mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
         }
         mBackground.isAlive = true;
+
+        if (mForeground == null) {
+            mForeGroundImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.background_05_2);
+            mForeground = new GameObj(0, GameParams.scaleHeight - mForeGroundImage.getHeight(), GameParams.scaleWidth, mForeGroundImage.getHeight(), 0, 0, mForeGroundImage.getWidth(), mForeGroundImage.getHeight(), 0, 0, 0);
+        }
+        mForeground.isAlive = true;
 
         if (mSceneTitle == null) {
             mSceneTitleImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
@@ -468,6 +476,11 @@ public class Stage5 extends DrawableGameComponent {
 
         if (mPopoObj != null) {
             mPopoObj.draw(mSubCanvas);
+        }
+
+        if (mForeground.isAlive)
+        {
+            mSubCanvas.drawBitmap(mForeGroundImage, mForeground.srcRect, mForeground.destRect, null);
         }
 
         for (f = mObjCollections.size() -1 ; f >= 0; f--) {
