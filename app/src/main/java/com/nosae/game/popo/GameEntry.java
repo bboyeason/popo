@@ -86,9 +86,9 @@ public class GameEntry extends Game {
 
         GameParams.colorMaskGameOver = new ColorMask(Color.RED, 0);
         GameParams.colorMaskGameOver.isAlive = false;
-        GameParams.breakStageMask = new AnimationMask(R.drawable.break_stage_animation, 7, 1, 7, 3, 2, 60 , 6, 92, 152);
+        GameParams.breakStageMask = new AnimationMask(R.drawable.break_stage_animation, 7, 1, 7, 3, 2, 60, 6, 92, 152);
         GameParams.breakStageMask.isAlive = false;
-        GameParams.loadingMask = new AnimationMask(R.drawable.waiting_popo, 10, 3, 25, 1, 1, 60 , 6, 92, 152);
+        GameParams.loadingMask = new AnimationMask(R.drawable.waiting_popo, 10, 3, 25, 1, 2, 60, 6, 92, 152);
         GameParams.loadingMask.isAlive = true;
         super.Initialize();
     }
