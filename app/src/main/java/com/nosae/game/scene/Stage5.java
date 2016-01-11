@@ -84,10 +84,10 @@ public class Stage5 extends DrawableGameComponent {
             {  5,  0 }, /* 3. Max index */
             {  6,  1 }, /* 4. Death animation start */
             { 14, 19 }, /* 5. Death animation end */
-            {  0,  0 }, /* 6. Touch Score */
+            {  0, 20 }, /* 6. Touch Score */
             { -1, -1 }, /* 7. Arrival Score */
             {  0,  0 }, /* 8. Timer add */
-            { -1, -1 }, /* 9. Life add */
+            { -1,  0 }, /* 9. Life add */
             {  0,  0 }, /* 10. Is cake */
     };
 
@@ -167,6 +167,7 @@ public class Stage5 extends DrawableGameComponent {
         mObj.setMaxIndex(objectTable[3][random]);
         mObj.setDeathIndexStart(objectTable[4][random]);
         mObj.setDeathIndexEnd(objectTable[5][random]);
+        mObj.setTouchScore(objectTable[6][random]);
         mObj.setTimerAdd(objectTable[8][random]);
         mObj.setLifeAdd(objectTable[9][random]);
         if (objectTable.length > 10)
@@ -386,6 +387,7 @@ public class Stage5 extends DrawableGameComponent {
                         if (!mSubObj.readyToDeath) {
                             Life1.addLife(mSubObj.getLifeAdd());
                             mTimerBar.addTimer(mSubObj.getTimerAdd());
+                            GameParams.stage5TotalScore += mSubObj.getTouchScore();
                             mSubObj.readyToDeath = true;
                             if (mSubObj.getLifeAdd() < 0)
                                 GameParams.vibrator.vibrate(50);
