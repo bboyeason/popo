@@ -76,12 +76,12 @@ public class Stage4 extends DrawableGameComponent {
                     R.drawable.d_fish_03,
                     R.drawable.d_fish_04
             },
-            {  1,  1,  1,  1 }, /* Animation column */
-            {  1,  1,  1,  1 }, /* Animation row */
-            {  0,  0,  0,  0 }, /* Max index */
-            {  0,  0,  0,  0 }, /* Death animation start */
-            {  0,  0,  0,  0 }, /* Death animation end */
-            { 10, 20,  0,  0 }, /* Touch Score */
+            { 10, 10, 10, 10 }, /* Animation column */
+            {  3,  3,  2,  2 }, /* Animation row */
+            {  5,  5,  5,  5 }, /* Max index */
+            {  6,  6,  6,  6 }, /* Death animation start */
+            { 24, 24, 14, 14 }, /* Death animation end */
+            { 20, 20,  0,  0 }, /* Touch Score */
             { -1, -1, -1, -1 }, /* Arrival Score */
             {  0,  0,  0,  0 }, /* Timer add */
             {  0,  0, -1, -2 } /* Life add */

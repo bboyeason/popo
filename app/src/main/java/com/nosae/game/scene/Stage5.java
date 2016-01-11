@@ -74,18 +74,19 @@ public class Stage5 extends DrawableGameComponent {
     private Rect stackRect;
     private int[][] mFishTable = {
             {
-                    R.drawable.d_fish_03
+                    R.drawable.e_fish_01,
+                    R.drawable.e_fish_02
             },
-            {  1 }, /* 1. Animation column */
-            {  1 }, /* 2. Animation row */
-            {  0 }, /* 3. Max index */
-            {  0 }, /* 4. Death animation start */
-            {  0 }, /* 5. Death animation end */
-            {  0 }, /* 6. Touch Score */
-            { -1 }, /* 7. Arrival Score */
-            {  0 }, /* 8. Timer add */
-            { -1 }, /* 9. Life add */
-            {  0 }, /* 10. Is cake */
+            { 10,  5 }, /* 1. Animation column */
+            {  2,  4 }, /* 2. Animation row */
+            {  5,  0 }, /* 3. Max index */
+            {  6,  1 }, /* 4. Death animation start */
+            { 14, 19 }, /* 5. Death animation end */
+            {  0,  0 }, /* 6. Touch Score */
+            { -1, -1 }, /* 7. Arrival Score */
+            {  0,  0 }, /* 8. Timer add */
+            { -1, -1 }, /* 9. Life add */
+            {  0,  0 }, /* 10. Is cake */
     };
 
     private int[][] mCakeTable = {
