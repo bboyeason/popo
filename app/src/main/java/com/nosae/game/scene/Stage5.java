@@ -51,9 +51,6 @@ public class Stage5 extends DrawableGameComponent {
     private GameObj mForeground;
     private Bitmap mForeGroundImage;
 
-    private GameObj mSceneTitle;
-    private Bitmap mSceneTitleImage;
-
     private Score mScore;
 
     private Text mFpsText;
@@ -301,11 +298,6 @@ public class Stage5 extends DrawableGameComponent {
         }
         mForeground.isAlive = true;
 
-        if (mSceneTitle == null) {
-            mSceneTitleImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
-            mSceneTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, 0);
-        }
-
         if (DebugConfig.isFpsDebugOn) {
             mFpsText = new Text(GameParams.halfWidth - 50, 100, 12, "FPS", Color.BLUE);
         }
@@ -451,11 +443,6 @@ public class Stage5 extends DrawableGameComponent {
         {
             mSubCanvas.drawBitmap(mBackGroundImage, mBackground.srcRect, mBackground.destRect, null);
         }
-
-        if (mSceneTitle != null) {
-            mSubCanvas.drawBitmap(mSceneTitleImage, mSceneTitle.srcRect, mSceneTitle.destRect, null);
-        }
-
 
         if (DebugConfig.isFpsDebugOn) {
             mSubCanvas.drawText(mFpsText.message, mFpsText.x, mFpsText.y, mFpsText.paint);

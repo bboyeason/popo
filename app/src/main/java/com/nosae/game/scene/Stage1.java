@@ -40,9 +40,6 @@ public class Stage1 extends DrawableGameComponent {
     private GameObj mBackground;
     private Bitmap mBackGroundImage;
 
-    private GameObj mSceneTitle;
-    private Bitmap mSceneTitleImage;
-
     private NormalFish mSubFishObj;
 
     public Popo mPopoObj;
@@ -224,11 +221,6 @@ public class Stage1 extends DrawableGameComponent {
         // Random fish generator
         FishGeneration(true);
 
-        if (mSceneTitle == null) {
-            mSceneTitleImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.a_stage_title);
-            mSceneTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, 0);
-        }
-
         if (mPopoObj == null) {
             Bitmap popoImage = BitmapFactory.decodeResource(GameParams.res,
                     R.drawable.popo);
@@ -404,10 +396,6 @@ public class Stage1 extends DrawableGameComponent {
                 }
             }
 */
-        }
-
-        if (mSceneTitle != null) {
-            mSubCanvas.drawBitmap(mSceneTitleImage, mSceneTitle.srcRect, mSceneTitle.destRect, mSceneTitle.paint);
         }
 
         for (f = mFishCollections.size() - 1; f >= 0; f--) {

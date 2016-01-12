@@ -43,9 +43,6 @@ public class Stage2 extends DrawableGameComponent {
     private GameObj mBackground;
     private Bitmap mBackGroundImage;
 
-    private GameObj mSceneTitle;
-    private Bitmap mSceneTitleImage;
-
     private Score mScore;
 
     private GameObj mLifeIcon;
@@ -252,11 +249,6 @@ public class Stage2 extends DrawableGameComponent {
         }
         mBackground.isAlive = true;
 
-        if (mSceneTitle == null) {
-            mSceneTitleImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_stage_title);
-            mSceneTitle = new GameObj(GameParams.halfWidth, (int) (10 * GameParams.density), mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, mSceneTitleImage.getWidth(), mSceneTitleImage.getHeight(), 0, 0, 0);
-        }
-
         if (mScore == null)
             mScore = new Score((int) (20 * GameParams.density), (int) (20 * GameParams.density));
 
@@ -401,10 +393,6 @@ public class Stage2 extends DrawableGameComponent {
 
         if (DebugConfig.isFpsDebugOn) {
             mSubCanvas.drawText(mFpsText.message, mFpsText.x, mFpsText.y, mFpsText.paint);
-        }
-
-        if (mSceneTitle != null) {
-            mSubCanvas.drawBitmap(mSceneTitleImage, mSceneTitle.srcRect, mSceneTitle.destRect, mSceneTitle.paint);
         }
 
         if (mScore != null)
