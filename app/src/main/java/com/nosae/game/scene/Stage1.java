@@ -398,15 +398,6 @@ public class Stage1 extends DrawableGameComponent {
 */
         }
 
-        for (f = mFishCollections.size() - 1; f >= 0; f--) {
-            mSubFishObj = (NormalFish) mFishCollections.get(f);
-            if (mSubFishObj.isAlive) {
-                mSubCanvas.drawBitmap(mSubFishObj.image, mSubFishObj.srcRect,
-                        mSubFishObj.destRect, mSubFishObj.paint);
-            }
-
-        }
-
 //        if (mPopoObj != null && mPopoObj.isAlive) {
 //            mSubCanvas.drawBitmap(mPopoObj.popoImage, mPopoObj.srcRect, mPopoObj.destRect,
 //                    mPopoObj.paint);
@@ -432,6 +423,15 @@ public class Stage1 extends DrawableGameComponent {
 
         if (mTimerBar != null) {
             mSubCanvas.drawBitmap(mTimerBarImage, mTimerBar.srcRect, mTimerBar.destRect, null);
+        }
+        
+        for (f = mFishCollections.size() - 1; f >= 0; f--) {
+            mSubFishObj = (NormalFish) mFishCollections.get(f);
+            if (mSubFishObj.isAlive) {
+                mSubCanvas.drawBitmap(mSubFishObj.image, mSubFishObj.srcRect,
+                        mSubFishObj.destRect, mSubFishObj.paint);
+            }
+
         }
 
         if ((GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.colorMaskGameOver.isAlive) {
