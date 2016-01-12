@@ -171,12 +171,16 @@ public class FishObj extends GameObj {
         this.moveTo(GameParams.screenRect.left + r.nextInt(GameParams.scaleWidth - srcWidth), GameParams.screenRect.top - srcHeight + 1);
     }
 
+    protected void FishAnimation(boolean readyToDeath) {
+        FishAnimation(readyToDeath, 0);
+    }
 
-    protected void FishAnimation(boolean readyToDeath)
+    protected void FishAnimation(boolean readyToDeath, long frameTime)
     {
         // Set animation frame index
         if (!readyToDeath) {
-            index += offset;
+            if(frameTime % animationSpeed == 0)
+                index += offset;
 
             if (index > maxIndex || index < 0)
                 index = 0;

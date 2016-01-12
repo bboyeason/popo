@@ -73,15 +73,16 @@ public class Stage4 extends DrawableGameComponent {
                     R.drawable.d_fish_03,
                     R.drawable.d_fish_04
             },
-            { 10, 10, 10, 10 }, /* Animation column */
-            {  3,  3,  2,  2 }, /* Animation row */
-            {  5,  5,  5,  5 }, /* Max index */
-            {  6,  6,  6,  6 }, /* Death animation start */
-            { 24, 24, 14, 14 }, /* Death animation end */
-            { 20, 20,  0,  0 }, /* Touch Score */
-            { -1, -1, -1, -1 }, /* Arrival Score */
-            {  0,  0,  0,  0 }, /* Timer add */
-            {  0,  0, -1, -2 } /* Life add */
+            { 10, 10, 10, 10 }, /* 1. Animation column */
+            {  3,  3,  2,  2 }, /* 2. Animation row */
+            {  5,  5,  5,  5 }, /* 3. Max index */
+            {  6,  6,  6,  6 }, /* 4. Death animation start */
+            { 24, 24, 14, 14 }, /* 5. Death animation end */
+            { 20, 20,  0,  0 }, /* 6. Touch Score */
+            { -1, -1, -1, -1 }, /* 7. Arrival Score */
+            {  0,  0,  0,  0 }, /* 8. Timer add */
+            {  0,  0, -1, -2 }, /* 9. Life add */
+            {  1,  1,  2,  2 } /* 10. Animation speed */
     };
 
     private final List<OnStageCompleteListener> mOnStageCompleteListeners;
@@ -175,6 +176,8 @@ public class Stage4 extends DrawableGameComponent {
         mObj.setTouchScore(objectTable[6][random]);
         mObj.setTimerAdd(objectTable[8][random]);
         mObj.setLifeAdd(objectTable[9][random]);
+        if (objectTable.length > 10)
+            mObj.setAnimationSpeed(objectTable[10][random]);
         mObj.isAlive = true;
         mObjCollections.add(mObj);
     }
@@ -302,7 +305,7 @@ public class Stage4 extends DrawableGameComponent {
 
         for (int f = mObjCollections.size() -1 ; f >= 0; f--) {
             mSubObj = (NormalFish) mObjCollections.get(f);
-            mSubObj.Animation();
+            mSubObj.Animation(GameEntry.totalFrames);
             if (!GameParams.loadingMask.isAlive && !GameParams.breakStageMask.isAlive) {
                 if (mSubObj.smartMoveDown(GameParams.screenRect.height())) {
                     mObjCollections.remove(mSubObj);

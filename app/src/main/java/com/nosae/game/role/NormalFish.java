@@ -24,10 +24,13 @@ public class NormalFish extends FishObj {
     }
 
     public void Animation() {
+        Animation(0);
+    }
+    public void Animation(long frameTime) {
         if (index == 0)
             offset = 1;
         else if (index == maxIndex)
             offset = -1;
-        FishAnimation(readyToDeath);
+        FishAnimation(readyToDeath, frameTime);
     }
 }

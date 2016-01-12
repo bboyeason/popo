@@ -37,6 +37,7 @@ public class GameObj {
     public int theta;
 
     public int speed;
+    protected int animationSpeed = 1;
     public int alpha;
     public boolean isAlive;
     public State state = State.step1;
@@ -197,6 +198,10 @@ public class GameObj {
         srcRect.bottom = srcRect.top + srcHeight;
 //        DebugConfig.d("index: " + index);
 //        DebugConfig.d("setAnimationIndex: " + srcRect.left + ", " + srcRect.top + ", " + srcRect.right + ", " + srcRect.bottom);
+    }
+
+    public void setAnimationSpeed(int animationSpeed) {
+        this.animationSpeed = animationSpeed;
     }
     /*
     *//**
