@@ -71,37 +71,31 @@ public class Stage2 extends DrawableGameComponent {
                     R.drawable.b_fish_red_do,
                     R.drawable.b_fish_red_re,
                     R.drawable.b_fish_red_mi,
-                    R.drawable.b_fish_red_fa,
-                    R.drawable.b_fish_red_so,
                     R.drawable.b_fish_yellow_do,
                     R.drawable.b_fish_yellow_re,
                     R.drawable.b_fish_yellow_mi,
-                    R.drawable.b_fish_yellow_fa,
-                    R.drawable.b_fish_yellow_so,
                     R.drawable.b_fish_blue_do,
                     R.drawable.b_fish_blue_re,
                     R.drawable.b_fish_blue_mi,
-                    R.drawable.b_fish_blue_fa,
-                    R.drawable.b_fish_blue_so
             },
-            { 10, 10, 10, 1, 1, 10, 10, 10, 1, 1, 10, 10, 10, 1, 1 }, /* Animation column */
-            { 2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 2, 1, 1 }, /* Animation row */
-            { 5, 5, 5, 0, 0, 5, 5, 5, 0, 0, 5, 5, 5, 0, 0 }, /* Max index */
-            { 6, 6, 6, 0, 0, 6, 6, 6, 0, 0, 6, 6, 6, 0, 0 }, /* Death animation start */
-            { 14, 14, 14, 0, 0, 14, 14, 14, 0, 0, 14, 14, 14, 0, 0 }, /* Death animation end */
+            { 10, 10, 10, 10, 10, 10, 10, 10, 10 }, /* Animation column */
+            { 2, 2, 2, 2, 2, 2, 2, 2, 2 }, /* Animation row */
+            { 5, 5, 5, 5, 5, 5, 5, 5, 5 }, /* Max index */
+            { 6, 6, 6, 6, 6, 6, 6, 6, 6 }, /* Death animation start */
+            { 14, 14, 14, 14, 14, 14, 14, 14, 14 }, /* Death animation end */
     };
 
     /* Color, red:0, yellow:1, blue:2 */
     private Quiz.quizColor mFishTableColor[] = {
-            Quiz.quizColor.red, Quiz.quizColor.red, Quiz.quizColor.red, Quiz.quizColor.red, Quiz.quizColor.red,
-            Quiz.quizColor.yellow, Quiz.quizColor.yellow, Quiz.quizColor.yellow, Quiz.quizColor.yellow, Quiz.quizColor.yellow,
-            Quiz.quizColor.blue, Quiz.quizColor.blue, Quiz.quizColor.blue, Quiz.quizColor.blue, Quiz.quizColor.blue
+            Quiz.quizColor.red, Quiz.quizColor.red, Quiz.quizColor.red,
+            Quiz.quizColor.yellow, Quiz.quizColor.yellow, Quiz.quizColor.yellow,
+            Quiz.quizColor.blue, Quiz.quizColor.blue, Quiz.quizColor.blue,
     };
     /* Syllable */
     private Quiz.quizSyllable mFishTableSyllable[] = {
-            Quiz.quizSyllable.Do, Quiz.quizSyllable.Re, Quiz.quizSyllable.Mi, Quiz.quizSyllable.Fa, Quiz.quizSyllable.So,
-            Quiz.quizSyllable.Do, Quiz.quizSyllable.Re, Quiz.quizSyllable.Mi, Quiz.quizSyllable.Fa, Quiz.quizSyllable.So,
-            Quiz.quizSyllable.Do, Quiz.quizSyllable.Re, Quiz.quizSyllable.Mi, Quiz.quizSyllable.Fa, Quiz.quizSyllable.So
+            Quiz.quizSyllable.Do, Quiz.quizSyllable.Re, Quiz.quizSyllable.Mi,
+            Quiz.quizSyllable.Do, Quiz.quizSyllable.Re, Quiz.quizSyllable.Mi,
+            Quiz.quizSyllable.Do, Quiz.quizSyllable.Re, Quiz.quizSyllable.Mi
     };
 
     private Stage2_fish mSubFishObj;
@@ -305,11 +299,9 @@ public class Stage2 extends DrawableGameComponent {
 
         if (mQuiz == null) {
             mQuizImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_quiz);
-            width = mQuizImage.getWidth() / 5;
+            width = mQuizImage.getWidth() / 3;
             height = mQuizImage.getHeight() / 3;
-            mQuiz = new Quiz(GameParams.halfWidth + GameParams.halfWidth / 2 - width / 2,
-                    mPopoObj.destRect.top + mPopoObj.destHeight / 2 - height / 2,
-                    width, height, 0, 0, width, height, 0, 0, 0);
+            mQuiz = new Quiz(GameParams.scaleWidth - GameParams.halfWidth / 3 - width / 2, mPopoObj.destRect.top - height, width, height, 0, 0, width, height, 0, 0, 0);
         }
         mQuiz.randomQuiz();
 

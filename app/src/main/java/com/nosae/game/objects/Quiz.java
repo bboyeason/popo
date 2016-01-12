@@ -14,7 +14,7 @@ public class Quiz extends GameObj{
         public quizSyllable syllable;
     }
     public enum quizColor {red, yellow, blue}
-    public enum quizSyllable {Do, Re, Mi, Fa, So}
+    public enum quizSyllable {Do, Re, Mi}
 
     public static QuizItem quizTable[];
     public static int currentQuiz;
@@ -37,13 +37,13 @@ public class Quiz extends GameObj{
         this.halfWidth = this.width >> 1;
         this.halfHeight = this.height >> 1;
 
-        quizTable = new QuizItem[15];
+        quizTable = new QuizItem[9];
         for (int n = 0; n < quizTable.length; n++) {
             quizTable[n] = new QuizItem();
             quizColor[] colors = {quizColor.red, quizColor.yellow, quizColor.blue};
-            quizTable[n].color = colors[n / 5];
-            quizSyllable[] syllables = {quizSyllable.Do, quizSyllable.Re, quizSyllable.Mi, quizSyllable.Fa, quizSyllable.So};
-            quizTable[n].syllable = syllables[n % 5];
+            quizTable[n].color = colors[n / 3];
+            quizSyllable[] syllables = {quizSyllable.Do, quizSyllable.Re, quizSyllable.Mi};
+            quizTable[n].syllable = syllables[n % 3];
 //            DebugConfig.d("quizTable[" + n + "]: " + quizTable[n].color + ", " + quizTable[n].syllable);
         }
 
@@ -51,19 +51,19 @@ public class Quiz extends GameObj{
     }
 
     private void initQuiz() {
-        oldQuiz = mRandom.nextInt(14);
+        oldQuiz = mRandom.nextInt(8);
     }
 
     public void randomQuiz() {
 //        if (!isQuizHit)
 //            return;
 //        isQuizHit = false;
-        currentQuiz = mRandom.nextInt(14);
+        currentQuiz = mRandom.nextInt(8);
         if (currentQuiz != oldQuiz) {
             index = currentQuiz;
             oldQuiz = currentQuiz;
             DebugConfig.d("Current quiz: " + quizTable[index].color + ", " + quizTable[index].syllable);
-            int col = 5;
+            int col = 3;
             setAnimationIndex(col);
         } else {
             DebugConfig.d("Same quiz, random select again.");
