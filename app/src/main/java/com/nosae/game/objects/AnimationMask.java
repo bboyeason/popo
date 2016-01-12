@@ -20,23 +20,16 @@ public class AnimationMask extends GameObj {
     public Rect MaskDestRect;
     public int maxIndex;// Animation frame count
     private int repeat;
+    private int id, column, row;
 
     public AnimationMask(int id, int column, int row, int frameCount, int repeat, int speed, int alpha, int r, int g, int b) {
         super(alpha, r, g, b, speed);
         this.repeat = repeat;
         this.maxIndex = frameCount - 1;
+        this.id = id;
+        this.column = column;
+        this.row = row;
         MaskDestRect = new Rect(0, 0, GameParams.scaleWidth, GameParams.scaleHeight);
-        try {
-            bitmap = BitmapFactory.decodeResource(GameParams.res, id);
-        } catch (OutOfMemoryError e) {
-            DebugConfig.e(e.getMessage());
-        }
-        if (bitmap != null) {
-            srcWidth = bitmap.getWidth() / column;
-            srcHeight = bitmap.getHeight() / row;
-        }
-        srcRect = new Rect(0, 0, srcWidth, srcHeight);
-        destRect = new Rect(GameParams.halfWidth - srcWidth / 2, GameParams.halfHeight - srcHeight / 2, GameParams.halfWidth + srcWidth / 2, GameParams.halfHeight + srcHeight / 2);
     }
 
     public int getDelayFrame() {
@@ -50,6 +43,17 @@ public class AnimationMask extends GameObj {
                     isAlive = true;
                 startFrame = frameTime;
                 state = State.step2;
+                try {
+                    bitmap = BitmapFactory.decodeResource(GameParams.res, id);
+                } catch (OutOfMemoryError e) {
+                    DebugConfig.e(e.getMessage());
+                }
+                if (bitmap != null) {
+                    srcWidth = bitmap.getWidth() / column;
+                    srcHeight = bitmap.getHeight() / row;
+                }
+                srcRect = new Rect(0, 0, srcWidth, srcHeight);
+                destRect = new Rect(GameParams.halfWidth - srcWidth / 2, GameParams.halfHeight - srcHeight / 2, GameParams.halfWidth + srcWidth / 2, GameParams.halfHeight + srcHeight / 2);
 
                 break;
             case step2:
@@ -64,7 +68,7 @@ public class AnimationMask extends GameObj {
                         delayFrame = frameTime;
                         isAlive = false;
                         index = 0;
-//                        release();
+                        release();
                         return true;
                     }
                 }
