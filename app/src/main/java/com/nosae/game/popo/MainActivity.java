@@ -212,6 +212,9 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
             GameParams.msgHandler.removeMessages(Events.CREATE_OBJECT);
             GameParams.msgHandler.removeMessages(Events.CREATE_CAKE);
         }
+        if (GameParams.music != null) {
+            GameParams.music = null;
+        }
         super.onStop();
     }
 

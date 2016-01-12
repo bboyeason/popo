@@ -142,7 +142,6 @@ public class GameEntry extends Game {
 
                     // TODO move this to somewhere before GameEntry Run()
                     if (GameParams.music == null) {
-//                        GameParams.music.player.release();
                         GameParams.music = new Music(mMainActivity, R.raw.stage1, GameParams.musicVolumeRatio);
                         GameParams.music.setLooping(true);
                         GameParams.music.Play();
@@ -154,6 +153,11 @@ public class GameEntry extends Game {
                     if (mStage2 == null)
                         mStage2 = new Stage2(this);
                     Components.add(mStage2);
+                    if (GameParams.music == null) {
+                        GameParams.music = new Music(mMainActivity, R.raw.stage2, GameParams.musicVolumeRatio);
+                        GameParams.music.setLooping(true);
+                        GameParams.music.Play();
+                    }
                     break;
 
                 case Stage3:
@@ -161,6 +165,11 @@ public class GameEntry extends Game {
                     if (mStage3 == null)
                         mStage3 = new Stage3(this);
                     Components.add(mStage3);
+                    if (GameParams.music == null) {
+                        GameParams.music = new Music(mMainActivity, R.raw.stage3, GameParams.musicVolumeRatio);
+                        GameParams.music.setLooping(true);
+                        GameParams.music.Play();
+                    }
                     break;
 
                 case Stage4:
@@ -168,6 +177,11 @@ public class GameEntry extends Game {
                     if (mStage4 == null)
                         mStage4 = new Stage4(this);
                     Components.add(mStage4);
+                    if (GameParams.music == null) {
+                        GameParams.music = new Music(mMainActivity, R.raw.stage4, GameParams.musicVolumeRatio);
+                        GameParams.music.setLooping(true);
+                        GameParams.music.Play();
+                    }
                     break;
 
                 case Stage5:
@@ -175,6 +189,11 @@ public class GameEntry extends Game {
                     if (mStage5 == null)
                         mStage5 = new Stage5(this);
                     Components.add(mStage5);
+                    if (GameParams.music == null) {
+                        GameParams.music = new Music(mMainActivity, R.raw.stage5, GameParams.musicVolumeRatio);
+                        GameParams.music.setLooping(true);
+                        GameParams.music.Play();
+                    }
                     break;
             }
 
