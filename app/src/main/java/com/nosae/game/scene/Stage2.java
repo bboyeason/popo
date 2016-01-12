@@ -58,10 +58,6 @@ public class Stage2 extends DrawableGameComponent {
     private Popo mPopoObj;
     private Bitmap mPopoImage;
 
-    private GameObj mStaff;
-
-    private Bitmap mStaffImage;
-
     private Quiz mQuiz;
     private Bitmap mQuizImage;
     public static boolean isQuizHit = true;
@@ -307,11 +303,6 @@ public class Stage2 extends DrawableGameComponent {
         }
         mPopoObj.isAlive = true;
 
-        if (mStaff == null) {
-            mStaffImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_staff);
-            mStaff = new GameObj(0, GameParams.scaleHeight - mPopoImage.getHeight() - mStaffImage.getHeight(), GameParams.scaleWidth, mStaffImage.getHeight(), 0, 0, mStaffImage.getWidth(), mStaffImage.getHeight(), 0, 0, 0);
-        }
-
         if (mQuiz == null) {
             mQuizImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_quiz);
             width = mQuizImage.getWidth() / 5;
@@ -441,10 +432,6 @@ public class Stage2 extends DrawableGameComponent {
 
         if (mPopoObj != null) {
             mPopoObj.draw(mSubCanvas);
-        }
-
-        if (mStaff != null) {
-            mSubCanvas.drawBitmap(mStaffImage, mStaff.srcRect, mStaff.destRect, mStaff.paint);
         }
 
         if (mQuiz != null) {
