@@ -21,16 +21,16 @@ public class TimerBar extends GameObj {
     private int mRunningFrame = 0; // fps * 30 seconds
     public boolean isTimeout = false;
     public static Integer[] mTimeTable = {
-            R.drawable.time_9,
-            R.drawable.time_8,
-            R.drawable.time_7,
-            R.drawable.time_6,
-            R.drawable.time_5,
-            R.drawable.time_4,
-            R.drawable.time_3,
-            R.drawable.time_2,
-            R.drawable.time_1,
-            R.drawable.time_0
+//            R.drawable.time_9,
+//            R.drawable.time_8,
+//            R.drawable.time_7,
+//            R.drawable.time_6,
+//            R.drawable.time_5,
+//            R.drawable.time_4,
+//            R.drawable.time_3,
+//            R.drawable.time_2,
+//            R.drawable.time_1,
+//            R.drawable.time_0
     };
 
     public TimerBar(int gamingTime) {
