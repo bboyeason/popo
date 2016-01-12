@@ -33,6 +33,7 @@ public class StageSwipe extends FragmentActivity {
     private Button mExitButton;
     private static int DELAY_ACTIVITY = 100;
     private static StageSwipe sInstance;
+    private Music mMusic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,10 @@ public class StageSwipe extends FragmentActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        if (mMusic == null) {
+            mMusic = new Music(this, R.raw.stage_selection, GameParams.musicVolumeRatio);
+            mMusic.setLooping(true);
+        }
 
         // Transparent effect
         Animation amAlpha = new AlphaAnimation(0.3f, 1.0f);
@@ -160,5 +165,26 @@ public class StageSwipe extends FragmentActivity {
             });
             return rootView;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mMusic != null) {
+            mMusic.setMusicVolume(GameParams.musicVolumeRatio);
+            mMusic.Play();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mMusic != null)
+            mMusic.Pause();
     }
 }
