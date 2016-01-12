@@ -47,13 +47,6 @@ public class Menu extends Activity {
             mMusic.setLooping(true);
         }
 
-        imageViewMainRole.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Menu.this, StageSwipe.class);
-                startActivity(i);
-            }
-        });
         logoInit();
     }
 
@@ -78,6 +71,28 @@ public class Menu extends Activity {
         Animation amTranslate = new TranslateAnimation(fromX, toX, fromY, toY);
         amTranslate.setDuration(3000);
         imageViewMainRole.startAnimation(amTranslate);
+        amTranslate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                imageViewMainRole.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(Menu.this, StageSwipe.class);
+                        startActivity(i);
+                    }
+                });
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         Music.soundPoolInit();
         GameParams.soundID = GameParams.soundPool.load(this, R.raw.sound_01, 1);
     }
