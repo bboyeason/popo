@@ -90,18 +90,22 @@ public class Stage5 extends DrawableGameComponent {
 
     private int[][] mCakeTable = {
             {
-                    R.drawable.shit
+                    R.drawable.e_cake_01,
+                    R.drawable.e_cake_02,
+                    R.drawable.e_cake_03,
+                    R.drawable.e_cake_04,
+                    R.drawable.e_cake_05
             },
-            { 1 }, /* 1. Animation column */
-            { 1 }, /* 2. Animation row */
-            { 0 }, /* 3. Max index */
-            { 0 }, /* 4. Death animation start */
-            { 0 }, /* 5. Death animation end */
-            { 0 }, /* 6. Touch Score */
-            { 0 }, /* 7. Arrival Score */
-            { 0 }, /* 8. Timer add */
-            { 0 }, /* 9. Life add */
-            { 1 }, /* 10. Is cake */
+            { 1, 1, 1, 1, 1 }, /* 1. Animation column */
+            { 1, 1, 1, 1, 1 }, /* 2. Animation row */
+            { 0, 0, 0, 0, 0 }, /* 3. Max index */
+            { 0, 0, 0, 0, 0 }, /* 4. Death animation start */
+            { 0, 0, 0, 0, 0 }, /* 5. Death animation end */
+            { 0, 0, 0, 0, 0 }, /* 6. Touch Score */
+            { 0, 0, 0, 0, 0 }, /* 7. Arrival Score */
+            { 0, 0, 0, 0, 0 }, /* 8. Timer add */
+            { 0, 0, 0, 0, 0 }, /* 9. Life add */
+            { 1, 1, 1, 1, 1 }, /* 10. Is cake */
     };
 
     private final List<OnStageCompleteListener> mOnStageCompleteListeners;
@@ -137,14 +141,17 @@ public class Stage5 extends DrawableGameComponent {
         GameParams.msgHandler = new MsgHandler(this);
     }
 
-    private void CreateObjects(int[][] objectTable) {
+    private void CreateObjects(int[][] objectTable, boolean inOrder) {
         if (GameParams.loadingMask.isAlive || mGameEntry.mMainActivity.mToggleButton.isChecked())
             return;
         int width, height;
         int speed;
         int random;
         Random _random = new Random();
-        random = _random.nextInt(objectTable[0].length);
+        if (!inOrder)
+            random = _random.nextInt(objectTable[0].length);
+        else
+            random = mCakes.size();
         speed = _random.nextInt(GameParams.stage5RandomSpeed) + GameParams.stage5RandomSpeed;
         Bitmap objImage;
         try {
@@ -184,17 +191,14 @@ public class Stage5 extends DrawableGameComponent {
                 else if (mPopoObj.getX() + mPopoObj.destWidth > GameParams.screenRect.right)
                     mPopoObj.setX(GameParams.screenRect.right - mPopoObj.destWidth);
 
-                int p = mCakes.size();
-                if (p == 0)
-                    stackRect = mPopoObj.destRect;
-
                 for (int i = mCakes.size() -1 ; i >= 0; i--) {
                     mSubObj = mCakes.get(i);
-                    mSubObj.setX(mPopoObj.getX());
-                    mSubObj.setY(mPopoObj.getY() - p * mSubObj.destHeight);
-                    if (p == mCakes.size())
+                    if (i == mCakes.size() - 1)
                         stackRect = mSubObj.destRect;
-                    p--;
+                    mSubObj.setX(mPopoObj.getX() + mPopoObj.srcWidth / 2 - mSubObj.halfWidth);
+                    mSubObj.setY(mPopoObj.getY());
+                    for (int j = i; j >= 0; j--)
+                        mSubObj.addY((int) (-mCakes.get(j).srcHeight + 5 * GameParams.density));
                 }
             }
         }
@@ -212,7 +216,7 @@ public class Stage5 extends DrawableGameComponent {
                 if (GameParams.isGameOver || GameParams.isClearStage5)
                     return;
 
-                CreateObjects(mFishTable);
+                CreateObjects(mFishTable, false);
                 if (GameParams.onOff) {
                     Message m = new Message();
                     m.what = Events.CREATE_FISH;
@@ -223,7 +227,7 @@ public class Stage5 extends DrawableGameComponent {
                 if (GameParams.isGameOver || GameParams.isClearStage5)
                     return;
 
-                CreateObjects(GameParams.specialObjectTable);
+                CreateObjects(GameParams.specialObjectTable, false);
                 if (GameParams.onOff) {
                     Message m = new Message();
                     m.what = Events.CREATE_OBJECT;
@@ -234,7 +238,7 @@ public class Stage5 extends DrawableGameComponent {
                 if (GameParams.isGameOver || GameParams.isClearStage5)
                     return;
 
-                CreateObjects(mCakeTable);
+                CreateObjects(mCakeTable, true);
                 if (GameParams.onOff) {
                     Message m = new Message();
                     m.what = Events.CREATE_CAKE;
@@ -255,7 +259,6 @@ public class Stage5 extends DrawableGameComponent {
         GameParams.stage5TotalScore = 0;
         GameParams.isClearStage5 = false;
         mRandom = new Random();
-
         mObjCollections = new FishCollection();
     }
 
@@ -339,6 +342,8 @@ public class Stage5 extends DrawableGameComponent {
             Bitmap mPopoImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.popo);
             mPopoObj = new Popo(mPopoImage, GameParams.halfWidth - mPopoImage.getWidth() / 2, GameParams.scaleHeight - mPopoImage.getHeight(), mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, 0);
         }
+        stackRect = mPopoObj.destRect;
+
         mPopoObj.isAlive = true;
         ObjectGeneration(true);
         if (GameParams.loadingMask != null)
@@ -480,7 +485,7 @@ public class Stage5 extends DrawableGameComponent {
 
         }
 
-        for (f = mCakes.size() -1 ; f >= 0; f--) {
+        for (f = 0 ; f < mCakes.size(); f++) {
             mSubObj = mCakes.get(f);
             if (mSubObj.isAlive) {
                 mSubCanvas.drawBitmap(mSubObj.image, mSubObj.srcRect, mSubObj.destRect, mSubObj.paint);
