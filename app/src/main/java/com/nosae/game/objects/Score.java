@@ -56,7 +56,7 @@ public class Score extends GameObj {
         Bitmap bitmap;
         for (int i = 0; i < digits.length; i++) {
             bitmap  = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mScore[digits[i]]);
-            canvas.drawBitmap(bitmap, destX + i * bitmap.getWidth() ,destY ,null);
+            canvas.drawBitmap(bitmap, destX + i * bitmap.getWidth() + 5 * GameParams.density, destY, null);
         }
     }
 
