@@ -22,6 +22,7 @@ import com.nosae.game.objects.Life1;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar2;
 import com.nosae.game.role.NormalFish;
+import com.nosae.game.role.Popo;
 import com.nosae.game.settings.DebugConfig;
 
 import java.util.ArrayList;
@@ -47,6 +48,9 @@ public class Stage3 extends DrawableGameComponent {
 
     public TimerBar2 mTimerBar;
     public Bitmap mTimerBarImage;
+
+    private Popo mPopoObj;
+    private Bitmap mPopoImage;
 
     private GameObj mLifeIcon;
     private Bitmap mLifeImage;
@@ -260,6 +264,12 @@ public class Stage3 extends DrawableGameComponent {
             mTimerBar.setStartFrame((int) GameEntry.totalFrames);
         }
 
+        if (mPopoObj == null) {
+            mPopoImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.c_popo_01);
+            mPopoObj = new Popo(mPopoImage, 0, GameParams.scaleHeight - mPopoImage.getHeight(), mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, 0);
+        }
+        mPopoObj.isAlive = true;
+
         ObjectGeneration(true);
         if (GameParams.loadingMask != null)
             if (!GameParams.loadingMask.isAlive) {
@@ -356,6 +366,10 @@ public class Stage3 extends DrawableGameComponent {
 
         if (mTimerBar != null) {
             mSubCanvas.drawBitmap(mTimerBarImage, mTimerBar.srcRect, mTimerBar.destRect, null);
+        }
+
+        if (mPopoObj != null) {
+            mPopoObj.draw(mSubCanvas);
         }
 
         if (!GameParams.loadingMask.isAlive) {

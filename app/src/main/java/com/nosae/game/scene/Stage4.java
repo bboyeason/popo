@@ -283,7 +283,7 @@ public class Stage4 extends DrawableGameComponent {
         }
 
         if (mPopoObj == null) {
-            Bitmap mPopoImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.popo);
+            Bitmap mPopoImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.d_popo_01);
             mPopoObj = new Popo(mPopoImage, GameParams.halfWidth - mPopoImage.getWidth() / 2, GameParams.scaleHeight - mPopoImage.getHeight(), mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, 0);
         }
         mPopoObj.isAlive = true;

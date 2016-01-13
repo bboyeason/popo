@@ -282,10 +282,8 @@ public class Stage2 extends DrawableGameComponent {
         }
 
         if (mPopoObj == null) {
-            mPopoImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.popo);
-            Bitmap mRule2Image = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_role2);
-            mPopoObj = new Popo(mPopoImage, GameParams.halfWidth - mPopoImage.getWidth() / 2, GameParams.scaleHeight - mPopoImage.getHeight(), mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, 0);
-            mPopoObj.role2 = mPopoObj.new Role2(mRule2Image, mPopoObj.getX() - mRule2Image.getWidth(), GameParams.scaleHeight - mRule2Image.getHeight(), mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, mRule2Image.getWidth(), mRule2Image.getHeight(), 0, 0, 0);
+            mPopoImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_popo_01);
+            mPopoObj = new Popo(mPopoImage, 0, GameParams.scaleHeight - mPopoImage.getHeight(), mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, 0);
         }
         mPopoObj.isAlive = true;
 
@@ -293,7 +291,7 @@ public class Stage2 extends DrawableGameComponent {
             mQuizImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_quiz);
             width = mQuizImage.getWidth() / 3;
             height = mQuizImage.getHeight() / 3;
-            mQuiz = new Quiz(GameParams.scaleWidth - GameParams.halfWidth / 3 - width / 2, mPopoObj.destRect.top - height, width, height, 0, 0, width, height, 0, 0, 0);
+            mQuiz = new Quiz(GameParams.scaleWidth - GameParams.halfWidth / 3 - width / 2, mPopoObj.destRect.top, width, height, 0, 0, width, height, 0, 0, 0);
         }
         mQuiz.randomQuiz();
 
@@ -421,9 +419,6 @@ public class Stage2 extends DrawableGameComponent {
         for (f = mFishCollections.size() -1 ; f >= 0; f--) {
             mSubFishObj = (Stage2_fish) mFishCollections.get(f);
             if (mSubFishObj != null && mSubFishObj.isAlive) {
-//                mSubCanvas.rotate(mSubFishObj.theta - 90, mSubFishObj.getX()
-//                        + Aircraft.halfWidth, mSubFishObj.getY()
-//                        + Aircraft.halfHeight);
                 mSubCanvas.drawBitmap(mSubFishObj.image, mSubFishObj.srcRect,
                         mSubFishObj.destRect, mSubFishObj.paint);
             }
