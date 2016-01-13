@@ -70,6 +70,9 @@ public class GameObj {
         this.speed = speed;
     }
 
+    public GameObj()
+    {
+    }
     public GameObj(int destX,int destY,int destWidth,int destHeight,int srcX,int srcY,int srcWidth,int srcHeight,int speed,int color,int theta)
     {
         this.destWidth = destWidth;
@@ -79,7 +82,7 @@ public class GameObj {
         this.srcWidth = srcWidth;
         this.srcHeight = srcHeight;
         this.destRect = new Rect(destX, destY, destX + destWidth, destY + destHeight);
-        this.srcRect = new Rect(srcX, srcY, srcX + srcWidth, srcY + srcHeight);;
+        this.srcRect = new Rect(srcX, srcY, srcX + srcWidth, srcY + srcHeight);
         this.speed = speed;
         setTheta(theta);
 

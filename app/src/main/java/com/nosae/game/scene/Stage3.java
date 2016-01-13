@@ -39,6 +39,7 @@ public class Stage3 extends DrawableGameComponent {
 
     private GameObj mBackground;
     private Bitmap mBackGroundImage;
+    private Bitmap mForeGroundImage;
 
     private Score mScore;
 
@@ -53,25 +54,17 @@ public class Stage3 extends DrawableGameComponent {
 
     private Random mRandom;
 
-    private NormalFish mObj;
     private NormalFish mSubObj;
     public static FishCollection mObjCollections;
-    private int[][] mObjTable_1 = {
-            {
-                    R.drawable.s_0,
-                    R.drawable.s_1,
-                    R.drawable.s_2,
-                    R.drawable.s_3,
-                    R.drawable.s_4,
-                    R.drawable.s_5,
-                    R.drawable.s_6,
-                    R.drawable.s_7,
-                    R.drawable.s_8,
-                    R.drawable.s_9,
-            },
-            { 0, 10, 10, 10, 20, 20 ,20, 0, 0, 0 } // Score
-    };
 
+    private int[][] mHidingTable = {
+            {14, 355, 56, 410},
+            {0, 468, 95, 562},
+            {337,204 ,383, 296},
+            {330, 355, 396, 392},
+            {288, 493, 325, 547}
+    };
+    public static ArrayList<GameObj> mHidingObj;
     private Rect mLimitRect;
 
     private final List<OnStageCompleteListener> mOnStageCompleteListeners;
@@ -123,7 +116,7 @@ public class Stage3 extends DrawableGameComponent {
                 break;
         }
     }
-
+    /*
     public void CreateObj(int[][] objectTable) {
         int width, height;
         Bitmap objImage;
@@ -146,7 +139,7 @@ public class Stage3 extends DrawableGameComponent {
             mObjCollections.add(mObj);
         }
     }
-
+    */
     private void CreateSpecialObjects(int[][] objectTable) {
         if (GameParams.loadingMask.isAlive || mGameEntry.mMainActivity.mToggleButton.isChecked())
             return;
@@ -166,7 +159,7 @@ public class Stage3 extends DrawableGameComponent {
 
         width = objImage.getWidth() / objectTable[1][random];
         height = objImage.getHeight() / objectTable[2][random];
-        mObj = new NormalFish(objImage, 0, 0, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
+        NormalFish mObj = new NormalFish(objImage, 0, 0, width, height, 0, 0, width, height, 0, Color.WHITE, 90);
         mObj.random(mLimitRect);
         mObj.setCol(objectTable[1][random]);
         mObj.setMaxIndex(objectTable[3][random]);
@@ -184,7 +177,7 @@ public class Stage3 extends DrawableGameComponent {
         DebugConfig.d("Stage3 Initialize()");
         GameParams.stage3TotalScore = 0;
         mRandom = new Random();
-
+        mHidingObj = new ArrayList<>();
         mObjCollections = new FishCollection();
         GameParams.isClearStage3 = false;
     }
@@ -205,10 +198,27 @@ public class Stage3 extends DrawableGameComponent {
         int width, height;
 
         if (mBackground == null) {
-            mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.background_03, GameParams.scaleWidth, GameParams.scaleHeight);
+            mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.c_original, GameParams.scaleWidth, GameParams.scaleHeight);
             mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
         }
         mBackground.isAlive = true;
+
+        BitmapFactory.Options dimensions = new BitmapFactory.Options();
+        dimensions.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(GameParams.res, R.drawable.c_testing, dimensions);
+        width =  dimensions.outWidth;
+        height = dimensions.outHeight;
+        DebugConfig.d("Background image size: " + width + " x " + height + " pixels");
+        if (mForeGroundImage == null) {
+            mForeGroundImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.c_testing);
+            GameObj _obj;
+            for (int[] aHidingTable : mHidingTable) {
+                _obj = new GameObj();
+                _obj.srcRect = new Rect((aHidingTable[0] * GameParams.densityDpi / 160), (aHidingTable[1] * GameParams.densityDpi / 160), (aHidingTable[2] * GameParams.densityDpi / 160), (aHidingTable[3] * GameParams.densityDpi / 160));
+                _obj.destRect = new Rect((aHidingTable[0] * GameParams.scaleWidth / width), (aHidingTable[1] * GameParams.scaleHeight / height), (aHidingTable[2] * GameParams.scaleWidth / width), (aHidingTable[3] * GameParams.scaleHeight / height));
+                mHidingObj.add(_obj);
+            }
+        }
 
         if (DebugConfig.isFpsDebugOn) {
             mFpsText = new Text(GameParams.halfWidth - 50, 100, 12, "FPS", Color.BLUE);
@@ -250,7 +260,6 @@ public class Stage3 extends DrawableGameComponent {
             mTimerBar.setStartFrame((int) GameEntry.totalFrames);
         }
 
-        CreateObj(mObjTable_1);
         ObjectGeneration(true);
         if (GameParams.loadingMask != null)
             if (!GameParams.loadingMask.isAlive) {
@@ -324,7 +333,12 @@ public class Stage3 extends DrawableGameComponent {
         {
             mSubCanvas.drawBitmap(mBackGroundImage, mBackground.srcRect, mBackground.destRect, null);
         }
-
+        if (mBackground.isAlive)
+        {
+            for (int i = 0; i < mHidingObj.size(); i++) {
+                mSubCanvas.drawBitmap(mForeGroundImage, mHidingObj.get(i).srcRect, mHidingObj.get(i).destRect, null);
+            }
+        }
         if (DebugConfig.isFpsDebugOn) {
             mSubCanvas.drawText(mFpsText.message, mFpsText.x, mFpsText.y, mFpsText.paint);
         }

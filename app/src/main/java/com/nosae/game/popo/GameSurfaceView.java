@@ -118,8 +118,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                             _object = Stage3.mObjCollections.get(f);
                             if (_object.destRect.contains((int) x, (int) y)) {
                                 if (!_object.readyToDeath) {
-                                    GameParams.stage3TotalScore += _object.getTouchScore();
-//                                    _object.isAlive = false;
+//                                    GameParams.stage3TotalScore += _object.getTouchScore();
+                                    _object.isAlive = false;
                                     DebugConfig.d("Hit object, score: " + _object.getTouchScore());
 
                                     mMainActivity.mGameEntry.mStage3.mTimerBar.addTimer(_object.getTimerAdd());
@@ -129,6 +129,14 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                                 return true;
                             }
                         }
+                        for (int i = 0; i < Stage3.mHidingObj.size(); i++) {
+                            if(Stage3.mHidingObj.get(i).destRect.contains((int) x, (int) y)) {
+                                GameParams.stage3TotalScore += 20;
+                                Stage3.mHidingObj.remove(i);
+                                return true;
+                            }
+                        }
+
                         Life1.addLife(-1);
                         GameParams.vibrator.vibrate(50);
                         DebugConfig.d("no Hit!!!");
