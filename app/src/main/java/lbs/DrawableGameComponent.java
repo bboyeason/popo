@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.nosae.game.popo.GameParams;
-import com.nosae.game.settings.DebugConfig;
 
 import java.lang.ref.WeakReference;
 
@@ -48,7 +47,7 @@ public abstract class DrawableGameComponent {
 
 	protected void UnloadContent() {
 		GameParams.isGameOver = false;
-		GameParams.colorMaskGameOver.isAlive = false;
+		GameParams.gameOverMask.isAlive = false;
 	}
 
 	protected void Update() {

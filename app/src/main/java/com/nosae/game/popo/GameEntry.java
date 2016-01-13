@@ -8,7 +8,6 @@ import lbs.Game;
 
 import com.nosae.game.objects.AnimationMask;
 import com.nosae.game.objects.ColorMask;
-import com.nosae.game.objects.AnimationMask;
 import com.nosae.game.objects.Music;
 import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;
@@ -84,8 +83,8 @@ public class GameEntry extends Game {
         }
         GameParams.isGameOver = false;
 
-        GameParams.colorMaskGameOver = new ColorMask(Color.RED, 0);
-        GameParams.colorMaskGameOver.isAlive = false;
+        GameParams.gameOverMask = new AnimationMask(R.drawable.game_over_animation, 10, 2, 13, 1, 4, 60, 6, 92, 152);
+        GameParams.gameOverMask.isAlive = false;
         GameParams.breakStageMask = new AnimationMask(R.drawable.break_stage_animation, 10, 1, 10, 2, 2, 60, 6, 92, 152);
         GameParams.breakStageMask.isAlive = false;
         GameParams.loadingMask = new AnimationMask(R.drawable.waiting_popo, 10, 3, 25, 1, 2, 60, 6, 92, 152);
@@ -110,9 +109,9 @@ public class GameEntry extends Game {
 //        DebugConfig.d("GameEntry Update()");
         if (GameParams.isGameOver
                 && (mMainActivity.mRestartButton.getVisibility() == View.INVISIBLE)) {
-            Message m = new Message();
-            m.what = Events.RESTART_STAGE;
-            MainActivity.mMsgHandler.sendMessage(m);
+//            Message m = new Message();
+//            m.what = Events.RESTART_STAGE;
+//            MainActivity.mMsgHandler.sendMessage(m);
             DebugConfig.d("Game Over!!!!!!!!!!!!!!!!!!!!!!!!");
         }
         if (GameParams.breakStageMask.isAlive

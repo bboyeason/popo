@@ -26,6 +26,7 @@ import com.nosae.game.objects.FishCollection;
 import com.nosae.game.objects.Life1;
 import com.nosae.game.role.Popo;
 import com.nosae.game.objects.GameObj;
+import com.nosae.game.objects.GameObj.State;
 import com.nosae.game.role.NormalFish;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar2;
@@ -149,6 +150,7 @@ public class Stage1 extends DrawableGameComponent {
 
         GameParams.stage1TotalScore = 0;
         GameParams.isClearStage1 = false;
+        GameParams.gameOverMask.state = State.step1;
         super.Initialize();
     }
 
@@ -343,7 +345,12 @@ public class Stage1 extends DrawableGameComponent {
             }
 
             if (GameParams.isGameOver || !mPopoObj.isAlive) {
-                GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
+                if (GameParams.gameOverMask.Action((int) GameEntry.totalFrames)) {
+                    Message m = new Message();
+                    m.what = Events.RESTART_STAGE;
+                    m.obj = View.VISIBLE;
+                    MainActivity.mMsgHandler.sendMessage(m);
+                }
             } else if (!(GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.stage1TotalScore >= GameParams.stage1BreakScore) {
                 if (GameParams.breakStageMask.state == GameObj.State.step1) {
                     FishGeneration(false);
@@ -422,9 +429,9 @@ public class Stage1 extends DrawableGameComponent {
 
         }
 
-        if ((GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.colorMaskGameOver.isAlive) {
-            mSubCanvas.drawRect(GameParams.colorMaskGameOver.destRect, GameParams.colorMaskGameOver.paint);
-            mSubCanvas.drawText(GameParams.colorMaskGameOver.text.message, GameParams.colorMaskGameOver.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, GameParams.colorMaskGameOver.text.paint);
+        if ((GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.gameOverMask.isAlive) {
+            mSubCanvas.drawRect(GameParams.gameOverMask.MaskDestRect, GameParams.gameOverMask.paint);
+            GameParams.gameOverMask.draw(mSubCanvas);
         } else if (!(GameParams.isGameOver || !mPopoObj.isAlive) && GameParams.breakStageMask.isAlive) {
             mSubCanvas.drawRect(GameParams.breakStageMask.MaskDestRect, GameParams.breakStageMask.paint);
             GameParams.breakStageMask.draw(mSubCanvas);

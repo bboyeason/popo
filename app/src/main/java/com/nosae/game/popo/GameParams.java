@@ -119,7 +119,7 @@ public class GameParams {
             { 10,  0 }, /* Timer add (seconds) */
             {  0,  1 } /* Life add */
     };
-    public static ColorMask colorMaskGameOver;
+    public static AnimationMask gameOverMask;
     public static AnimationMask loadingMask;
     public static AnimationMask breakStageMask;
     public static boolean isGameOver = false;

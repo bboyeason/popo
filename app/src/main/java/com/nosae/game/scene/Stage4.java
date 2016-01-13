@@ -22,6 +22,7 @@ import com.nosae.game.popo.R;
 import com.nosae.game.popo.Text;
 import com.nosae.game.objects.FishCollection;
 import com.nosae.game.objects.GameObj;
+import com.nosae.game.objects.GameObj.State;
 import com.nosae.game.objects.Life1;
 import com.nosae.game.objects.Score;
 import com.nosae.game.objects.TimerBar2;
@@ -213,8 +214,8 @@ public class Stage4 extends DrawableGameComponent {
         GameParams.isClearStage4 = false;
 
         mRandom = new Random();
-
         mObjCollections = new FishCollection();
+        GameParams.gameOverMask.state = State.step1;
     }
 
     public static void ObjectGeneration(boolean produce) {
@@ -313,7 +314,7 @@ public class Stage4 extends DrawableGameComponent {
                 }
             }
 
-            if (!GameParams.colorMaskGameOver.isAlive) {
+            if (!GameParams.gameOverMask.isAlive) {
                 if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
                     if (!mSubObj.readyToDeath) {
                         GameParams.stage4TotalScore += mSubObj.getTouchScore();
@@ -349,7 +350,12 @@ public class Stage4 extends DrawableGameComponent {
             }
 
             if (GameParams.isGameOver) {
-                GameParams.colorMaskGameOver.Action((int) GameEntry.totalFrames);
+                if (GameParams.gameOverMask.Action((int) GameEntry.totalFrames)) {
+                    Message m = new Message();
+                    m.what = Events.RESTART_STAGE;
+                    m.obj = View.VISIBLE;
+                    MainActivity.mMsgHandler.sendMessage(m);
+                }
             } else if (!GameParams.isGameOver && GameParams.stage4TotalScore >= GameParams.stage4BreakScore) {
                 if (GameParams.breakStageMask.state == GameObj.State.step1) {
                     ObjectGeneration(false);
@@ -412,10 +418,9 @@ public class Stage4 extends DrawableGameComponent {
 
         }
 
-        if ((GameParams.isGameOver) && GameParams.colorMaskGameOver.isAlive)
-        {
-            mSubCanvas.drawRect(GameParams.colorMaskGameOver.destRect, GameParams.colorMaskGameOver.paint);
-            mSubCanvas.drawText(GameParams.colorMaskGameOver.text.message, GameParams.colorMaskGameOver.text.x, mGameEntry.mMainActivity.mRestartButton.getTop() - 30, GameParams.colorMaskGameOver.text.paint);
+        if ((GameParams.isGameOver) && GameParams.gameOverMask.isAlive) {
+            mSubCanvas.drawRect(GameParams.gameOverMask.MaskDestRect, GameParams.gameOverMask.paint);
+            GameParams.gameOverMask.draw(mSubCanvas);
         } else if (!GameParams.isGameOver && GameParams.breakStageMask.isAlive) {
             mSubCanvas.drawRect(GameParams.breakStageMask.MaskDestRect, GameParams.breakStageMask.paint);
             GameParams.breakStageMask.draw(mSubCanvas);
