@@ -128,19 +128,19 @@ public class StageSwipe extends FragmentActivity {
 
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 1:
-                    imageView.setImageResource(R.drawable.orange_number_1_64);
+                    imageView.setImageResource(R.drawable.stage01);
                     break;
                 case 2:
-                    imageView.setImageResource(R.drawable.orange_number_2_64);
+                    imageView.setImageResource(R.drawable.stage02);
                     break;
                 case 3:
-                    imageView.setImageResource(R.drawable.orange_number_3_64);
+                    imageView.setImageResource(R.drawable.stage03);
                     break;
                 case 4:
-                    imageView.setImageResource(R.drawable.orange_number_4_64);
+                    imageView.setImageResource(R.drawable.stage04);
                     break;
                 case 5:
-                    imageView.setImageResource(R.drawable.orange_number_5_64);
+                    imageView.setImageResource(R.drawable.stage05);
                     break;
             }
 
