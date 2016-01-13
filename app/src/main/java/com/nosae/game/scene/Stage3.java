@@ -215,15 +215,13 @@ public class Stage3 extends DrawableGameComponent {
         width =  dimensions.outWidth;
         height = dimensions.outHeight;
         DebugConfig.d("Background image size: " + width + " x " + height + " pixels");
-        if (mForeGroundImage == null) {
-            mForeGroundImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.c_testing);
-            GameObj _obj;
-            for (int[] aHidingTable : mHidingTable) {
-                _obj = new GameObj();
-                _obj.srcRect = new Rect((aHidingTable[0] * GameParams.densityDpi / 160), (aHidingTable[1] * GameParams.densityDpi / 160), (aHidingTable[2] * GameParams.densityDpi / 160), (aHidingTable[3] * GameParams.densityDpi / 160));
-                _obj.destRect = new Rect((aHidingTable[0] * GameParams.scaleWidth / width), (aHidingTable[1] * GameParams.scaleHeight / height), (aHidingTable[2] * GameParams.scaleWidth / width), (aHidingTable[3] * GameParams.scaleHeight / height));
-                mHidingObj.add(_obj);
-            }
+        mForeGroundImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.c_testing);
+        GameObj _obj;
+        for (int[] aHidingTable : mHidingTable) {
+            _obj = new GameObj();
+            _obj.srcRect = new Rect((aHidingTable[0] * GameParams.densityDpi / 160), (aHidingTable[1] * GameParams.densityDpi / 160), (aHidingTable[2] * GameParams.densityDpi / 160), (aHidingTable[3] * GameParams.densityDpi / 160));
+            _obj.destRect = new Rect((aHidingTable[0] * GameParams.scaleWidth / width), (aHidingTable[1] * GameParams.scaleHeight / height), (aHidingTable[2] * GameParams.scaleWidth / width), (aHidingTable[3] * GameParams.scaleHeight / height));
+            mHidingObj.add(_obj);
         }
 
         if (DebugConfig.isFpsDebugOn) {
