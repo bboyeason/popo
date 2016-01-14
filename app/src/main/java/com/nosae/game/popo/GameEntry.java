@@ -7,7 +7,6 @@ import android.view.View;
 import lbs.Game;
 
 import com.nosae.game.objects.AnimationMask;
-import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.Music;
 import com.nosae.game.scene.Stage1;
 import com.nosae.game.scene.Stage2;
@@ -27,6 +26,7 @@ public class GameEntry extends Game {
     public Stage5 mStage5;
     public MainActivity mMainActivity;
     public boolean isForceRestart = false;
+    boolean isGameOverOrBreakStageMusicPlaying;
 
     public GameEntry(MainActivity mMainActivity) {
         DebugConfig.d("GameEntry Constructor");
@@ -109,13 +109,26 @@ public class GameEntry extends Game {
 //        DebugConfig.d("GameEntry Update()");
         if (GameParams.isGameOver
                 && (mMainActivity.mRestartButton.getVisibility() == View.INVISIBLE)) {
-//            Message m = new Message();
-//            m.what = Events.RESTART_STAGE;
-//            MainActivity.mMsgHandler.sendMessage(m);
+            if (!isGameOverOrBreakStageMusicPlaying) {
+                if (GameParams.music.player.isPlaying())
+                    GameParams.music.Stop();
+                GameParams.music = new Music(mMainActivity, R.raw.game_over, GameParams.musicVolumeRatio);
+                GameParams.music.setLooping(true);
+                GameParams.music.Play();
+                isGameOverOrBreakStageMusicPlaying = true;
+            }
             DebugConfig.d("Game Over!!!!!!!!!!!!!!!!!!!!!!!!");
         }
         if (GameParams.breakStageMask.isAlive
                 && mMainActivity.mToggleButton.getVisibility() == View.VISIBLE) {
+            if (!isGameOverOrBreakStageMusicPlaying) {
+                if (GameParams.music.player.isPlaying())
+                    GameParams.music.Stop();
+                GameParams.music = new Music(mMainActivity, R.raw.break_stage, GameParams.musicVolumeRatio);
+                GameParams.music.setLooping(true);
+                GameParams.music.Play();
+                isGameOverOrBreakStageMusicPlaying = true;
+            }
             Message m = new Message();
             m.what = Events.BREAK_STAGE;
             m.obj = View.INVISIBLE;
@@ -127,6 +140,7 @@ public class GameEntry extends Game {
             switch (GameStateClass.currentState) {
                 case None:
                     DebugConfig.d("None Stage");
+                    isGameOverOrBreakStageMusicPlaying = false;
                     break;
                 case Menu:
 //                    mMenuDrawable = new Menu_drawable(this);
