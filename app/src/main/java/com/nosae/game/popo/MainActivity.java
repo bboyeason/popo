@@ -52,12 +52,15 @@ public class MainActivity extends Activity implements DrawableGameComponent.OnSt
         DebugConfig.d("Handle message: " + msg.what);
         switch (msg.what) {
             case Events.RESTART_STAGE:
+                mRestartButton.getParent().requestTransparentRegion(mSurfaceView);
                 mRestartButton.setVisibility(View.VISIBLE);
                 mToggleButton.setVisibility(View.INVISIBLE);
                 break;
             case Events.BREAK_STAGE:
-                if (msg.obj != null)
-                mToggleButton.setVisibility((Integer) msg.obj);
+                if (msg.obj != null) {
+                    mToggleButton.getParent().requestTransparentRegion(mSurfaceView);
+                    mToggleButton.setVisibility((Integer) msg.obj);
+                }
                 break;
         }
 
