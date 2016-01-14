@@ -189,10 +189,10 @@ public class Stage4 extends DrawableGameComponent {
 //            DebugConfig.d("onSensorChanged: " + event.values[0]);
             if (mPopoObj != null) {
                 mPopoObj.addX((int) -event.values[SensorManager.DATA_X] << 2);
-                if (mPopoObj.getX() < GameParams.screenRect.left - (mPopoObj.srcWidth >> 1))
-                    mPopoObj.setX(GameParams.screenRect.left - (mPopoObj.srcWidth >> 1));
-                else if (mPopoObj.getX() + mPopoObj.destWidth > GameParams.screenRect.right)
-                    mPopoObj.setX(GameParams.screenRect.right - mPopoObj.destWidth);
+                if (mPopoObj.getX() < GameParams.screenRect.left - (mPopoObj.destWidth >> 1))
+                    mPopoObj.setX(GameParams.screenRect.left - (mPopoObj.destWidth >> 1));
+                else if (mPopoObj.getX() + (mPopoObj.destWidth >> 1) > GameParams.screenRect.right)
+                    mPopoObj.setX(GameParams.screenRect.right - (mPopoObj.destWidth >> 1));
             }
         }
 
