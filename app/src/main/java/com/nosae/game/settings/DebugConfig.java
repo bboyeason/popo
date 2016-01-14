@@ -8,7 +8,7 @@ import android.util.Log;
 public class DebugConfig {
     // Debug switch
     public static final boolean isDebugOn = true;
-    public static final boolean isFpsDebugOn = true;
+    public static final boolean isFpsDebugOn = false;
     public static String TAG = "PoPo";
 //    public static final boolean DEBUG_OTHER = isDebugOn && true;
 
