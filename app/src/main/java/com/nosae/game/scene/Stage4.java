@@ -315,7 +315,7 @@ public class Stage4 extends DrawableGameComponent {
             }
 
             if (!GameParams.gameOverMask.isAlive) {
-                if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
+                if (GameParams.isCollisionFromTop(mPopoObj.destRect, mSubObj.destRect)) {
                     if (!mSubObj.readyToDeath) {
                         GameParams.stage4TotalScore += mSubObj.getTouchScore();
                         Life1.addLife(mSubObj.getLifeAdd());

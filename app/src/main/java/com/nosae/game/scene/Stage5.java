@@ -382,7 +382,7 @@ public class Stage5 extends DrawableGameComponent {
                         }
                     }
                 } else {
-                    if (GameParams.isCollision(mPopoObj.destRect, mSubObj.destRect)) {
+                    if (GameParams.isCollisionFromTop(mPopoObj.destRect, mSubObj.destRect)) {
                         if (!mSubObj.readyToDeath) {
                             Life1.addLife(mSubObj.getLifeAdd());
                             mTimerBar.addTimer(mSubObj.getTimerAdd());
