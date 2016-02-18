@@ -5,23 +5,23 @@
     android:layout_height="200dp"
     android:background="@drawable/logo">
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Music"
-        android:id="@+id/music_switch"
+    <ToggleButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/music_on_off"
+        android:id="@+id/music_togglebutton"
+        android:textOn=""
+        android:textOff=""
         android:checked="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="32dp"
-        android:layout_above="@+id/sound_switch" />
+        android:layout_above="@+id/sound_seekBar"
+        android:layout_centerHorizontal="true" />
 
-    <Switch
+    <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sound"
-        android:id="@+id/sound_switch"
+        android:textOn=""
+        android:textOff=""
+        android:id="@+id/sound_togglebutton"
         android:checked="true"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/sound_seekBar"
@@ -33,18 +33,18 @@
         android:id="@+id/music_seekBar"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/music_switch"
-        android:layout_toRightOf="@+id/music_switch"
-        android:layout_toEndOf="@+id/music_switch"
-        android:layout_alignTop="@+id/music_switch"
+        android:layout_alignBottom="@+id/music_togglebutton"
+        android:layout_toRightOf="@+id/music_togglebutton"
+        android:layout_toEndOf="@+id/music_togglebutton"
+        android:layout_alignTop="@+id/music_togglebutton"
         android:visibility="invisible" />
 
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sound_seekBar"
-        android:layout_alignBottom="@+id/sound_switch"
-        android:layout_alignTop="@+id/sound_switch"
+        android:layout_alignBottom="@+id/sound_togglebutton"
+        android:layout_alignTop="@+id/sound_togglebutton"
         android:layout_alignLeft="@+id/music_seekBar"
         android:layout_alignStart="@+id/music_seekBar"
         android:visibility="invisible" />

@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Switch;
+import android.widget.ToggleButton;
 
 import com.nosae.game.popo.GameParams;
 import com.nosae.game.popo.R;
@@ -39,19 +40,21 @@ public class Settings extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
-        Switch mMusicSwitch = (Switch) findViewById(R.id.music_switch);
-        Switch mSoundSwitch = (Switch) findViewById(R.id.sound_switch);
+        ToggleButton mMusicToggleButton = (ToggleButton) findViewById(R.id.music_togglebutton);
+        ToggleButton mSoundToggleButton = (ToggleButton) findViewById(R.id.sound_togglebutton);
+        mSoundToggleButton.setVisibility(View.INVISIBLE);//temp
 
         SeekBar mMusicSeekBar = (SeekBar) findViewById(R.id.music_seekBar);
         SeekBar mSoundSeekBar = (SeekBar) findViewById(R.id.sound_seekBar);
 
         SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
         GameParams.isMusicOn = settings.getBoolean(GameParams.PREFS_MUSIC_KEY, true);
-        mMusicSwitch.setChecked(GameParams.isMusicOn);
+        mMusicToggleButton.setChecked(GameParams.isMusicOn);
 
         settings = getSharedPreferences(GameParams.PREFS_SOUND, 0);
-        GameParams.isSoundOn = settings.getBoolean(GameParams.PREFS_SOUND_KEY, true);
-        mSoundSwitch.setChecked(GameParams.isSoundOn);
+//        GameParams.isSoundOn = settings.getBoolean(GameParams.PREFS_SOUND_KEY, true);
+        GameParams.isSoundOn = GameParams.isMusicOn;//temp
+        mSoundToggleButton.setChecked(GameParams.isSoundOn);
 
         settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
         GameParams.setMusicVolume(settings.getInt(GameParams.PREFS_MUSIC_VOLUME_KEY, 100));
@@ -61,10 +64,11 @@ public class Settings extends Activity {
         GameParams.setSoundVolume(settings.getInt(GameParams.PREFS_SOUND_VOLUME_KEY, 100));
         mSoundSeekBar.setProgress((int) (GameParams.soundVolumeRatio * 100));
 
-        mMusicSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        mMusicToggleButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 GameParams.isMusicOn = isChecked;
+                GameParams.isSoundOn = isChecked;//temp
                 DebugConfig.d("Settings: music => " + GameParams.isMusicOn);
                 SharedPreferences settings = getSharedPreferences(GameParams.PREFS_MUSIC, 0);
                 SharedPreferences.Editor editor = settings.edit();
@@ -73,7 +77,7 @@ public class Settings extends Activity {
             }
         });
 
-        mSoundSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        mSoundToggleButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 GameParams.isSoundOn = isChecked;
