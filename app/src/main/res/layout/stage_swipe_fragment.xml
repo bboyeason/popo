@@ -11,5 +11,11 @@
         android:layout_gravity="center"
         android:scaleType="centerCrop"
         android:layout_centerInParent="true" />
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView_icon"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

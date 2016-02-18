@@ -1,5 +1,6 @@
 package com.nosae.game.scene;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -125,22 +127,33 @@ public class StageSwipe extends FragmentActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.stage_swipe_fragment, container, false);
             ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
-
+            ImageView imageViewIcon = (ImageView) rootView.findViewById(R.id.imageView_icon);
+            ObjectAnimator objAnimator = ObjectAnimator.ofFloat(imageViewIcon, "translationY", -50, 50);
+            objAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+            objAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+            objAnimator.setRepeatMode(ObjectAnimator.REVERSE);
+            objAnimator.setDuration(1500);
+            objAnimator.start();
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 1:
-                    imageView.setImageResource(R.drawable.stage01);
+                    imageView.setBackgroundResource(R.drawable.stage01);
+                    imageViewIcon.setImageResource(R.drawable.stage01_icon_01);
                     break;
                 case 2:
-                    imageView.setImageResource(R.drawable.stage02);
+                    imageView.setBackgroundResource(R.drawable.stage02);
+                    imageViewIcon.setImageResource(R.drawable.stage02_icon_01);
                     break;
                 case 3:
-                    imageView.setImageResource(R.drawable.stage03);
+                    imageView.setBackgroundResource(R.drawable.stage03);
+                    imageViewIcon.setImageResource(R.drawable.stage03_icon_01);
                     break;
                 case 4:
-                    imageView.setImageResource(R.drawable.stage04);
+                    imageView.setBackgroundResource(R.drawable.stage04);
+                    imageViewIcon.setImageResource(R.drawable.stage04_icon_01);
                     break;
                 case 5:
-                    imageView.setImageResource(R.drawable.stage05);
+                    imageView.setBackgroundResource(R.drawable.stage05);
+                    imageViewIcon.setImageResource(R.drawable.stage05_icon_01);
                     break;
             }
 
