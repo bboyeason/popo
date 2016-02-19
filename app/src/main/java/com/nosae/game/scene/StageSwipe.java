@@ -36,6 +36,7 @@ public class StageSwipe extends FragmentActivity {
     private static int DELAY_ACTIVITY = 100;
     private static StageSwipe sInstance;
     private Music mMusic;
+    private static int STAGE_COUNT = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +108,7 @@ public class StageSwipe extends FragmentActivity {
 
         @Override
         public int getCount() {
-            return 5;
+            return STAGE_COUNT;
         }
     }
 
@@ -155,7 +156,10 @@ public class StageSwipe extends FragmentActivity {
                     imageView.setBackgroundResource(R.drawable.stage05);
                     imageViewIcon.setImageResource(R.drawable.stage05_icon_01);
                     break;
-            }
+                case 6:
+                    imageView.setBackgroundResource(R.drawable.stage06);
+                    imageViewIcon.setImageResource(R.drawable.stage06_icon_01);
+                    break;            }
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -164,8 +168,13 @@ public class StageSwipe extends FragmentActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Intent i = new Intent(sInstance, MainActivity.class);
-                            i.putExtra(GameParams.STAGE, getArguments().getInt(ARG_SECTION_NUMBER));
+                            Intent i;
+                            if (getArguments().getInt(ARG_SECTION_NUMBER) == 6) {
+                                i = new Intent(sInstance, KarnofskyScale.class);
+                            } else {
+                                i = new Intent(sInstance, MainActivity.class);
+                                i.putExtra(GameParams.STAGE, getArguments().getInt(ARG_SECTION_NUMBER));
+                            }
                             startActivity(i);
                             this.finish();
                         }
