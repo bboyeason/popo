@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.ToggleButton;
@@ -40,6 +41,7 @@ public class Settings extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
+
         ToggleButton mMusicToggleButton = (ToggleButton) findViewById(R.id.music_togglebutton);
         ToggleButton mSoundToggleButton = (ToggleButton) findViewById(R.id.sound_togglebutton);
         mSoundToggleButton.setVisibility(View.INVISIBLE);//temp
