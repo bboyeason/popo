@@ -135,31 +135,37 @@ public class StageSwipe extends FragmentActivity {
             objAnimator.setRepeatMode(ObjectAnimator.REVERSE);
             objAnimator.setDuration(1500);
             objAnimator.start();
-            switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
-                case 1:
-                    imageView.setBackgroundResource(R.drawable.stage01);
-                    imageViewIcon.setImageResource(R.drawable.stage01_icon_01);
-                    break;
-                case 2:
-                    imageView.setBackgroundResource(R.drawable.stage02);
-                    imageViewIcon.setImageResource(R.drawable.stage02_icon_01);
-                    break;
-                case 3:
-                    imageView.setBackgroundResource(R.drawable.stage03);
-                    imageViewIcon.setImageResource(R.drawable.stage03_icon_01);
-                    break;
-                case 4:
-                    imageView.setBackgroundResource(R.drawable.stage04);
-                    imageViewIcon.setImageResource(R.drawable.stage04_icon_01);
-                    break;
-                case 5:
-                    imageView.setBackgroundResource(R.drawable.stage05);
-                    imageViewIcon.setImageResource(R.drawable.stage05_icon_01);
-                    break;
-                case 6:
-                    imageView.setBackgroundResource(R.drawable.stage06);
-                    imageViewIcon.setImageResource(R.drawable.stage06_icon_01);
-                    break;            }
+
+            try {
+                switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
+                    case 1:
+                        imageView.setBackgroundResource(R.drawable.stage01);
+                        imageViewIcon.setImageResource(R.drawable.stage01_icon_01);
+                        break;
+                    case 2:
+                        imageView.setBackgroundResource(R.drawable.stage02);
+                        imageViewIcon.setImageResource(R.drawable.stage02_icon_01);
+                        break;
+                    case 3:
+                        imageView.setBackgroundResource(R.drawable.stage03);
+                        imageViewIcon.setImageResource(R.drawable.stage03_icon_01);
+                        break;
+                    case 4:
+                        imageView.setBackgroundResource(R.drawable.stage04);
+                        imageViewIcon.setImageResource(R.drawable.stage04_icon_01);
+                        break;
+                    case 5:
+                        imageView.setBackgroundResource(R.drawable.stage05);
+                        imageViewIcon.setImageResource(R.drawable.stage05_icon_01);
+                        break;
+                    case 6:
+                        imageView.setBackgroundResource(R.drawable.stage06);
+                        imageViewIcon.setImageResource(R.drawable.stage06_icon_01);
+                        break;
+                }
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+            }
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -172,9 +178,9 @@ public class StageSwipe extends FragmentActivity {
                             if (getArguments().getInt(ARG_SECTION_NUMBER) == 6) {
                                 i = new Intent(sInstance, KarnofskyScale.class);
                             } else {
-                                i = new Intent(sInstance, MainActivity.class);
-                                i.putExtra(GameParams.STAGE, getArguments().getInt(ARG_SECTION_NUMBER));
+                                i = new Intent(sInstance, Guide.class);
                             }
+                            i.putExtra(GameParams.STAGE, getArguments().getInt(ARG_SECTION_NUMBER));
                             startActivity(i);
                             this.finish();
                         }
