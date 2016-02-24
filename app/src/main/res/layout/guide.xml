@@ -19,6 +19,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/guide_shake_01"
         android:scaleType="fitCenter" />
 </RelativeLayout>
