@@ -42,9 +42,10 @@ public class Settings extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
+        findViewById(R.id.settings_layout).getBackground().setAlpha(128);
         ToggleButton mMusicToggleButton = (ToggleButton) findViewById(R.id.music_togglebutton);
         ToggleButton mSoundToggleButton = (ToggleButton) findViewById(R.id.sound_togglebutton);
-        mSoundToggleButton.setVisibility(View.INVISIBLE);//temp
+        mSoundToggleButton.setVisibility(View.GONE);//temp
 
         SeekBar mMusicSeekBar = (SeekBar) findViewById(R.id.music_seekBar);
         SeekBar mSoundSeekBar = (SeekBar) findViewById(R.id.sound_seekBar);

@@ -4,7 +4,7 @@
     android:layout_width="200dp"
     android:layout_height="200dp"
     android:background="@drawable/logo"
-    android:alpha="0.5">
+    android:id="@+id/settings_layout" >
 
     <ToggleButton
         android:layout_width="60dp"
@@ -14,8 +14,7 @@
         android:textOn=""
         android:textOff=""
         android:checked="true"
-        android:layout_above="@+id/sound_seekBar"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerInParent="true" />
 
     <ToggleButton
         android:layout_width="wrap_content"
