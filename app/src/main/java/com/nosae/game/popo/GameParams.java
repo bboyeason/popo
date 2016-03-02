@@ -185,6 +185,10 @@ public class GameParams {
         return theta;
     }
 
+    public static Bitmap decodeResource(int resId) {
+        return decodeSampledBitmapFromResource(resId, 0, 0);
+    }
+
     // For load scaled down image into memory
     public static Bitmap decodeSampledBitmapFromResource(int resId, int reqWidth, int reqHeight) {
         return decodeSampledBitmapFromResource(res, resId, reqWidth, reqHeight);
@@ -192,18 +196,34 @@ public class GameParams {
 
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
+        Bitmap bitmap = null;
+        if (reqWidth == 0 && reqHeight == 0) {
+            try {
+                bitmap = BitmapFactory.decodeResource(res, resId);
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+                DebugConfig.e(e.getMessage());
+            }
+        } else {
+            // First decode with inJustDecodeBounds=true to check dimensions
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeResource(res, resId, options);
 
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
+            // Calculate inSampleSize
+            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
 
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
+            try {
+                bitmap = BitmapFactory.decodeResource(res, resId, options);
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+                DebugConfig.e(e.getMessage());
+            }
+        }
+        return bitmap;
     }
 
     public static int calculateInSampleSize(
