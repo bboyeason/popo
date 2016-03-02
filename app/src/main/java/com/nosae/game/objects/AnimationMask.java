@@ -43,11 +43,7 @@ public class AnimationMask extends GameObj {
                     isAlive = true;
                 startFrame = frameTime;
                 state = State.step2;
-                try {
-                    bitmap = BitmapFactory.decodeResource(GameParams.res, id);
-                } catch (OutOfMemoryError e) {
-                    DebugConfig.e(e.getMessage());
-                }
+                bitmap = GameParams.decodeResource(id);
                 if (bitmap != null) {
                     srcWidth = bitmap.getWidth() / column;
                     srcHeight = bitmap.getHeight() / row;

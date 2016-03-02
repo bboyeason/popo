@@ -36,7 +36,7 @@ public class Score extends GameObj {
         super(destX, destY, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         this.destX = destX;
         this.destY = destY;
-        bitmap  = BitmapFactory.decodeResource(GameParams.res, mScore[0]);
+        bitmap  = GameParams.decodeResource(mScore[0]);
         width = bitmap.getWidth();
         height = bitmap.getHeight();
         edge_X_right = destX + 3 * width;
@@ -55,8 +55,9 @@ public class Score extends GameObj {
 //        DebugConfig.d("drawScore: " + digits[0]);
         Bitmap bitmap;
         for (int i = 0; i < digits.length; i++) {
-            bitmap  = (Bitmap) BitmapFactory.decodeResource(GameParams.res, mScore[digits[i]]);
-            canvas.drawBitmap(bitmap, destX + i * bitmap.getWidth() + 5 * GameParams.density, destY, null);
+            bitmap = GameParams.decodeResource(mScore[digits[i]]);
+            if (bitmap != null)
+                canvas.drawBitmap(bitmap, destX + i * bitmap.getWidth() + 5 * GameParams.density, destY, null);
         }
     }
 

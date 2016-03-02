@@ -9,7 +9,6 @@ import android.os.Vibrator;
 import android.util.DisplayMetrics;
 
 import com.nosae.game.objects.AnimationMask;
-import com.nosae.game.objects.ColorMask;
 import com.nosae.game.objects.Music;
 import com.nosae.game.settings.DebugConfig;
 

@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.*;
 import android.view.View;
-import android.widget.Toast;
 
 import com.nosae.game.popo.Events;
 import com.nosae.game.popo.GameEntry;
@@ -178,14 +177,9 @@ public class Stage1 extends DrawableGameComponent {
         int random;
         random = mRandom.nextInt(fishTable[0].length);
         Bitmap fishImage;
-        try {
-            fishImage = BitmapFactory.decodeResource(GameParams.res, fishTable[0][random]);
-        } catch (OutOfMemoryError e) {
-            e.printStackTrace();
-            Toast.makeText(mGameEntry.mMainActivity, "OutOfMemoryError!",
-                    Toast.LENGTH_SHORT).show();
+        fishImage = GameParams.decodeResource(fishTable[0][random]);
+        if (fishImage == null)
             return;
-        }
 
         width = fishImage.getWidth() / fishTable[1][random];
         height = fishImage.getHeight() / fishTable[2][random];
@@ -217,21 +211,27 @@ public class Stage1 extends DrawableGameComponent {
         if (mBackground == null) {
             // Load background image
             mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.background_01, GameParams.scaleWidth, GameParams.scaleHeight);
-            mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
+            if (mBackGroundImage != null) {
+                mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
+            }
         }
-        mBackground.isAlive = true;
+        if (mBackground != null)
+            mBackground.isAlive = true;
         // Random fish generator
         FishGeneration(true);
 
         if (mPopoObj == null) {
-            Bitmap popoImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.a_popo_01);
-            Popo.width = popoImage.getWidth();
-            Popo.height = popoImage.getHeight();
-            Popo.halfWidth = Popo.width >> 1;
-            Popo.halfHeight = Popo.height >> 1;
-            mPopoObj = new Popo(popoImage, GameParams.scaleWidth - Popo.width, GameParams.scaleHeight - Popo.height, Popo.width, Popo.height, 0, 0, Popo.width, Popo.height, 0, Color.WHITE, 90);
+            Bitmap popoImage = GameParams.decodeResource(R.drawable.a_popo_01);
+            if (popoImage != null) {
+                Popo.width = popoImage.getWidth();
+                Popo.height = popoImage.getHeight();
+                Popo.halfWidth = Popo.width >> 1;
+                Popo.halfHeight = Popo.height >> 1;
+                mPopoObj = new Popo(popoImage, GameParams.scaleWidth - Popo.width, GameParams.scaleHeight - Popo.height, Popo.width, Popo.height, 0, 0, Popo.width, Popo.height, 0, Color.WHITE, 90);
+            }
         }
-        mPopoObj.isAlive = true;
+        if (mPopoObj != null)
+            mPopoObj.isAlive = true;
 
         if (DebugConfig.isFpsDebugOn) {
             mFpsText = new Text(GameParams.halfWidth - 50, 100, 12, "FPS", Color.BLUE);
@@ -243,16 +243,28 @@ public class Stage1 extends DrawableGameComponent {
         if (mLifeIcon == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
-            mLifeImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
-            mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + (int) (5 * GameParams.density), mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
+            try {
+                mLifeImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.life, options);
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+            }
+            if (mLifeImage != null)
+                mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + (int) (5 * GameParams.density), mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
         }
 
         if (mLife1 == null) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
-            Bitmap numBitmap = BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
-            mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
-            numBitmap.recycle();
+            Bitmap numBitmap = null;
+            try {
+                numBitmap = BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+            }
+            if (numBitmap != null && mLifeIcon != null) {
+                mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
+                numBitmap.recycle();
+            }
         }
         Life1.setLife(GameParams.stage1Life);
 
@@ -260,7 +272,7 @@ public class Stage1 extends DrawableGameComponent {
 //            BitmapFactory.Options options = new BitmapFactory.Options();
 //            options.inSampleSize = 4;
 //            mTimerBarImage = GameParams.decodeSampledBitmapFromResource(R.drawable.timer_bar, (int) (GameParams.density * GameParams.halfWidth), (int) (GameParams.density * 120));
-            mTimerBarImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.timer_bar);
+            mTimerBarImage = GameParams.decodeResource(R.drawable.timer_bar);
             if (mTimerBarImage != null) {
                 width = mTimerBarImage.getWidth();
                 height = mTimerBarImage.getHeight() / GameParams.timerBarRowCount;
@@ -377,7 +389,7 @@ public class Stage1 extends DrawableGameComponent {
     @Override
     protected void Draw() {
         Canvas mSubCanvas = mGameEntry.canvas;
-        if (mBackground.isAlive) {
+        if (mBackground != null && mBackground.isAlive) {
             mSubCanvas.drawBitmap(mBackGroundImage,
                     mBackground.srcRect,
                     mBackground.destRect,

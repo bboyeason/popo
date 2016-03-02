@@ -155,14 +155,9 @@ public class Stage5 extends DrawableGameComponent {
             random = mCakes.size();
         speed = _random.nextInt(GameParams.stage5RandomSpeed) + GameParams.stage5RandomSpeed;
         Bitmap objImage;
-        try {
-            objImage = BitmapFactory.decodeResource(GameParams.res, objectTable[0][random]);
-        } catch (OutOfMemoryError e) {
-            e.printStackTrace();
-            Toast.makeText(mGameEntry.mMainActivity, "OutOfMemoryError!",
-                    Toast.LENGTH_SHORT).show();
+        objImage = GameParams.decodeResource(objectTable[0][random]);
+        if (objImage == null)
             return;
-        }
 
         width = objImage.getWidth() / objectTable[1][random];
         height = objImage.getHeight() / objectTable[2][random];
@@ -293,15 +288,19 @@ public class Stage5 extends DrawableGameComponent {
 
         if (mBackground == null) {
             mBackGroundImage = GameParams.decodeSampledBitmapFromResource(R.drawable.background_05_1, GameParams.scaleWidth, GameParams.scaleHeight);
-            mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
+            if (mBackGroundImage != null)
+                mBackground = new GameObj(0, 0, GameParams.scaleWidth, GameParams.scaleHeight, 0, 0, mBackGroundImage.getWidth(), mBackGroundImage.getHeight(), 0, 0, 0);
         }
-        mBackground.isAlive = true;
+        if (mBackground != null)
+            mBackground.isAlive = true;
 
         if (mForeground == null) {
-            mForeGroundImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.background_05_2);
-            mForeground = new GameObj(0, GameParams.scaleHeight - mForeGroundImage.getHeight(), GameParams.scaleWidth, mForeGroundImage.getHeight(), 0, 0, mForeGroundImage.getWidth(), mForeGroundImage.getHeight(), 0, 0, 0);
+            mForeGroundImage = GameParams.decodeResource(R.drawable.background_05_2);
+            if (mForeGroundImage != null)
+                mForeground = new GameObj(0, GameParams.scaleHeight - mForeGroundImage.getHeight(), GameParams.scaleWidth, mForeGroundImage.getHeight(), 0, 0, mForeGroundImage.getWidth(), mForeGroundImage.getHeight(), 0, 0, 0);
         }
-        mForeground.isAlive = true;
+        if (mForeground != null)
+            mForeground.isAlive = true;
 
         if (DebugConfig.isFpsDebugOn) {
             mFpsText = new Text(GameParams.halfWidth - 50, 100, 12, "FPS", Color.BLUE);
@@ -310,24 +309,29 @@ public class Stage5 extends DrawableGameComponent {
         if (mScore == null)
             mScore = new Score((int) (20 * GameParams.density), (int) (20 * GameParams.density));
 
-        if (mLifeIcon == null) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;
-            mLifeImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.b_life, options);
-            mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + (int) (5 * GameParams.density), mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
-        }
+        try {
+            if (mLifeIcon == null) {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 4;
+                mLifeImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.life, options);
+                mLifeIcon = new GameObj(mScore.destRect.left, mScore.getY() + mScore.height + (int) (5 * GameParams.density), mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, mLifeImage.getWidth(), mLifeImage.getHeight(), 0, 0, 0);
+            }
 
-        if (mLife1 == null) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 2;
-            Bitmap numBitmap = BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
-            mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
-            numBitmap.recycle();
+            if (mLife1 == null) {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                Bitmap numBitmap = BitmapFactory.decodeResource(GameParams.res, R.drawable.s_0, options);
+                mLife1 = new Life1(mLifeIcon.destRect.right + (int) (10 * GameParams.density), mLifeIcon.destRect.bottom - mLifeIcon.halfHeight - (numBitmap.getHeight() >> 1), numBitmap.getWidth(), numBitmap.getHeight(), 0, 0, numBitmap.getWidth() * 2, numBitmap.getHeight() * 2);
+                numBitmap.recycle();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            DebugConfig.e(e.getMessage());
         }
         Life1.setLife(GameParams.stage5Life);
 
         if (mTimerBar == null) {
-            mTimerBarImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.timer_bar);
+            mTimerBarImage = GameParams.decodeResource(R.drawable.timer_bar);
             if (mTimerBarImage != null) {
                 width = mTimerBarImage.getWidth();
                 height = mTimerBarImage.getHeight() / GameParams.timerBarRowCount;
@@ -341,8 +345,8 @@ public class Stage5 extends DrawableGameComponent {
         }
 
         if (mPopoObj == null) {
-            Bitmap mPopoImage = BitmapFactory.decodeResource(GameParams.res, R.drawable.d_popo_01);
-            mPopoObj = new Popo(mPopoImage, GameParams.halfWidth - mPopoImage.getWidth() / 2, GameParams.scaleHeight - mPopoImage.getHeight(), mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, mPopoImage.getWidth(), mPopoImage.getHeight(), 0, 0, 0);
+            Bitmap popoImage = GameParams.decodeResource(R.drawable.d_popo_01);
+            mPopoObj = new Popo(popoImage, GameParams.halfWidth - popoImage.getWidth() / 2, GameParams.scaleHeight - popoImage.getHeight(), popoImage.getWidth(), popoImage.getHeight(), 0, 0, popoImage.getWidth(), popoImage.getHeight(), 0, 0, 0);
         }
         stackRect = mPopoObj.destRect;
 
@@ -451,8 +455,7 @@ public class Stage5 extends DrawableGameComponent {
     protected void Draw() {
         super.Draw();
         Canvas mSubCanvas = mGameEntry.canvas;
-        if (mBackground.isAlive)
-        {
+        if (mBackground != null && mBackground.isAlive) {
             mSubCanvas.drawBitmap(mBackGroundImage, mBackground.srcRect, mBackground.destRect, null);
         }
 
