@@ -482,7 +482,7 @@ public class Stage5 extends DrawableGameComponent {
             mPopoObj.draw(mSubCanvas);
         }
 
-        if (mForeground.isAlive)
+        if (mForeground != null && mForeground.isAlive)
         {
             mSubCanvas.drawBitmap(mForeGroundImage, mForeground.srcRect, mForeground.destRect, null);
         }
