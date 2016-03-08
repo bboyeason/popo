@@ -129,7 +129,7 @@ public class StageSwipe extends FragmentActivity {
             View rootView = inflater.inflate(R.layout.stage_swipe_fragment, container, false);
             ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
             ImageView imageViewIcon = (ImageView) rootView.findViewById(R.id.imageView_icon);
-            ObjectAnimator objAnimator = ObjectAnimator.ofFloat(imageViewIcon, "translationY", -50, 50);
+            ObjectAnimator objAnimator = ObjectAnimator.ofFloat(imageViewIcon, "translationY", -150, -50);
             objAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
             objAnimator.setRepeatCount(ObjectAnimator.INFINITE);
             objAnimator.setRepeatMode(ObjectAnimator.REVERSE);
