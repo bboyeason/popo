@@ -64,8 +64,9 @@ public class Menu extends Activity {
         float fromX, toX, fromY, toY;
         fromX = 0;
         toX = 0;
-        fromY = imageViewMainRole.getBackground().getIntrinsicHeight();
+        fromY = GameParams.halfHeight;
         toY = 0;
+        // imageViewMainRole.getBackground().getIntrinsicHeight()
         // Move effect
         Animation amTranslate = new TranslateAnimation(fromX, toX, fromY, toY);
         amTranslate.setDuration(3000);
