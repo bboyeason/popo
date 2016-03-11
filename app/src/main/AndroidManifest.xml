@@ -34,6 +34,14 @@
             android:theme="@style/GameTheme" >
         </activity>
 
+        <!-- Karnofsky scale result activity -->
+        <activity
+            android:name="com.nosae.game.scene.KarnofskyScaleResult"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:theme="@style/GameTheme" >
+        </activity>
+
         <!-- Menu activity -->
         <activity
             android:name="com.nosae.game.scene.Menu"

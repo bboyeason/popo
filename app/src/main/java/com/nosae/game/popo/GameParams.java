@@ -33,6 +33,7 @@ public class GameParams {
     public static final String STAGE5_COMPLETED = "Stage5Completed";
 
     public static final String STAGE = "stage";
+    public static final String RESULT = "result";
     public static Resources res = null;
 
     public static Rect screenRect;
