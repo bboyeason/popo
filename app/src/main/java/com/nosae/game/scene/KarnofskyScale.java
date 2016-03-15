@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.nosae.game.objects.Music;
 import com.nosae.game.popo.GameParams;
 import com.nosae.game.popo.R;
 import com.nosae.game.settings.DebugConfig;
@@ -37,6 +38,11 @@ public class KarnofskyScale extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.karnofsky_scale);
 
+        if (GameParams.music == null) {
+            GameParams.music = new Music(this, R.raw.stage6, GameParams.musicVolumeRatio);
+            GameParams.music.setLooping(true);
+            GameParams.music.Play();
+        }
         ViewGroup systemContent = (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content);
         changeFonts(systemContent);
         final ImageView imageViewInfo = (ImageView) findViewById(R.id.imageViewInfo);
@@ -275,5 +281,12 @@ public class KarnofskyScale extends Activity {
             }
         }
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (GameParams.music != null)
+            GameParams.music.player.stop();
     }
 }
