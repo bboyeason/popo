@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:gravity="right"
     android:orientation="horizontal"
-    android:background="@drawable/background_06_02"
+    android:background="@drawable/background_06_01"
     android:weightSum="1">
 
     <TableLayout
@@ -18,8 +18,8 @@
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:weightSum="8"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:weightSum="8">
 
             <TextView
                 android:layout_width="fill_parent"
@@ -56,8 +56,8 @@
             android:id="@+id/tableRow01"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:gravity="left"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="left">
 
             <TextView
                 android:id="@+id/textView01"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/question_11" />
+                android:text="@string/question_01" />
             <RadioGroup
                 android:id="@+id/radioGroup01"
                 android:layout_width="fill_parent"
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/question_12" />
+                android:text="@string/question_02" />
 
             <RadioGroup
                 android:id="@+id/radioGroup02"
@@ -164,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/question_13" />
+                android:text="@string/question_03" />
 
             <RadioGroup
                 android:id="@+id/radioGroup03"
@@ -213,7 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/question_14" />
+                android:text="@string/question_04" />
 
             <RadioGroup
                 android:id="@+id/radioGroup04"
@@ -263,7 +263,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/question_15" />
+                android:text="@string/question_05" />
 
             <RadioGroup
                 android:id="@+id/radioGroup05"
@@ -312,7 +312,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/question_16" />
+                android:text="@string/question_06" />
 
             <RadioGroup
                 android:id="@+id/radioGroup06"
@@ -361,7 +361,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/question_17" />
+                android:text="@string/question_07" />
 
             <RadioGroup
                 android:id="@+id/radioGroup07"
@@ -410,7 +410,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/question_18" />
+                android:text="@string/question_08" />
 
             <RadioGroup
                 android:id="@+id/radioGroup08"
@@ -459,7 +459,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/question_19" />
+                android:text="@string/question_09" />
 
             <RadioGroup
                 android:id="@+id/radioGroup09"
@@ -500,6 +500,7 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:gravity="left"
+            android:baselineAligned="false"
             android:layout_weight="1">
 
             <TextView
@@ -508,7 +509,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/question_20" />
+                android:text="@string/question_10" />
 
             <RadioGroup
                 android:id="@+id/radioGroup10"
@@ -546,11 +547,5 @@
         </TableRow>
 
     </TableLayout>
-
-    <!--<ImageView-->
-        <!--android:id="@+id/imageViewInfo"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="fill_parent"-->
-        <!--android:scaleType="fitXY" />-->
 
 </RelativeLayout>

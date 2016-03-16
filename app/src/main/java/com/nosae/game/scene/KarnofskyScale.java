@@ -36,7 +36,7 @@ public class KarnofskyScale extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.karnofsky_scale);
+        setContentView(R.layout.karnofsky_scale_00);
 
         if (GameParams.music == null) {
             GameParams.music = new Music(this, R.raw.stage6, GameParams.musicVolumeRatio);
@@ -46,21 +46,18 @@ public class KarnofskyScale extends Activity {
         ViewGroup systemContent = (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content);
         changeFonts(systemContent);
         final ImageView imageViewInfo = (ImageView) findViewById(R.id.imageViewInfo);
-        try {
-            imageViewInfo.setImageResource(R.drawable.k_introduction);
-        } catch (OutOfMemoryError e) {
-            e.printStackTrace();
-        }
+
         imageViewInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageViewInfo.setImageDrawable(null);
                 imageViewInfo.setVisibility(View.GONE);
+                setContentView(R.layout.karnofsky_scale_01);
+                getRadioGroupView();
+                setRadioGroupListener();
             }
         });
 
-        getRadioGroupView();
-        setRadioGroupListener();
     }
 
     public void getRadioGroupView() {
@@ -136,10 +133,10 @@ public class KarnofskyScale extends Activity {
                     currentPage++;
                 switch (currentPage) {
                     case 1:
-                        setContentView(R.layout.karnofsky_scale_01);
+                        setContentView(R.layout.karnofsky_scale_02);
                         break;
                     case 2:
-                        setContentView(R.layout.karnofsky_scale_02);
+                        setContentView(R.layout.karnofsky_scale_03);
                         break;
                 }
                 countPoint();
