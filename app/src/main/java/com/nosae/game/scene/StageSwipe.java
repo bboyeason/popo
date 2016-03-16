@@ -21,7 +21,6 @@ import android.widget.ImageView;
 
 import com.nosae.game.objects.Music;
 import com.nosae.game.popo.GameParams;
-import com.nosae.game.popo.MainActivity;
 import com.nosae.game.popo.R;
 import com.nosae.game.settings.DebugConfig;
 
@@ -41,6 +40,7 @@ public class StageSwipe extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DebugConfig.d("StageSwipe onCreate()");
         setContentView(R.layout.stage_swipe);
         sInstance = this;
 
@@ -54,7 +54,6 @@ public class StageSwipe extends FragmentActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         if (mMusic == null) {
             mMusic = new Music(this, R.raw.stage_selection, GameParams.musicVolumeRatio);
             mMusic.setLooping(true);
@@ -114,6 +113,8 @@ public class StageSwipe extends FragmentActivity {
 
     public static class PlaceholderFragment extends Fragment {
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private ImageView imageViewIcon;
+        private ImageView imageView;
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
@@ -124,48 +125,97 @@ public class StageSwipe extends FragmentActivity {
         }
 
         @Override
+        public void onResume() {
+            super.onResume();
+            DebugConfig.d("PlaceholderFragment onResume()" + getArguments().getInt(ARG_SECTION_NUMBER));
+            try {
+                switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
+                    case 1:
+                        imageView.setBackgroundResource(R.drawable.stage01);
+                        if (GameParams.stageCompletedCount >= 0) {
+                            imageViewIcon.setImageResource(R.drawable.stage01_icon_01);
+                            imageView.setEnabled(true);
+                            DebugConfig.d("image view isEnabled(): " + imageView.isEnabled());
+                        } else  {
+                            imageView.setEnabled(false);
+                            imageViewIcon.setImageResource(R.drawable.stage01_icon_02);
+                        }
+                        break;
+                    case 2:
+                        imageView.setBackgroundResource(R.drawable.stage02);
+                        if (GameParams.stageCompletedCount >= 1) {
+                            imageViewIcon.setImageResource(R.drawable.stage02_icon_01);
+                            imageView.setEnabled(true);
+                            GameParams.decodeResource(R.drawable.stage02_icon_01);
+                            DebugConfig.d("image view isEnabled(): " + imageView.isEnabled());
+                        } else {
+                            imageView.setEnabled(false);
+                            imageViewIcon.setImageResource(R.drawable.stage02_icon_02);
+                        }
+                        break;
+                    case 3:
+                        imageView.setBackgroundResource(R.drawable.stage03);
+                        if (GameParams.stageCompletedCount >= 2) {
+                            imageViewIcon.setImageResource(R.drawable.stage03_icon_01);
+                            imageView.setEnabled(true);
+                            DebugConfig.d("image view isEnabled(): " + imageView.isEnabled());
+                        } else {
+                            imageView.setEnabled(false);
+                            imageViewIcon.setImageResource(R.drawable.stage03_icon_02);
+                        }
+                        break;
+                    case 4:
+                        imageView.setBackgroundResource(R.drawable.stage04);
+                        if (GameParams.stageCompletedCount >= 3) {
+                            imageViewIcon.setImageResource(R.drawable.stage04_icon_01);
+                            imageView.setEnabled(true);
+                            DebugConfig.d("image view isEnabled(): " + imageView.isEnabled());
+                        } else {
+                            imageView.setEnabled(false);
+                            imageViewIcon.setImageResource(R.drawable.stage04_icon_02);
+                        }
+                        break;
+                    case 5:
+                        imageView.setBackgroundResource(R.drawable.stage05);
+                        if (GameParams.stageCompletedCount >= 4) {
+                            imageViewIcon.setImageResource(R.drawable.stage05_icon_01);
+                            imageView.setEnabled(true);
+                            DebugConfig.d("image view isEnabled(): " + imageView.isEnabled());
+                        } else {
+                            imageView.setEnabled(false);
+                            imageViewIcon.setImageResource(R.drawable.stage05_icon_02);
+                        }
+                        break;
+                    case 6:
+                        imageView.setBackgroundResource(R.drawable.stage06);
+                        if (GameParams.stageCompletedCount >= 5) {
+                            imageViewIcon.setImageResource(R.drawable.stage06_icon_01);
+                            imageView.setEnabled(true);
+                            DebugConfig.d("image view isEnabled(): " + imageView.isEnabled());
+                        } else {
+                            imageView.setEnabled(false);
+                            imageViewIcon.setImageResource(R.drawable.stage06_icon_02);
+                        }
+                        break;
+                }
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            DebugConfig.d("PlaceholderFragment onCreateView()");
             View rootView = inflater.inflate(R.layout.stage_swipe_fragment, container, false);
-            ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
-            ImageView imageViewIcon = (ImageView) rootView.findViewById(R.id.imageView_icon);
+            imageView = (ImageView) rootView.findViewById(R.id.imageView);
+            imageViewIcon = (ImageView) rootView.findViewById(R.id.imageView_icon);
             ObjectAnimator objAnimator = ObjectAnimator.ofFloat(imageViewIcon, "translationY", -150, -50);
             objAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
             objAnimator.setRepeatCount(ObjectAnimator.INFINITE);
             objAnimator.setRepeatMode(ObjectAnimator.REVERSE);
             objAnimator.setDuration(1500);
             objAnimator.start();
-
-            try {
-                switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
-                    case 1:
-                        imageView.setBackgroundResource(R.drawable.stage01);
-                        imageViewIcon.setImageResource(R.drawable.stage01_icon_01);
-                        break;
-                    case 2:
-                        imageView.setBackgroundResource(R.drawable.stage02);
-                        imageViewIcon.setImageResource(R.drawable.stage02_icon_01);
-                        break;
-                    case 3:
-                        imageView.setBackgroundResource(R.drawable.stage03);
-                        imageViewIcon.setImageResource(R.drawable.stage03_icon_01);
-                        break;
-                    case 4:
-                        imageView.setBackgroundResource(R.drawable.stage04);
-                        imageViewIcon.setImageResource(R.drawable.stage04_icon_01);
-                        break;
-                    case 5:
-                        imageView.setBackgroundResource(R.drawable.stage05);
-                        imageViewIcon.setImageResource(R.drawable.stage05_icon_01);
-                        break;
-                    case 6:
-                        imageView.setBackgroundResource(R.drawable.stage06);
-                        imageViewIcon.setImageResource(R.drawable.stage06_icon_01);
-                        break;
-                }
-            } catch (OutOfMemoryError e) {
-                e.printStackTrace();
-            }
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -174,14 +224,14 @@ public class StageSwipe extends FragmentActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Intent i;
+                            Intent intent;
                             if (getArguments().getInt(ARG_SECTION_NUMBER) == 6) {
-                                i = new Intent(sInstance, KarnofskyScale.class);
+                                intent = new Intent(sInstance, KarnofskyScale.class);
                             } else {
-                                i = new Intent(sInstance, Guide.class);
+                                intent = new Intent(sInstance, Guide.class);
                             }
-                            i.putExtra(GameParams.STAGE, getArguments().getInt(ARG_SECTION_NUMBER));
-                            startActivity(i);
+                            intent.putExtra(GameParams.STAGE, getArguments().getInt(ARG_SECTION_NUMBER));
+                            startActivity(intent);
                             this.finish();
                         }
 
@@ -198,20 +248,25 @@ public class StageSwipe extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        DebugConfig.d("StageSwipe onResume()");
         if (mMusic != null) {
             mMusic.setMusicVolume(GameParams.musicVolumeRatio);
             mMusic.Play();
         }
+        SharedPreferences settings = getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
+        GameParams.stageCompletedCount = settings.getInt(GameParams.STAGE_COMPLETED_COUNT, 0);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        DebugConfig.d("StageSwipe onStop()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        DebugConfig.d("StageSwipe onPause()");
         if (mMusic != null)
             mMusic.Pause();
     }

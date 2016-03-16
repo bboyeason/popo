@@ -372,9 +372,11 @@ public class Stage2 extends DrawableGameComponent {
                 if (GameParams.breakStageMask.state == GameObj.State.step1) {
                     FishGeneration(false);
                     SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putBoolean(GameParams.STAGE2_COMPLETED, true);
-                    editor.apply();
+                    if (settings.getInt(GameParams.STAGE_COMPLETED_COUNT, 0) < 2) {
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putInt(GameParams.STAGE_COMPLETED_COUNT, 2);
+                        editor.apply();
+                    }
                 }
                 if (GameParams.breakStageMask.Action((int) GameEntry.totalFrames))
                     NotifyStageCompleted();

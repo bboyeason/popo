@@ -26,11 +26,8 @@ public class GameParams {
     public static final String PREFS_SOUND_KEY = "isSoundOn";
     public static final String PREFS_SOUND_VOLUME_KEY = "SoundVolume";
     public static final String STAGES_COMPLETED = "StageCompleted";
-    public static final String STAGE1_COMPLETED = "Stage1Completed";
-    public static final String STAGE2_COMPLETED = "Stage2Completed";
-    public static final String STAGE3_COMPLETED = "Stage3Completed";
-    public static final String STAGE4_COMPLETED = "Stage4Completed";
-    public static final String STAGE5_COMPLETED = "Stage5Completed";
+    public static final String STAGE_COMPLETED_COUNT = "StageCompletedCount";
+    public static int stageCompletedCount = 0;
 
     public static final String STAGE = "stage";
     public static final String RESULT = "result";

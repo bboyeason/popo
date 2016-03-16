@@ -433,9 +433,11 @@ public class Stage5 extends DrawableGameComponent {
                 if (GameParams.breakStageMask.state == GameObj.State.step1) {
                     ObjectGeneration(false);
                     SharedPreferences settings = mGameEntry.mMainActivity.getSharedPreferences(GameParams.STAGES_COMPLETED, 0);
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putBoolean(GameParams.STAGE5_COMPLETED, true);
-                    editor.apply();
+                    if (settings.getInt(GameParams.STAGE_COMPLETED_COUNT, 0) < 5) {
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putInt(GameParams.STAGE_COMPLETED_COUNT, 5);
+                        editor.apply();
+                    }
                 }
                 if (GameParams.breakStageMask.Action((int) GameEntry.totalFrames))
                     NotifyStageCompleted();
