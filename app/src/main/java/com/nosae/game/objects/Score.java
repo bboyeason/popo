@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 
 import com.nosae.game.popo.GameParams;
 import com.nosae.game.popo.R;
+import com.nosae.game.settings.DebugConfig;
 
 /**
  * Created by eason on 2015/10/23.
@@ -39,7 +40,7 @@ public class Score extends GameObj {
         bitmap  = GameParams.decodeResource(mScore[0]);
         width = bitmap.getWidth();
         height = bitmap.getHeight();
-        edge_X_right = destX + 3 * width;
+        edge_X_right = (int) (destX + 3 * width + 4 * GameParams.density);
         bitmap.recycle();
         bitmap = null;
     }
@@ -52,12 +53,11 @@ public class Score extends GameObj {
         int[] digits = getDigitsOf(totalScore);
 //        bitmap = (Bitmap) BitmapFactory.decodeResource(GameParams.res,
 //                mScore[0]);
-//        DebugConfig.d("drawScore: " + digits[0]);
         Bitmap bitmap;
         for (int i = 0; i < digits.length; i++) {
             bitmap = GameParams.decodeResource(mScore[digits[i]]);
             if (bitmap != null)
-                canvas.drawBitmap(bitmap, destX + i * bitmap.getWidth() + 5 * GameParams.density, destY, null);
+                canvas.drawBitmap(bitmap, destX + i * bitmap.getWidth() + i * 2 * GameParams.density, destY, null);
         }
     }
 
