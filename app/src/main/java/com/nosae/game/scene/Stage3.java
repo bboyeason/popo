@@ -166,6 +166,7 @@ public class Stage3 extends DrawableGameComponent {
         mObj.setDeathIndexEnd(objectTable[5][random]);
         mObj.setTimerAdd(objectTable[8][random]);
         mObj.setLifeAdd(objectTable[9][random]);
+        mObj.setLife(2);
         mObj.isAlive = true;
         mObjCollections.add(mObj);
     }
@@ -291,8 +292,11 @@ public class Stage3 extends DrawableGameComponent {
             mSubObj = (NormalFish) mObjCollections.get(f);
             mSubObj.Animation();
 
+            if (mSubObj.life <= 0)
+                mSubObj.isAlive = false;
             if (!mSubObj.isAlive)
                 mObjCollections.remove(mSubObj);
+            mSubObj.life--;
         }
 
         if (!GameParams.loadingMask.isAlive) {
