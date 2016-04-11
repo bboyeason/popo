@@ -247,7 +247,7 @@ public class Stage2 extends DrawableGameComponent {
             mBackground.isAlive = true;
 
         if (mScore == null)
-            mScore = new Score((int) (20 * GameParams.density), (int) (20 * GameParams.density));
+            mScore = new Score((int) (GameParams.edgeToScore * GameParams.density), (int) (GameParams.topToScore * GameParams.density));
 
         try {
             if (mLifeIcon == null) {

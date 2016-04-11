@@ -43,6 +43,10 @@ public class GameParams {
     public static float density = 1.5f;
     public static int densityDpi = 0;
 
+    public static int topToScore = 20;
+    public static int edgeToScore = 15;
+    public static int scoreToTimerbar = 15;
+
     public static int stage1FishRandomSpeed = 4;
     public static int stage2FishRandomSpeed = 3;
     public static int stage4RandomSpeed = 4;
