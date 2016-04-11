@@ -146,7 +146,6 @@ public class StageSwipe extends FragmentActivity {
                         if (GameParams.stageCompletedCount >= 1) {
                             imageViewIcon.setImageResource(R.drawable.stage02_icon_01);
                             imageView.setEnabled(true);
-                            GameParams.decodeResource(R.drawable.stage02_icon_01);
                             DebugConfig.d("image view isEnabled(): " + imageView.isEnabled());
                         } else {
                             imageView.setEnabled(false);
