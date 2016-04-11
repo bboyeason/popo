@@ -42,7 +42,7 @@ public class Settings extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        findViewById(R.id.settings_layout).getBackground().setAlpha(128);
+//        findViewById(R.id.settings_layout).getBackground().setAlpha(128);
         ToggleButton mMusicToggleButton = (ToggleButton) findViewById(R.id.music_togglebutton);
         ToggleButton mSoundToggleButton = (ToggleButton) findViewById(R.id.sound_togglebutton);
         mSoundToggleButton.setVisibility(View.GONE);//temp
