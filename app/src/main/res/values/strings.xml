@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">PoPo</string>
+    <string name="app_name">波波迷航記</string>
     <string name="action_settings">Settings</string>
     <string name="Radio_button_01">沒有或極少</string>
     <string name="Radio_button_02">有時侯</string>
