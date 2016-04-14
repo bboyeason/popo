@@ -24,13 +24,7 @@ public class KarnofskyScale extends Activity {
     RadioGroup radioGroup03;
     RadioGroup radioGroup04;
     RadioGroup radioGroup05;
-    RadioGroup radioGroup06;
-    RadioGroup radioGroup07;
-    RadioGroup radioGroup08;
-    RadioGroup radioGroup09;
-    RadioGroup radioGroup10;
-    RadioGroup radioGroup11;
-    private int currentPage = 0;
+    private int currentPage = 1;
     private int point = 0;
 
     @Override
@@ -66,13 +60,6 @@ public class KarnofskyScale extends Activity {
         radioGroup03 = (RadioGroup) findViewById(R.id.radioGroup03);
         radioGroup04 = (RadioGroup) findViewById(R.id.radioGroup04);
         radioGroup05 = (RadioGroup) findViewById(R.id.radioGroup05);
-        radioGroup06 = (RadioGroup) findViewById(R.id.radioGroup06);
-        radioGroup07 = (RadioGroup) findViewById(R.id.radioGroup07);
-        radioGroup08 = (RadioGroup) findViewById(R.id.radioGroup08);
-        radioGroup09 = (RadioGroup) findViewById(R.id.radioGroup09);
-        radioGroup10 = (RadioGroup) findViewById(R.id.radioGroup10);
-        if (currentPage == 2)
-            radioGroup11 = (RadioGroup) findViewById(R.id.radioGroup11);
     }
 
     public void setRadioGroupListener() {
@@ -81,13 +68,6 @@ public class KarnofskyScale extends Activity {
         radioGroup03.setOnCheckedChangeListener(listener);
         radioGroup04.setOnCheckedChangeListener(listener);
         radioGroup05.setOnCheckedChangeListener(listener);
-        radioGroup06.setOnCheckedChangeListener(listener);
-        radioGroup07.setOnCheckedChangeListener(listener);
-        radioGroup08.setOnCheckedChangeListener(listener);
-        radioGroup09.setOnCheckedChangeListener(listener);
-        radioGroup10.setOnCheckedChangeListener(listener);
-        if (currentPage == 2)
-            radioGroup11.setOnCheckedChangeListener(listener);
     }
 
     RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener() {
@@ -97,32 +77,20 @@ public class KarnofskyScale extends Activity {
         }
     };
     private void nextPage() {
-        DebugConfig.d("************** nextPage *************** current page: " + currentPage);
 
         if (radioGroup01.getCheckedRadioButtonId() != -1
                 && radioGroup02.getCheckedRadioButtonId() != -1
                 && radioGroup03.getCheckedRadioButtonId() != -1
                 && radioGroup04.getCheckedRadioButtonId() != -1
-                && radioGroup05.getCheckedRadioButtonId() != -1
-                && radioGroup06.getCheckedRadioButtonId() != -1
-                && radioGroup07.getCheckedRadioButtonId() != -1
-                && radioGroup08.getCheckedRadioButtonId() != -1
-                && radioGroup09.getCheckedRadioButtonId() != -1
-                && radioGroup10.getCheckedRadioButtonId() != -1) {
-            if (currentPage == 3 && radioGroup11.getCheckedRadioButtonId() != -1) {
+                && radioGroup05.getCheckedRadioButtonId() != -1) {
+            if (currentPage == 3) {
+                countPoint();
                 DebugConfig.d("************** result ***************");
-                //TODO show result
                 radioGroup01.setOnCheckedChangeListener(null);
                 radioGroup02.setOnCheckedChangeListener(null);
                 radioGroup03.setOnCheckedChangeListener(null);
                 radioGroup04.setOnCheckedChangeListener(null);
                 radioGroup05.setOnCheckedChangeListener(null);
-                radioGroup06.setOnCheckedChangeListener(null);
-                radioGroup07.setOnCheckedChangeListener(null);
-                radioGroup08.setOnCheckedChangeListener(null);
-                radioGroup09.setOnCheckedChangeListener(null);
-                radioGroup10.setOnCheckedChangeListener(null);
-                radioGroup11.setOnCheckedChangeListener(null);
                 Intent i;
                 i = new Intent(this, KarnofskyScaleResult.class);
                 i.putExtra(GameParams.RESULT, point);
@@ -132,13 +100,14 @@ public class KarnofskyScale extends Activity {
                 if (currentPage <= 2)
                     currentPage++;
                 switch (currentPage) {
-                    case 1:
+                    case 2:
                         setContentView(R.layout.karnofsky_scale_02);
                         break;
-                    case 2:
+                    case 3:
                         setContentView(R.layout.karnofsky_scale_03);
                         break;
                 }
+                DebugConfig.d("************** nextPage: " + currentPage + " ***************");
                 countPoint();
                 getRadioGroupView();
                 setRadioGroupListener();
@@ -153,8 +122,6 @@ public class KarnofskyScale extends Activity {
             point += 1;
         } else if (radioGroup01.getCheckedRadioButtonId() == R.id.radioButton01_03) {
             point += 2;
-        } else if (radioGroup01.getCheckedRadioButtonId() == R.id.radioButton01_04) {
-            point += 3;
         }
 
         if (radioGroup02.getCheckedRadioButtonId() == R.id.radioButton02_01) {
@@ -163,8 +130,6 @@ public class KarnofskyScale extends Activity {
             point += 1;
         } else if (radioGroup02.getCheckedRadioButtonId() == R.id.radioButton02_03) {
             point += 2;
-        } else if (radioGroup02.getCheckedRadioButtonId() == R.id.radioButton02_04) {
-            point += 3;
         }
 
         if (radioGroup03.getCheckedRadioButtonId() == R.id.radioButton03_01) {
@@ -173,8 +138,6 @@ public class KarnofskyScale extends Activity {
             point += 1;
         } else if (radioGroup03.getCheckedRadioButtonId() == R.id.radioButton03_03) {
             point += 2;
-        } else if (radioGroup03.getCheckedRadioButtonId() == R.id.radioButton03_04) {
-            point += 3;
         }
 
         if (radioGroup04.getCheckedRadioButtonId() == R.id.radioButton04_01) {
@@ -183,8 +146,6 @@ public class KarnofskyScale extends Activity {
             point += 1;
         } else if (radioGroup04.getCheckedRadioButtonId() == R.id.radioButton04_03) {
             point += 2;
-        } else if (radioGroup04.getCheckedRadioButtonId() == R.id.radioButton04_04) {
-            point += 3;
         }
 
         if (radioGroup05.getCheckedRadioButtonId() == R.id.radioButton05_01) {
@@ -193,71 +154,8 @@ public class KarnofskyScale extends Activity {
             point += 1;
         } else if (radioGroup05.getCheckedRadioButtonId() == R.id.radioButton05_03) {
             point += 2;
-        } else if (radioGroup05.getCheckedRadioButtonId() == R.id.radioButton05_04) {
-            point += 3;
         }
 
-        if (radioGroup06.getCheckedRadioButtonId() == R.id.radioButton06_01) {
-            point += 0;
-        } else if (radioGroup06.getCheckedRadioButtonId() == R.id.radioButton06_02) {
-            point += 1;
-        } else if (radioGroup06.getCheckedRadioButtonId() == R.id.radioButton06_03) {
-            point += 2;
-        } else if (radioGroup06.getCheckedRadioButtonId() == R.id.radioButton06_04) {
-            point += 3;
-        }
-
-        if (radioGroup07.getCheckedRadioButtonId() == R.id.radioButton07_01) {
-            point += 0;
-        } else if (radioGroup07.getCheckedRadioButtonId() == R.id.radioButton07_02) {
-            point += 1;
-        } else if (radioGroup07.getCheckedRadioButtonId() == R.id.radioButton07_03) {
-            point += 2;
-        } else if (radioGroup07.getCheckedRadioButtonId() == R.id.radioButton07_04) {
-            point += 3;
-        }
-
-        if (radioGroup08.getCheckedRadioButtonId() == R.id.radioButton08_01) {
-            point += 0;
-        } else if (radioGroup08.getCheckedRadioButtonId() == R.id.radioButton08_02) {
-            point += 1;
-        } else if (radioGroup08.getCheckedRadioButtonId() == R.id.radioButton08_03) {
-            point += 2;
-        } else if (radioGroup08.getCheckedRadioButtonId() == R.id.radioButton08_04) {
-            point += 3;
-        }
-
-        if (radioGroup09.getCheckedRadioButtonId() == R.id.radioButton09_01) {
-            point += 0;
-        } else if (radioGroup09.getCheckedRadioButtonId() == R.id.radioButton09_02) {
-            point += 1;
-        } else if (radioGroup09.getCheckedRadioButtonId() == R.id.radioButton09_03) {
-            point += 2;
-        } else if (radioGroup09.getCheckedRadioButtonId() == R.id.radioButton09_04) {
-            point += 3;
-        }
-
-        if (radioGroup10.getCheckedRadioButtonId() == R.id.radioButton10_01) {
-            point += 0;
-        } else if (radioGroup10.getCheckedRadioButtonId() == R.id.radioButton10_02) {
-            point += 1;
-        } else if (radioGroup10.getCheckedRadioButtonId() == R.id.radioButton10_03) {
-            point += 2;
-        } else if (radioGroup10.getCheckedRadioButtonId() == R.id.radioButton10_04) {
-            point += 3;
-        }
-
-        if (radioGroup11 != null) {
-            if (radioGroup11.getCheckedRadioButtonId() == R.id.radioButton11_01) {
-                point += 0;
-            } else if (radioGroup11.getCheckedRadioButtonId() == R.id.radioButton11_02) {
-                point += 1;
-            } else if (radioGroup11.getCheckedRadioButtonId() == R.id.radioButton11_03) {
-                point += 2;
-            } else if (radioGroup11.getCheckedRadioButtonId() == R.id.radioButton11_04) {
-                point += 3;
-            }
-        }
         DebugConfig.d("total point = " + point);
     }
     public void changeFonts(ViewGroup root) {

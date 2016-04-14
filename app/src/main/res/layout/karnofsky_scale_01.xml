@@ -44,12 +44,6 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="@string/Radio_button_03" />
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="@string/Radio_button_04" />
         </TableRow>
 
         <TableRow
@@ -93,14 +87,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <RadioButton
-                    android:id="@+id/radioButton01_04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
             </RadioGroup>
         </TableRow>
-
         <TableRow
             android:id="@+id/tableRow02"
             android:layout_width="fill_parent"
@@ -143,11 +131,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <RadioButton
-                    android:id="@+id/radioButton02_04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
             </RadioGroup>
 
         </TableRow>
@@ -193,11 +176,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <RadioButton
-                    android:id="@+id/radioButton03_04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
             </RadioGroup>
         </TableRow>
         <TableRow
@@ -243,11 +221,6 @@
                     android:layout_weight="1"
                     android:enabled="true" />
 
-                <RadioButton
-                    android:id="@+id/radioButton04_04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
             </RadioGroup>
         </TableRow>
         <TableRow
@@ -292,257 +265,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <RadioButton
-                    android:id="@+id/radioButton05_04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </RadioGroup>
-        </TableRow>
-        <TableRow
-            android:id="@+id/tableRow06"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:gravity="left"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/textView06"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="@string/question_06" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup06"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButton06_01"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton06_02"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton06_03"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton06_04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </RadioGroup>
-        </TableRow>
-        <TableRow
-            android:id="@+id/tableRow07"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:gravity="left"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/textView07"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="@string/question_07" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup07"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButton07_01"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton07_02"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton07_03"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton07_04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </RadioGroup>
-        </TableRow>
-        <TableRow
-            android:id="@+id/tableRow08"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:gravity="left"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/textView08"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="@string/question_08" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup08"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButton08_01"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton08_02"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton08_03"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton08_04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </RadioGroup>
-        </TableRow>
-        <TableRow
-            android:id="@+id/tableRow09"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:gravity="left"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/textView09"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="@string/question_09" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup09"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButton09_01"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton09_02"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton09_03"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton09_04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </RadioGroup>
-        </TableRow>
-        <TableRow
-            android:id="@+id/tableRow10"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:gravity="left"
-            android:baselineAligned="false"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="@string/question_10" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup10"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButton10_01"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton10_02"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton10_03"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/radioButton10_04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
             </RadioGroup>
         </TableRow>
 

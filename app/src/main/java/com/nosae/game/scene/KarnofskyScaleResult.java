@@ -28,14 +28,10 @@ public class KarnofskyScaleResult extends Activity {
         resultPoint = intent.getIntExtra(GameParams.RESULT, 0);
         final ImageView imageViewResult = (ImageView) findViewById(R.id.imageViewResult);
         try {
-            if (resultPoint <= 28) {
+            if (resultPoint <= 22) {
                 imageViewResult.setImageResource(R.drawable.result_01);
-            } else if (resultPoint >= 29 && resultPoint <= 35) {
+            } else if (resultPoint > 22) {
                 imageViewResult.setImageResource(R.drawable.result_02);
-            } else if (resultPoint >= 36 && resultPoint <= 51) {
-                imageViewResult.setImageResource(R.drawable.result_03);
-            } else if (resultPoint >= 52) {
-                imageViewResult.setImageResource(R.drawable.result_04);
             }
         } catch (OutOfMemoryError e) {
             e.printStackTrace();
