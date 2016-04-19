@@ -414,5 +414,8 @@ public class Stage3 extends DrawableGameComponent {
         if (mObjCollections != null)
             mObjCollections.clear();
         ObjectGeneration(false);
+
+        //TODO try release all resources
+        System.gc();
     }
 }

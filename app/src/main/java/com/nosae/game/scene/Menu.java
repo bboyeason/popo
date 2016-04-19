@@ -130,5 +130,11 @@ public class Menu extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         DebugConfig.d("Menu onDestroy()");
+        // TODO try release all resources
+//        imageView.setBackgroundDrawable(null);
+        imageView.setImageDrawable(null);
+        imageViewMainRole.setImageDrawable(null);
+        mMusic = null;
+        System.gc();
     }
 }

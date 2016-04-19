@@ -466,5 +466,8 @@ public class Stage1 extends DrawableGameComponent {
         if (mFishCollections != null)
             mFishCollections.clear();
         FishGeneration(false);
+
+        //TODO try release all resources
+        System.gc();
     }
 }

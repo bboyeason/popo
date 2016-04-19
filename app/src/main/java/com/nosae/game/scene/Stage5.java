@@ -537,5 +537,8 @@ public class Stage5 extends DrawableGameComponent {
         if (mCakes != null)
             mCakes.clear();
         ObjectGeneration(false);
+
+        //TODO try release all resources
+        System.gc();
     }
 }
